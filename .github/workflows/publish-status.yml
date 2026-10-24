@@ -1,0 +1,84 @@
+name: ECOS Service Status
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '3/5 * * * *'
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Check endpoints, or publish/update an incident or maintenance window'
+        required: true
+        type: choice
+        default: check
+        options: [check, incident_open, incident_update, incident_resolve, maintenance_schedule, maintenance_complete]
+      component:
+        description: 'Affected service'
+        type: choice
+        default: website
+        options: [website, access, requests]
+      title:
+        description: 'Public title for incident or maintenance'
+        type: string
+        required: false
+      message:
+        description: 'Public details; never include passwords or sensitive data'
+        type: string
+        required: false
+      start_utc:
+        description: 'For scheduled maintenance: UTC start, e.g. 2026-11-10T02:00:00Z'
+        type: string
+        required: false
+      end_utc:
+        description: 'For scheduled maintenance: UTC end, e.g. 2026-11-10T03:00:00Z'
+        type: string
+        required: false
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: status-publish
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Collect checks or publish status update
+        env:
+          ACTION: ${{ github.event.inputs.action || 'check' }}
+          COMPONENT: ${{ github.event.inputs.component || 'website' }}
+          TITLE: ${{ github.event.inputs.title || '' }}
+          MESSAGE: ${{ github.event.inputs.message || '' }}
+          START_UTC: ${{ github.event.inputs.start_utc || '' }}
+          END_UTC: ${{ github.event.inputs.end_utc || '' }}
+          ECOS_STATUS_ALERT_WEBHOOK: ${{ secrets.ECOS_STATUS_ALERT_WEBHOOK }}
+        run: python monitor.py
+      - name: Store public status history
+        run: |
+          git config user.name "ECOS Status Automation"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/data/status.json site/feed.xml
+          if ! git diff --cached --quiet; then
+            git commit -m "Update observed status [skip ci]"
+            git push origin HEAD:main
+          fi
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
