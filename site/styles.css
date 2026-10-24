@@ -3,3 +3,111 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
 .timeline-main .incident-update{font-size:12px;border-left:2px solid #567c91;padding:5px 0 5px 12px;margin:11px 0;color:#a8c3d2}.incident-update strong{display:block;font-size:11px;font-weight:660;color:#d5e6ee;margin-bottom:3px}
+
+
+/* ECOS STATUS v1.0.1: exact Circuit Meridian logo and animation from ECOS public footer. */
+.ecos-circuit-meridian {
+  --ecos-outline: #172b38;
+  --ecos-wire: #172b38;
+  --ecos-track-color: #a7b8c2;
+  --ecos-scan-color: #4a83ae;
+  --ecos-dot-color: #4f94c8;
+  --ecos-disc-color: #f7f8f6;
+  display: inline-block;
+  flex: none;
+  overflow: visible;
+  vertical-align: middle;
+  shape-rendering: geometricPrecision;
+}
+.ecos-circuit-meridian .ecos-outline {
+  fill: none; stroke: var(--ecos-outline); stroke-width: 2.1;
+  stroke-linejoin: round; stroke-linecap: round;
+}
+.ecos-circuit-meridian .ecos-track {
+  fill: none; stroke: var(--ecos-track-color); stroke-width: 1.8; opacity: .63;
+}
+.ecos-circuit-meridian .ecos-meridian-orbit {
+  transform-origin: 24px 24px;
+  animation: ecos-meridian-turn 28s linear infinite;
+}
+.ecos-circuit-meridian .ecos-orbit-arc {
+  fill: none; stroke: var(--ecos-scan-color); stroke-width: 2.25;
+  stroke-linecap: round; stroke-dasharray: 29 83; opacity: .96;
+}
+.ecos-circuit-meridian .ecos-orbit-glow {
+  fill: var(--ecos-dot-color); opacity: .18;
+  animation: ecos-meridian-breathe 3.5s ease-in-out infinite;
+}
+.ecos-circuit-meridian .ecos-orbit-node { fill: var(--ecos-dot-color); }
+.ecos-circuit-meridian .ecos-conductor {
+  fill: none; stroke: var(--ecos-wire); stroke-width: 2.25; stroke-linecap: round;
+}
+.ecos-circuit-meridian .ecos-terminal {
+  fill: var(--ecos-disc-color); stroke: var(--ecos-wire); stroke-width: 2.3;
+}
+.ecos-circuit-meridian .ecos-hub {
+  fill: var(--ecos-disc-color); stroke: var(--ecos-wire); stroke-width: 2.4;
+}
+.ecos-circuit-meridian .ecos-hub-center { fill: var(--ecos-dot-color); }
+/* Light on dark: ECOS app header / optional dark public page. */
+.story .ecos-circuit-meridian,
+.access-body .ecos-circuit-meridian,
+.ecos-on-dark .ecos-circuit-meridian,
+.site-footer .ecos-circuit-meridian {
+  --ecos-outline: #edf7ff;
+  --ecos-wire: #eaf5ff;
+  --ecos-track-color: #537992;
+  --ecos-scan-color: #7bbce9;
+  --ecos-dot-color: #8bd0ff;
+  --ecos-disc-color: #0b263d;
+}
+/* Explicitly supersede legacy brand-mark path:first-child/last-child. */
+.brand-mark.ecos-circuit-meridian .ecos-outline,
+.brand-mark.ecos-circuit-meridian .ecos-conductor {
+  stroke: var(--ecos-outline); fill: none;
+}
+.brand-mark.ecos-circuit-meridian .ecos-conductor { stroke: var(--ecos-wire); }
+.brand-mark.ecos-circuit-meridian .ecos-orbit-arc {
+  stroke: var(--ecos-scan-color);
+}
+/* Fitted within existing header and app logo sizes; no layout jump. */
+.brand-mark.ecos-circuit-meridian { width: 38px; height: 38px; }
+.mark.ecos-circuit-meridian { width: 45px; height: 45px; }
+@media(max-width: 600px) {
+  .brand-mark.ecos-circuit-meridian { width: 32px; height: 32px; }
+}
+@media(max-width: 490px) {
+  .mark.ecos-circuit-meridian { width: 40px; height: 40px; }
+}
+.footer-brand .ecos-circuit-meridian {
+  width: 24px; height: 24px; margin-right: 9px; vertical-align: -6px;
+}
+@keyframes ecos-meridian-turn {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes ecos-meridian-breathe {
+  0%, 100% { opacity: .10; }
+  50% { opacity: .34; }
+}
+@media(prefers-reduced-motion: reduce) {
+  .ecos-circuit-meridian .ecos-meridian-orbit,
+  .ecos-circuit-meridian .ecos-orbit-glow { animation: none !important; }
+}
+@media print {
+  .ecos-circuit-meridian .ecos-meridian-orbit,
+  .ecos-circuit-meridian .ecos-orbit-glow { animation: none !important; }
+}
+
+
+/* Status-specific placement; identical artwork, no layout change to page modules. */
+.site-header .brand-symbol.ecos-circuit-meridian { width:36px; height:36px; flex:none; }
+.footer .footer-brand {display:inline-flex; align-items:center;gap:10px;white-space:nowrap;}
+.footer .footer-symbol.ecos-circuit-meridian {width:27px;height:27px;flex:none;margin:0;vertical-align:middle;}
+.footer .footer-wordmark {color:var(--ink);}
+.footer .footer-wordmark > span {color:#77add0;}
+@media(max-width:680px){
+ .site-header .brand-symbol.ecos-circuit-meridian{width:30px;height:30px;}
+ .footer .footer-symbol.ecos-circuit-meridian{width:24px;height:24px;}
+ .footer .footer-brand{gap:8px;font-size:clamp(12px,3.7vw,18px);}
+}
