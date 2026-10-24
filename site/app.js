@@ -27,5 +27,29 @@
   el('maintenanceList').innerHTML=maintenance.length?maintenance.map(m=>`<article class="timeline-item"><div class="timeline-date">${esc(date(m.starts_at))}</div><div class="timeline-main"><strong>${esc(m.title)}</strong><p>${esc(m.detail||'')}</p><p>Expected end: ${esc(date(m.ends_at))} · Component: ${esc(DISPLAY[m.component]||'Multiple services')}</p><span class="timeline-status">Scheduled</span></div></article>`).join(''):'<div class="loading-item">No maintenance windows have been published.</div>';
  }
  async function load(){try{const r=await fetch('./data/status.json?at='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('No report');const j=await r.json();render(j)}catch(e){render({components:{},incidents:[],maintenance:[],daily:{}})}}
+ // RSS subscription disclosure: a feed reader subscribes, not this static website.
+ function initSubscription(){
+  const trigger=el('openSubscribe'),dialog=el('subscribeDialog'),close=el('closeSubscribe');
+  const input=el('subscribeFeedUrl'),copy=el('copySubscribeUrl'),feedback=el('subscribeFeedback');
+  if(!trigger||!dialog||!input||!copy)return;
+  // Without dialog support, the anchor continues to the valid RSS document.
+  if(typeof dialog.showModal!=='function')return;
+  trigger.addEventListener('click',event=>{event.preventDefault();feedback.textContent='';dialog.showModal();});
+  close?.addEventListener('click',()=>dialog.close());
+  dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close();});
+  copy.addEventListener('click',async()=>{
+   let copied=false;
+   const value=input.value;
+   try{if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(value);copied=true;}}
+   catch(_e){}
+   if(!copied){
+    input.focus();input.select();
+    try{copied=Boolean(document.execCommand?.('copy'));}catch(_e){}
+   }
+   feedback.textContent=copied?'RSS link copied. Add it to your preferred feed reader.':'Select and copy the RSS address above into your feed reader.';
+   if(!copied){input.focus();input.select();}
+  });
+ }
+ initSubscription();
  load();setInterval(load,60000);
 })();
