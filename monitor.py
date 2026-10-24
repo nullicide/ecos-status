@@ -18,7 +18,7 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parent
 STATE = ROOT / 'site' / 'data' / 'status.json'
 FEED = ROOT / 'site' / 'feed.xml'
-URL = (os.getenv('ECOS_STATUS_PUBLIC_URL') or 'https://nullicide.github.io/ecos-status/').rstrip('/') + '/'
+URL = (os.getenv('ECOS_STATUS_PUBLIC_URL') or 'https://status.energycontrolos.com/').rstrip('/') + '/'
 TARGETS = {
     'website': ('https://www.energycontrolos.com/', ('ENERGY CONTROL OS',)),
     'access': ('https://app.energycontrolos.com/login/', ('Welcome back', 'ENERGY CONTROL OS')),
