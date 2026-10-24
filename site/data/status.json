@@ -1,13 +1,40 @@
 {
   "schema": 1,
-  "checked_at": null,
-  "first_checked_at": null,
+  "checked_at": "2026-10-24T03:34:31Z",
+  "first_checked_at": "2026-10-24T03:34:31Z",
   "components": {
-    "website": {"state": "unknown", "fail_streak": 0, "success_streak": 0},
-    "access": {"state": "unknown", "fail_streak": 0, "success_streak": 0},
-    "requests": {"state": "unknown", "fail_streak": 0, "success_streak": 0}
+    "website": {
+      "state": "operational",
+      "fail_streak": 0,
+      "success_streak": 1
+    },
+    "access": {
+      "state": "operational",
+      "fail_streak": 0,
+      "success_streak": 1
+    },
+    "requests": {
+      "state": "operational",
+      "fail_streak": 0,
+      "success_streak": 1
+    }
   },
-  "daily": {},
+  "daily": {
+    "2026-10-24": {
+      "website": {
+        "ok": 1,
+        "fail": 0
+      },
+      "access": {
+        "ok": 1,
+        "fail": 0
+      },
+      "requests": {
+        "ok": 1,
+        "fail": 0
+      }
+    }
+  },
   "incidents": [],
   "maintenance": []
 }

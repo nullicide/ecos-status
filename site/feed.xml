@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Energy Control OS — Status Updates</title>
+    <link>https://status.energycontrolos.com/</link>
+    <description>Public incidents and maintenance notices for Energy Control OS.</description>
+    <language>en-us</language>
+  </channel>
+</rss>
