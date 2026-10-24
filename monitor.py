@@ -40,9 +40,26 @@ def parse(value:str)->dt.datetime:
     return item.astimezone(UTC)
 
 def read()->dict:
+    # A newly created repository may not contain its initial status file.
+    # Initialize only when absent; never overwrite an existing history.
+    if not STATE.is_file():
+        print('Status history not found; initializing a new, unverified monitoring record.')
+        return {
+            'schema': 1,
+            'checked_at': None,
+            'first_checked_at': None,
+            'components': {name: {
+                'state': 'unknown', 'fail_streak': 0, 'success_streak': 0
+            } for name in TARGETS},
+            'daily': {},
+            'incidents': [],
+            'maintenance': [],
+        }
+    # Invalid existing JSON is a real error; do not silently discard history.
     return json.loads(STATE.read_text(encoding='utf-8'))
 
 def write(data:dict)->None:
+    STATE.parent.mkdir(parents=True, exist_ok=True)
     STATE.write_text(json.dumps(data,ensure_ascii=False,indent=2,sort_keys=False)+'\n',encoding='utf-8')
     rss(data)
 
