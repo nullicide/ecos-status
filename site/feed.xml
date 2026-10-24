@@ -2,7 +2,7 @@
 <rss version="2.0">
   <channel>
     <title>Energy Control OS — Status Updates</title>
-    <link>https://nullicide.github.io/ecos-status/</link>
+    <link>https://status.energycontrolos.com/</link>
     <description>Public incidents and maintenance notices for Energy Control OS.</description>
     <language>en-us</language>
   </channel>
