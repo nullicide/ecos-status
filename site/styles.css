@@ -1,0 +1,113 @@
+:root{color-scheme:dark;--bg:#071723;--ink:#e8f1f6;--muted:#9eb4c3;--blue:#85b6d1;--teal:#58c6a9;--amber:#e2ba76;--red:#f18c88;--line:#2b4453;--panel:#102838;--panel2:#0c2130;--font:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}a:hover{color:#abdaed}button,a{touch-action:manipulation}a:focus-visible{outline:2px solid #b7e4ff;outline-offset:4px}.skip{position:absolute;left:1rem;top:-4rem;background:white;color:#051a29;padding:.7rem;z-index:5}.skip:focus{top:1rem}.shell{width:min(1400px,calc(100% - 104px));margin:auto}.site-header{border-bottom:1px solid var(--line);background:#071725}.nav-inner{height:96px;display:flex;justify-content:space-between;align-items:center;gap:28px}.brand{display:flex;align-items:center;gap:14px;font-size:15px;letter-spacing:.1em;font-weight:750;line-height:1.25;white-space:nowrap}.brand-symbol{width:36px;height:36px;flex:none}.brand em,.footer-brand span{font-style:normal;color:#77add0}.brand small{display:block;margin-top:5px;font-size:9px;color:#86a7bc;letter-spacing:.21em}.nav-links{display:flex;align-items:center;gap:34px;font-size:12px;color:#aac0cd;font-weight:630}.nav-links a{white-space:nowrap}.back-link{color:#e8f1f6;border:1px solid #395766;padding:11px 14px}.back-link svg,.btn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.6;vertical-align:-3px;margin-left:8px}.intro{padding:100px 0 76px}.eyebrow,.section-num,.metric-label{font-size:11px;letter-spacing:.2em;color:#82a9bd;font-weight:710}.eyebrow{display:flex;align-items:center;gap:14px}.eyebrow-rule{width:32px;border-top:2px solid #79b0d0}.intro-grid{margin-top:50px;display:grid;grid-template-columns:minmax(0,1.75fr) minmax(235px,.58fr);gap:70px;align-items:end}h1{font-size:clamp(58px,7.2vw,106px);font-weight:620;line-height:1.02;letter-spacing:-.072em;margin:0}h1 span{color:#7baccc}.lede{font-size:18px;line-height:1.65;color:#b6c8d2;max-width:650px;margin:28px 0 0}.intro-aside{border-top:1px solid #416073;padding-top:24px}.intro-aside span,.footer-upper>div>span{font-size:10px;letter-spacing:.14em;font-weight:800;color:#88afc4}.intro-aside p{font-size:16px;line-height:1.65;color:#c6d4df;margin:23px 0 0}.global-status{border:1px solid #416075;background:linear-gradient(114deg,#123348,#112a3a);padding:26px 30px;display:flex;gap:22px;align-items:center;min-height:114px}.signal{flex:0 0 46px;height:46px;display:grid;place-items:center;border:1px solid #65879c;border-radius:50%}.signal i{width:12px;height:12px;border-radius:50%;background:#9db4c4}.global-copy{flex:1;min-width:0}.global-copy strong{font-size:23px;letter-spacing:-.025em;font-weight:660}.global-copy p{font-size:13px;line-height:1.5;color:#aec4d2;margin:6px 0 0}.global-timestamp{font-size:10px;letter-spacing:.1em;font-weight:750;color:#a5c0cd;text-align:right}.global-status[data-state=operational]{border-color:#3e8c79}.global-status[data-state=operational] .signal i{background:var(--teal);box-shadow:0 0 15px #58c6a97a}.global-status[data-state=degraded]{border-color:#907951}.global-status[data-state=degraded] .signal i{background:var(--amber)}.global-status[data-state=outage]{border-color:#a15f60}.global-status[data-state=outage] .signal i{background:var(--red)}.intro-metrics{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line)}.intro-metrics>div{padding:30px 24px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:9px}.intro-metrics>div:first-child{padding-left:0}.intro-metrics>div:last-child{border-right:0}.intro-metrics strong{font-size:24px;letter-spacing:-.04em;line-height:1.2;font-weight:610}.intro-metrics small{color:#869fae;font-size:12px}.section{padding:87px 0;border-bottom:1px solid var(--line);scroll-margin-top:34px}.section-heading{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(240px,.6fr);gap:65px;align-items:end;margin-bottom:35px}.section-heading h2{font-size:clamp(30px,3vw,43px);letter-spacing:-.055em;font-weight:620;margin:12px 0 0}.section-heading p{margin:0;color:#98b1c0;font-size:14px;line-height:1.7}.component-list,.history-list,.timeline-list{border:1px solid var(--line);background:var(--panel2)}.component{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:30px;padding:25px 28px;border-bottom:1px solid var(--line)}.component:last-child,.history-row:last-child,.timeline-item:last-child{border-bottom:0}.component-title{display:flex;align-items:center;gap:15px}.state-dot{width:10px;height:10px;border-radius:50%;background:#90a9b8;flex:none}.state-dot.operational{background:var(--teal)}.state-dot.degraded{background:var(--amber)}.state-dot.outage{background:var(--red)}.component-title strong{font-size:17px;font-weight:640}.component p{margin:8px 0 0 25px;color:#91aabb;font-size:12px;line-height:1.5}.state-label{font-size:12px;font-weight:650;white-space:nowrap;color:#9fb9c8}.state-label.operational{color:#84dac0}.state-label.degraded{color:#edc990}.state-label.outage{color:#ffaba6}.history-row{padding:26px 28px;border-bottom:1px solid var(--line)}.history-top{display:flex;justify-content:space-between;align-items:baseline;gap:15px}.history-top strong{font-size:16px}.history-top span{font-size:12px;color:#9fb8c7}.days{display:grid;grid-template-columns:repeat(90,1fr);gap:5px;margin:20px 0 8px}.day{height:26px;background:#344956;border-radius:1px}.day.good{background:#4ba990}.day.bad{background:#d28e79}.day.partial{background:#b9a16f}.day.none{background:#334858}.history-foot{display:flex;justify-content:space-between;gap:20px;color:#859dad;font-size:11px}.history-legend{display:flex;flex-wrap:wrap;gap:24px;font-size:11px;color:#9cb2be;margin-top:17px}.history-legend span{display:flex;align-items:center;gap:8px}.key{height:9px;width:9px;display:inline-block}.key.okay{background:#4ba990}.key.failing{background:#d28e79}.key.missing{background:#344858}.timeline-item{padding:26px 28px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:180px minmax(0,1fr);gap:22px}.timeline-date{font-size:11px;letter-spacing:.08em;color:#86a6b7;font-weight:650;line-height:1.55}.timeline-main strong{font-size:17px;font-weight:640}.timeline-main p{font-size:13px;color:#a6c0ce;line-height:1.75;margin:9px 0}.timeline-status{display:inline-flex;margin-top:10px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;border:1px solid #446274;padding:6px 8px;color:#a7c2d2}.timeline-status.open{border-color:#b18467;color:#ffc29a}.loading-item{padding:30px;color:#93aebb;font-size:14px}.subscribe{margin:95px 0 110px;background:linear-gradient(120deg,#142f41,#0f2738);border:1px solid #3b5a6c;padding:45px 48px;display:flex;align-items:end;justify-content:space-between;gap:50px}.subscribe h2{font-size:clamp(34px,4vw,52px);letter-spacing:-.06em;margin:16px 0 12px;font-weight:620}.subscribe p{font-size:14px;line-height:1.7;color:#aac1cd;max-width:630px;margin:0}.subscribe-actions{display:flex;align-items:center;flex-direction:column;gap:14px;flex:none}.btn{display:block;text-align:center;background:#e9f1f4;color:#0c2130;font-size:13px;font-weight:750;min-width:200px;padding:17px 20px}.btn:hover{background:#bfe5f3;color:#0c2130}.subscribe-actions span{font-size:11px;color:#8cb0c3}.footer{background:#06131e;border-top:1px solid var(--line)}.footer-upper{padding:65px 0 78px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:60px}.footer-brand{font-size:18px;letter-spacing:.16em;font-weight:750}.footer-upper p{color:#87a5b5;font-size:13px;line-height:1.9;margin:23px 0 0}.footer-upper>div:not(:first-child){display:flex;flex-direction:column;gap:14px}.footer-upper>div>span{margin-bottom:6px}.footer-upper a:not(.footer-brand){font-size:13px;color:#b5c9d3}.footer-lower{border-top:1px solid #284151;padding:23px 0 29px;display:flex;justify-content:space-between;gap:18px;font-size:10px;letter-spacing:.12em;color:#7294a7;font-weight:650}
+@media(max-width:920px){.shell{width:min(100% - 58px,1400px)}.nav-links{gap:18px}.intro-grid{gap:35px}.section-heading{gap:30px}.intro{padding-top:80px}}@media(max-width:680px){.shell{width:calc(100% - 36px)}.nav-inner{height:78px}.brand{font-size:12px;gap:9px}.brand-symbol{width:30px;height:30px}.brand small{font-size:8px}.nav-links a:not(.back-link){display:none}.nav-links .back-link{padding:9px 10px;font-size:11px}.intro{padding:66px 0 40px}.intro-grid,.section-heading{grid-template-columns:1fr;gap:25px}.intro-grid{margin-top:34px}h1{font-size:clamp(57px,13vw,78px)}.lede{font-size:16px;margin-top:20px}.intro-aside{padding-top:16px}.intro-aside p{margin:11px 0 0;font-size:14px}.global-status{padding:24px 18px;gap:13px;align-items:flex-start;flex-wrap:wrap}.signal{width:30px;height:30px;flex-basis:30px}.signal i{width:9px;height:9px}.global-copy{flex-basis:calc(100% - 53px)}.global-copy strong{font-size:19px}.global-timestamp{margin-left:44px;text-align:left}.intro-metrics>div{padding:19px 11px;min-width:0}.intro-metrics strong{font-size:17px}.metric-label{font-size:8px;letter-spacing:.12em}.intro-metrics small{font-size:10px;line-height:1.5}.section{padding:63px 0}.section-heading h2{font-size:32px}.component{padding:22px 16px;gap:15px}.component-title strong{font-size:15px}.component p{margin-left:25px}.state-label{font-size:11px}.history-row{padding:23px 16px}.days{gap:3px}.day{height:18px}.timeline-item{grid-template-columns:1fr;gap:8px;padding:22px 16px}.subscribe{margin:65px 0;padding:30px 21px;display:block}.subscribe-actions{align-items:stretch;margin-top:26px}.footer-upper{grid-template-columns:1fr 1fr;gap:38px 20px;padding:45px 0}.footer-upper>div:first-child{grid-column:1/-1}.footer-lower{flex-direction:column;font-size:9px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+.timeline-main .incident-update{font-size:12px;border-left:2px solid #567c91;padding:5px 0 5px 12px;margin:11px 0;color:#a8c3d2}.incident-update strong{display:block;font-size:11px;font-weight:660;color:#d5e6ee;margin-bottom:3px}
+
+
+/* ECOS STATUS v1.0.1: exact Circuit Meridian logo and animation from ECOS public footer. */
+.ecos-circuit-meridian {
+  --ecos-outline: #172b38;
+  --ecos-wire: #172b38;
+  --ecos-track-color: #a7b8c2;
+  --ecos-scan-color: #4a83ae;
+  --ecos-dot-color: #4f94c8;
+  --ecos-disc-color: #f7f8f6;
+  display: inline-block;
+  flex: none;
+  overflow: visible;
+  vertical-align: middle;
+  shape-rendering: geometricPrecision;
+}
+.ecos-circuit-meridian .ecos-outline {
+  fill: none; stroke: var(--ecos-outline); stroke-width: 2.1;
+  stroke-linejoin: round; stroke-linecap: round;
+}
+.ecos-circuit-meridian .ecos-track {
+  fill: none; stroke: var(--ecos-track-color); stroke-width: 1.8; opacity: .63;
+}
+.ecos-circuit-meridian .ecos-meridian-orbit {
+  transform-origin: 24px 24px;
+  animation: ecos-meridian-turn 28s linear infinite;
+}
+.ecos-circuit-meridian .ecos-orbit-arc {
+  fill: none; stroke: var(--ecos-scan-color); stroke-width: 2.25;
+  stroke-linecap: round; stroke-dasharray: 29 83; opacity: .96;
+}
+.ecos-circuit-meridian .ecos-orbit-glow {
+  fill: var(--ecos-dot-color); opacity: .18;
+  animation: ecos-meridian-breathe 3.5s ease-in-out infinite;
+}
+.ecos-circuit-meridian .ecos-orbit-node { fill: var(--ecos-dot-color); }
+.ecos-circuit-meridian .ecos-conductor {
+  fill: none; stroke: var(--ecos-wire); stroke-width: 2.25; stroke-linecap: round;
+}
+.ecos-circuit-meridian .ecos-terminal {
+  fill: var(--ecos-disc-color); stroke: var(--ecos-wire); stroke-width: 2.3;
+}
+.ecos-circuit-meridian .ecos-hub {
+  fill: var(--ecos-disc-color); stroke: var(--ecos-wire); stroke-width: 2.4;
+}
+.ecos-circuit-meridian .ecos-hub-center { fill: var(--ecos-dot-color); }
+/* Light on dark: ECOS app header / optional dark public page. */
+.story .ecos-circuit-meridian,
+.access-body .ecos-circuit-meridian,
+.ecos-on-dark .ecos-circuit-meridian,
+.site-footer .ecos-circuit-meridian {
+  --ecos-outline: #edf7ff;
+  --ecos-wire: #eaf5ff;
+  --ecos-track-color: #537992;
+  --ecos-scan-color: #7bbce9;
+  --ecos-dot-color: #8bd0ff;
+  --ecos-disc-color: #0b263d;
+}
+/* Explicitly supersede legacy brand-mark path:first-child/last-child. */
+.brand-mark.ecos-circuit-meridian .ecos-outline,
+.brand-mark.ecos-circuit-meridian .ecos-conductor {
+  stroke: var(--ecos-outline); fill: none;
+}
+.brand-mark.ecos-circuit-meridian .ecos-conductor { stroke: var(--ecos-wire); }
+.brand-mark.ecos-circuit-meridian .ecos-orbit-arc {
+  stroke: var(--ecos-scan-color);
+}
+/* Fitted within existing header and app logo sizes; no layout jump. */
+.brand-mark.ecos-circuit-meridian { width: 38px; height: 38px; }
+.mark.ecos-circuit-meridian { width: 45px; height: 45px; }
+@media(max-width: 600px) {
+  .brand-mark.ecos-circuit-meridian { width: 32px; height: 32px; }
+}
+@media(max-width: 490px) {
+  .mark.ecos-circuit-meridian { width: 40px; height: 40px; }
+}
+.footer-brand .ecos-circuit-meridian {
+  width: 24px; height: 24px; margin-right: 9px; vertical-align: -6px;
+}
+@keyframes ecos-meridian-turn {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes ecos-meridian-breathe {
+  0%, 100% { opacity: .10; }
+  50% { opacity: .34; }
+}
+@media(prefers-reduced-motion: reduce) {
+  .ecos-circuit-meridian .ecos-meridian-orbit,
+  .ecos-circuit-meridian .ecos-orbit-glow { animation: none !important; }
+}
+@media print {
+  .ecos-circuit-meridian .ecos-meridian-orbit,
+  .ecos-circuit-meridian .ecos-orbit-glow { animation: none !important; }
+}
+
+
+/* Status-specific placement; identical artwork, no layout change to page modules. */
+.site-header .brand-symbol.ecos-circuit-meridian { width:36px; height:36px; flex:none; }
+.footer .footer-brand {display:inline-flex; align-items:center;gap:10px;white-space:nowrap;}
+.footer .footer-symbol.ecos-circuit-meridian {width:27px;height:27px;flex:none;margin:0;vertical-align:middle;}
+.footer .footer-wordmark {color:var(--ink);}
+.footer .footer-wordmark > span {color:#77add0;}
+@media(max-width:680px){
+ .site-header .brand-symbol.ecos-circuit-meridian{width:30px;height:30px;}
+ .footer .footer-symbol.ecos-circuit-meridian{width:24px;height:24px;}
+ .footer .footer-brand{gap:8px;font-size:clamp(12px,3.7vw,18px);}
+}

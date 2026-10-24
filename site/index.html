@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071825">
+<meta name="description" content="Energy Control OS service status, current availability, incident updates and planned maintenance.">
+<title>System Status | Energy Control OS</title>
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./styles.css">
+<link rel="alternate" type="application/rss+xml" title="ECOS Status Updates" href="./feed.xml">
+<script src="./app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to status</a>
+<header class="site-header ecos-on-dark"><div class="shell nav-inner">
+<a class="brand" href="./" aria-label="Energy Control OS System Status home"><svg class="brand-symbol ecos-circuit-meridian" aria-hidden="true" focusable="false" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path class="ecos-outline" d="M24 2.65 43.65 13.325V34.675L24 45.35 4.35 34.675V13.325Z"/>
+<circle class="ecos-track" cx="24" cy="24" r="13.2"/>
+<g class="ecos-meridian-orbit">
+  <circle class="ecos-orbit-arc" cx="24" cy="24" r="13.2"/>
+  <circle class="ecos-orbit-glow" cx="37.2" cy="24" r="3.2"/>
+  <circle class="ecos-orbit-node" cx="37.2" cy="24" r="2"/>
+</g>
+<path class="ecos-conductor" d="M24 11.2V36.8"/>
+<circle class="ecos-terminal" cx="24" cy="11.2" r="3.1"/>
+<circle class="ecos-terminal" cx="24" cy="36.8" r="3.1"/>
+<circle class="ecos-hub" cx="24" cy="24" r="6.1"/>
+<circle class="ecos-hub-center" cx="24" cy="24" r="2.5"/></svg><span>ENERGY CONTROL <em>OS</em><small>SYSTEM STATUS</small></span></a>
+<nav class="nav-links" aria-label="Primary"><a href="#components">Services</a><a href="#history">History</a><a href="#incidents">Incidents</a><a href="https://www.energycontrolos.com/" class="back-link">Platform <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 15 15 5M7 5h8v8"/></svg></a></nav>
+</div></header>
+<main id="main">
+<section class="intro shell"><div class="eyebrow"><span class="eyebrow-rule"></span>ECOS / SERVICE AVAILABILITY</div><div class="intro-grid"><div><h1>Service status<span>.</span></h1><p class="lede">Availability, incidents, and maintenance—one reliable place for updates on Energy Control OS services.</p></div><div class="intro-aside"><span>ENTERPRISE SERVICE COMMUNICATION</span><p>Independent status reporting for customers and evaluators.</p></div></div></section>
+<div class="shell"><section class="global-status" id="globalStatus" aria-live="polite" data-state="unknown"><span class="signal" aria-hidden="true"><i></i></span><div class="global-copy"><strong id="globalTitle">Monitoring not yet established</strong><p id="globalDetail">Service checks have not reported verified results.</p></div><span class="global-timestamp" id="globalTime">AWAITING FIRST CHECK</span></section>
+<div class="intro-metrics"><div><span class="metric-label">MONITORING WINDOW</span><strong>90 days</strong><small>Rolling, observed checks</small></div><div><span class="metric-label">LAST EXTERNAL CHECK</span><strong id="lastChecked">Not available</strong><small>Updated automatically</small></div><div><span class="metric-label">POLLING INTERVAL</span><strong>5 minutes</strong><small>Best-effort external checks</small></div></div>
+<section class="section" id="components"><div class="section-heading"><div><span class="section-num">01 / SERVICES</span><h2>Current component health</h2></div><p>Availability checks reflect public endpoint reachability—not authentication success, equipment status, or operational authorization.</p></div><div id="componentList" class="component-list" aria-live="polite"><div class="loading-item">Waiting for the first monitoring report.</div></div></section>
+<section class="section" id="history"><div class="section-heading"><div><span class="section-num">02 / PERFORMANCE HISTORY</span><h2>Observed availability</h2></div><p>Availability is calculated from completed checks, not an uptime guarantee. Missing data are never counted as successful checks.</p></div><div id="historyList" class="history-list"><div class="loading-item">History will appear after monitoring begins.</div></div><div class="history-legend"><span><i class="key okay"></i>Successful checks</span><span><i class="key failing"></i>Failed checks</span><span><i class="key missing"></i>No observations</span></div></section>
+<section class="section" id="incidents"><div class="section-heading"><div><span class="section-num">03 / INCIDENT COMMUNICATION</span><h2>Incident history</h2></div><p>Updates are published as incidents are investigated, mitigated, and resolved.</p></div><div id="incidentList" class="timeline-list"><div class="loading-item">No incident reports published.</div></div></section>
+<section class="section" id="maintenance"><div class="section-heading"><div><span class="section-num">04 / PLANNED WORK</span><h2>Scheduled maintenance</h2></div><p>Upcoming service windows and their expected customer impact.</p></div><div id="maintenanceList" class="timeline-list"><div class="loading-item">No maintenance windows published.</div></div></section>
+<section class="subscribe"><div><span class="section-num">STAY INFORMED</span><h2>Get status updates.</h2><p>Subscribe to the public incident feed, or return here for current component health and maintenance notices.</p></div><div class="subscribe-actions"><a class="btn" href="./feed.xml" type="application/rss+xml">Subscribe via RSS <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 15 15 5M7 5h8v8"/></svg></a><span>No account required</span></div></section>
+</div>
+</main>
+<footer class="footer ecos-on-dark"><div class="shell footer-upper"><div><a href="https://www.energycontrolos.com/" class="footer-brand"><svg class="footer-symbol ecos-circuit-meridian" aria-hidden="true" focusable="false" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path class="ecos-outline" d="M24 2.65 43.65 13.325V34.675L24 45.35 4.35 34.675V13.325Z"/>
+<circle class="ecos-track" cx="24" cy="24" r="13.2"/>
+<g class="ecos-meridian-orbit">
+  <circle class="ecos-orbit-arc" cx="24" cy="24" r="13.2"/>
+  <circle class="ecos-orbit-glow" cx="37.2" cy="24" r="3.2"/>
+  <circle class="ecos-orbit-node" cx="37.2" cy="24" r="2"/>
+</g>
+<path class="ecos-conductor" d="M24 11.2V36.8"/>
+<circle class="ecos-terminal" cx="24" cy="11.2" r="3.1"/>
+<circle class="ecos-terminal" cx="24" cy="36.8" r="3.1"/>
+<circle class="ecos-hub" cx="24" cy="24" r="6.1"/>
+<circle class="ecos-hub-center" cx="24" cy="24" r="2.5"/></svg><span class="footer-wordmark">ENERGY CONTROL <span>OS</span></span></a><p>Know the Energy State.<br>Coordinate the Work.<br>Preserve the Record.</p></div><div><span>QUICK ACCESS</span><a href="https://www.energycontrolos.com/">ECOS Platform</a><a href="https://app.energycontrolos.com/">Enterprise Access</a><a href="https://www.energycontrolos.com/legal/">Legal &amp; Trust</a></div><div><span>STATUS RESOURCES</span><a href="#components">Current Status</a><a href="#incidents">Incident History</a><a href="./feed.xml">RSS Updates</a></div></div><div class="shell footer-lower"><span>© 2026 ENERGY CONTROL OS™</span><span>STATUS INFORMATION IS NOT AN OPERATIONAL SAFETY CONTROL</span></div></footer>
+</body></html>
