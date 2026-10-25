@@ -1,22 +1,22 @@
 {
   "schema": 1,
-  "checked_at": "2026-10-24T23:48:21Z",
+  "checked_at": "2026-10-25T00:02:52Z",
   "first_checked_at": "2026-10-24T03:34:31Z",
   "components": {
     "website": {
       "state": "operational",
       "fail_streak": 0,
-      "success_streak": 56
+      "success_streak": 57
     },
     "access": {
       "state": "operational",
       "fail_streak": 0,
-      "success_streak": 56
+      "success_streak": 57
     },
     "requests": {
       "state": "operational",
       "fail_streak": 0,
-      "success_streak": 56
+      "success_streak": 57
     }
   },
   "daily": {
@@ -31,6 +31,20 @@
       },
       "requests": {
         "ok": 56,
+        "fail": 0
+      }
+    },
+    "2026-10-25": {
+      "website": {
+        "ok": 1,
+        "fail": 0
+      },
+      "access": {
+        "ok": 1,
+        "fail": 0
+      },
+      "requests": {
+        "ok": 1,
         "fail": 0
       }
     }
