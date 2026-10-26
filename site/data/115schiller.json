@@ -1,36 +1,59 @@
 {
   "schema": 1,
   "project": "115-schiller",
-  "checked_at": null,
-  "first_checked_at": null,
+  "checked_at": "2026-10-26T22:20:17Z",
+  "first_checked_at": "2026-10-26T22:20:17Z",
   "components": {
     "website": {
-      "state": "unknown",
-      "success_streak": 0,
+      "state": "operational",
+      "success_streak": 1,
       "fail_streak": 0
     },
     "booking": {
-      "state": "unknown",
-      "success_streak": 0,
+      "state": "operational",
+      "success_streak": 1,
       "fail_streak": 0
     },
     "guest": {
-      "state": "unknown",
-      "success_streak": 0,
+      "state": "operational",
+      "success_streak": 1,
       "fail_streak": 0
     },
     "owner": {
-      "state": "unknown",
-      "success_streak": 0,
+      "state": "operational",
+      "success_streak": 1,
       "fail_streak": 0
     },
     "team": {
-      "state": "unknown",
-      "success_streak": 0,
+      "state": "operational",
+      "success_streak": 1,
       "fail_streak": 0
     }
   },
-  "daily": {},
+  "daily": {
+    "2026-10-26": {
+      "website": {
+        "ok": 1,
+        "fail": 0
+      },
+      "booking": {
+        "ok": 1,
+        "fail": 0
+      },
+      "guest": {
+        "ok": 1,
+        "fail": 0
+      },
+      "owner": {
+        "ok": 1,
+        "fail": 0
+      },
+      "team": {
+        "ok": 1,
+        "fail": 0
+      }
+    }
+  },
   "incidents": [],
   "maintenance": [],
   "scope": "External HTTP page reachability only; no checkout, availability, account authentication, or task workflows tested."
