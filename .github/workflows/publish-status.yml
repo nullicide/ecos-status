@@ -60,11 +60,15 @@ jobs:
           END_UTC: ${{ github.event.inputs.end_utc || '' }}
           ECOS_STATUS_ALERT_WEBHOOK: ${{ secrets.ECOS_STATUS_ALERT_WEBHOOK }}
         run: python monitor.py
+      - name: Collect independent 115 Schiller page checks
+        env:
+          ACTION: ${{ github.event.inputs.action || 'check' }}
+        run: python monitor_schiller.py
       - name: Store public status history
         run: |
           git config user.name "ECOS Status Automation"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add site/data/status.json site/feed.xml
+          git add site/data/status.json site/feed.xml site/data/115schiller.json
           if ! git diff --cached --quiet; then
             git commit -m "Update observed status [skip ci]"
             git push origin HEAD:main
