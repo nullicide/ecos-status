@@ -22,7 +22,7 @@ TARGETS = {
     "website": ("https://www.115schiller.com/", "115 Schiller · Guttenberg, Iowa"),
     "booking": ("https://www.115schiller.com/book/", "Reserve your stay | 115 Schiller"),
     "guest": ("https://www.115schiller.com/guest/", "My Stays | 115 Schiller"),
-    "owner": ("https://www.115schiller.com/admin/", "Owner portal · 115 Schiller"),
+    "owner": ("https://www.115schiller.com/admin/", "Secure owner and property operations portal for 115 Schiller."),
     "team": ("https://www.115schiller.com/team/", "Property Team · 115 Schiller"),
 }
 TITLES = {
@@ -68,9 +68,12 @@ def probe(item: tuple[str, tuple[str, str]]) -> tuple[str, bool]:
                 if expected.casefold() not in body.casefold():
                     raise ValueError("Expected exact page marker missing")
                 return (name, True)
-        except (urllib.error.URLError, TimeoutError, ValueError, OSError):
+        except (urllib.error.URLError, TimeoutError, ValueError, OSError) as exc:
+            # Log a bounded, non-sensitive failure reason for diagnostics.
+            failure = str(exc) if isinstance(exc, ValueError) else type(exc).__name__
             if attempt == 0:
                 time.sleep(1)
+    print("115 Schiller probe", name, "failed:", failure, flush=True)
     return (name, False)
 
 def open_auto_incident(data: dict, key: str, stamp: str) -> None:
