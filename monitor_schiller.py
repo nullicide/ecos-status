@@ -92,7 +92,12 @@ def open_auto_incident(data: dict, key: str, stamp: str) -> None:
 def close_auto_incident(data: dict, key: str, stamp: str) -> None:
     for incident in data["incidents"]:
         if incident.get("origin") == "monitor" and incident.get("component") == key and not incident.get("ended_at"):
-            message = "External page responses recovered. Functional workflows remain unverified."
+            if incident.get("classification") == "verification_false_positive":
+                message = ("Owner-page monitoring verification recovered after correcting an obsolete "
+                           "HTML title assertion. The earlier failed validations do not establish "
+                           "an actual portal outage. Authentication and private workflows were not tested.")
+            else:
+                message = "External page responses recovered. Functional workflows remain unverified."
             incident.update({"status": "resolved", "ended_at": stamp, "detail": message})
             incident.setdefault("updates", []).append({"at": stamp, "status": "resolved", "detail": message})
 

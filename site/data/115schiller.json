@@ -81,9 +81,9 @@
       "id": "85034f10-33e",
       "origin": "monitor",
       "component": "owner",
-      "title": "Owner portal entry — page reachability disruption",
-      "detail": "Two consecutive external page checks failed. The cause has not been established.",
-      "status": "investigating",
+      "title": "Owner portal entry — monitoring verification false alarm",
+      "detail": "An obsolete HTML title expectation in the external owner-page monitor caused incorrect failed verification results. The portal's actual page title is 'Property Operations · 115 Schiller'. The corrected monitor has passed its first check; a second successful check is required to close this incident. The earlier failed validations do not establish that the portal was unavailable.",
+      "status": "monitoring",
       "started_at": "2026-10-27T05:21:58Z",
       "ended_at": null,
       "updates": [
@@ -91,8 +91,14 @@
           "at": "2026-10-27T05:21:58Z",
           "status": "investigating",
           "detail": "Two consecutive external page checks failed. The cause has not been established."
+        },
+        {
+          "at": "2026-10-27T08:46:20Z",
+          "status": "monitoring",
+          "detail": "Cause identified: the monitor expected an outdated owner-page title. The assertion was corrected and deployed; the first verification passed. Monitoring recovery. Previously recorded failed checks are retained."
         }
-      ]
+      ],
+      "classification": "verification_false_positive"
     }
   ],
   "maintenance": [],
