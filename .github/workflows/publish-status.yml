@@ -60,6 +60,8 @@ jobs:
           END_UTC: ${{ github.event.inputs.end_utc || '' }}
           ECOS_STATUS_ALERT_WEBHOOK: ${{ secrets.ECOS_STATUS_ALERT_WEBHOOK }}
         run: python monitor.py
+      - name: Verify 115 Schiller monitoring assertions
+        run: python -m unittest discover -s tests -p 'test_monitor_schiller.py' -v
       - name: Collect independent 115 Schiller page checks
         env:
           ACTION: ${{ github.event.inputs.action || 'check' }}
