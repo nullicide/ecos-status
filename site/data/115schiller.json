@@ -1,32 +1,32 @@
 {
   "schema": 1,
   "project": "115-schiller",
-  "checked_at": "2026-10-27T08:46:20Z",
+  "checked_at": "2026-10-27T09:00:01Z",
   "first_checked_at": "2026-10-26T22:20:17Z",
   "components": {
     "website": {
       "state": "operational",
-      "success_streak": 23,
+      "success_streak": 24,
       "fail_streak": 0
     },
     "booking": {
       "state": "operational",
-      "success_streak": 23,
+      "success_streak": 24,
       "fail_streak": 0
     },
     "guest": {
       "state": "operational",
-      "success_streak": 23,
+      "success_streak": 24,
       "fail_streak": 0
     },
     "owner": {
-      "state": "degraded",
-      "success_streak": 1,
+      "state": "operational",
+      "success_streak": 2,
       "fail_streak": 0
     },
     "team": {
       "state": "operational",
-      "success_streak": 23,
+      "success_streak": 24,
       "fail_streak": 0
     }
   },
@@ -55,23 +55,23 @@
     },
     "2026-10-27": {
       "website": {
-        "ok": 19,
+        "ok": 20,
         "fail": 0
       },
       "booking": {
-        "ok": 19,
+        "ok": 20,
         "fail": 0
       },
       "guest": {
-        "ok": 19,
+        "ok": 20,
         "fail": 0
       },
       "owner": {
-        "ok": 12,
+        "ok": 13,
         "fail": 7
       },
       "team": {
-        "ok": 19,
+        "ok": 20,
         "fail": 0
       }
     }
@@ -82,10 +82,10 @@
       "origin": "monitor",
       "component": "owner",
       "title": "Owner portal entry — monitoring verification false alarm",
-      "detail": "An obsolete HTML title expectation in the external owner-page monitor caused incorrect failed verification results. The portal's actual page title is 'Property Operations · 115 Schiller'. The corrected monitor has passed its first check; a second successful check is required to close this incident. The earlier failed validations do not establish that the portal was unavailable.",
-      "status": "monitoring",
+      "detail": "Owner-page monitoring verification recovered after correcting an obsolete HTML title assertion. The earlier failed validations do not establish an actual portal outage. Authentication and private workflows were not tested.",
+      "status": "resolved",
       "started_at": "2026-10-27T05:21:58Z",
-      "ended_at": null,
+      "ended_at": "2026-10-27T09:00:01Z",
       "updates": [
         {
           "at": "2026-10-27T05:21:58Z",
@@ -96,6 +96,11 @@
           "at": "2026-10-27T08:46:20Z",
           "status": "monitoring",
           "detail": "Cause identified: the monitor expected an outdated owner-page title. The assertion was corrected and deployed; the first verification passed. Monitoring recovery. Previously recorded failed checks are retained."
+        },
+        {
+          "at": "2026-10-27T09:00:01Z",
+          "status": "resolved",
+          "detail": "Owner-page monitoring verification recovered after correcting an obsolete HTML title assertion. The earlier failed validations do not establish an actual portal outage. Authentication and private workflows were not tested."
         }
       ],
       "classification": "verification_false_positive"
