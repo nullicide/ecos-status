@@ -62,6 +62,26 @@ class OwnerProbeTests(unittest.TestCase):
                         ("owner", False)
                     )
 
+    def test_false_positive_incident_resolves_without_rewriting_history(self):
+        report = monitor.fresh()
+        earlier = "2026-10-27T05:21:58Z"
+        later = "2026-10-27T08:51:00Z"
+        report["incidents"] = [{
+            "id": "85034f10-33e", "origin": "monitor", "component": "owner",
+            "status": "monitoring", "classification": "verification_false_positive",
+            "started_at": earlier, "ended_at": None,
+            "updates": [{"at": earlier, "status": "investigating",
+                         "detail": "Original observed failures"}]
+        }]
+        monitor.close_auto_incident(report, "owner", later)
+        item = report["incidents"][0]
+        self.assertEqual(item["status"], "resolved")
+        self.assertEqual(item["started_at"], earlier)
+        self.assertEqual(item["ended_at"], later)
+        self.assertEqual(len(item["updates"]), 2)
+        self.assertIn("obsolete", item["detail"])
+        self.assertIn("earlier failed validations", item["detail"])
+
     def test_public_page_markers_remain_distinct(self):
         self.assertEqual(len(monitor.TARGETS), 5)
         self.assertEqual(
