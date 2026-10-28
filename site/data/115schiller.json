@@ -126,6 +126,34 @@
         }
       ],
       "classification": "verification_false_positive"
+    },
+    {
+      "id": "sch-team-monitor-20261027",
+      "origin": "operator_review",
+      "component": "team",
+      "title": "Property Team sign-in — monitoring target updated",
+      "detail": "A single external reachability verification failed after the public /team/ landing page was retired. The monitor still checked the retired URL and page marker. Monitoring was corrected to the canonical /team/login/ endpoint and subsequent samples recovered. The failed sample is retained; authenticated sign-in, assignments, and private workflows were not checked.",
+      "classification": "verification_false_positive",
+      "status": "resolved",
+      "started_at": "2026-10-28T03:02:12Z",
+      "ended_at": "2026-10-28T03:12:17Z",
+      "updates": [
+        {
+          "at": "2026-10-28T03:02:12Z",
+          "status": "investigating",
+          "detail": "One failed Property Team public-page validation observed. The underlying sign-in experience was not tested."
+        },
+        {
+          "at": "2026-10-28T03:07:00Z",
+          "status": "monitoring",
+          "detail": "Monitoring configuration corrected from retired /team/ landing page to canonical /team/login/ sign-in. This is an approximate configuration-change time, not an independently measured service event."
+        },
+        {
+          "at": "2026-10-28T03:12:17Z",
+          "status": "resolved",
+          "detail": "Two successful monitor samples recorded after the corrected target. Earlier failed observation retained; no confirmed authenticated-workflow outage."
+        }
+      ]
     }
   ],
   "maintenance": [],
