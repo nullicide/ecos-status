@@ -23,7 +23,7 @@ TARGETS = {
     "booking": ("https://www.115schiller.com/book/", "Reserve your stay | 115 Schiller"),
     "guest": ("https://www.115schiller.com/guest/", "My Stays | 115 Schiller"),
     "owner": ("https://www.115schiller.com/admin/", "Secure owner and property operations portal for 115 Schiller."),
-    "team": ("https://www.115schiller.com/team/", "Property Team · 115 Schiller"),
+    "team": ("https://www.115schiller.com/team/login/", "Property Team Sign In · 115 Schiller"),
 }
 TITLES = {
     "website": "Public website",
