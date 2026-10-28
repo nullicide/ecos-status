@@ -1,32 +1,32 @@
 {
   "schema": 1,
   "project": "115-schiller",
-  "checked_at": "2026-10-28T14:32:34Z",
+  "checked_at": "2026-10-28T15:22:47Z",
   "first_checked_at": "2026-10-26T22:20:17Z",
   "components": {
     "website": {
       "state": "operational",
-      "success_streak": 73,
+      "success_streak": 74,
       "fail_streak": 0
     },
     "booking": {
       "state": "operational",
-      "success_streak": 73,
+      "success_streak": 74,
       "fail_streak": 0
     },
     "guest": {
       "state": "operational",
-      "success_streak": 73,
+      "success_streak": 74,
       "fail_streak": 0
     },
     "owner": {
       "state": "operational",
-      "success_streak": 51,
+      "success_streak": 52,
       "fail_streak": 0
     },
     "team": {
       "state": "operational",
-      "success_streak": 19,
+      "success_streak": 20,
       "fail_streak": 0
     }
   },
@@ -77,23 +77,23 @@
     },
     "2026-10-28": {
       "website": {
-        "ok": 24,
+        "ok": 25,
         "fail": 0
       },
       "booking": {
-        "ok": 24,
+        "ok": 25,
         "fail": 0
       },
       "guest": {
-        "ok": 24,
+        "ok": 25,
         "fail": 0
       },
       "owner": {
-        "ok": 24,
+        "ok": 25,
         "fail": 0
       },
       "team": {
-        "ok": 23,
+        "ok": 24,
         "fail": 1
       }
     }
