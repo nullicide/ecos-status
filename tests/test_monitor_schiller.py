@@ -82,6 +82,21 @@ class OwnerProbeTests(unittest.TestCase):
         self.assertIn("obsolete", item["detail"])
         self.assertIn("earlier failed validations", item["detail"])
 
+    def test_property_team_monitor_uses_canonical_login(self):
+        url, marker = monitor.TARGETS["team"]
+        self.assertEqual(url, "https://www.115schiller.com/team/login/")
+        self.assertIn("Property Team Sign In", marker)
+        with patch.object(monitor.urllib.request, "urlopen",
+                          return_value=FakeResponse('<title>Property Team Sign In · 115 Schiller</title>')):
+            self.assertEqual(monitor.probe(("team", monitor.TARGETS["team"])), ("team", True))
+
+    def test_retired_team_landing_page_is_not_a_successful_login_probe(self):
+        with patch.object(monitor.urllib.request, "urlopen",
+                          return_value=FakeResponse('<title>Property Team · 115 Schiller</title>')):
+            with patch.object(monitor.time, "sleep"):
+                with patch("builtins.print"):
+                    self.assertEqual(monitor.probe(("team", monitor.TARGETS["team"])), ("team", False))
+
     def test_public_page_markers_remain_distinct(self):
         self.assertEqual(len(monitor.TARGETS), 5)
         self.assertEqual(
