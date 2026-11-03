@@ -50,6 +50,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Verify ECOS and 115 Schiller monitoring assertions
+        run: python -m unittest discover -s tests -p 'test_monitor*.py' -v
       - name: Collect checks or publish status update
         env:
           ACTION: ${{ github.event.inputs.action || 'check' }}
@@ -60,8 +62,6 @@ jobs:
           END_UTC: ${{ github.event.inputs.end_utc || '' }}
           ECOS_STATUS_ALERT_WEBHOOK: ${{ secrets.ECOS_STATUS_ALERT_WEBHOOK }}
         run: python monitor.py
-      - name: Verify 115 Schiller monitoring assertions
-        run: python -m unittest discover -s tests -p 'test_monitor_schiller.py' -v
       - name: Collect independent 115 Schiller page checks
         env:
           ACTION: ${{ github.event.inputs.action || 'check' }}
