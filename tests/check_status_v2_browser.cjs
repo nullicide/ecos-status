@@ -1,0 +1,46 @@
+'use strict';
+const assert=require('node:assert/strict');
+const {chromium}=require('playwright');
+(async()=>{
+ const instance=await chromium.launch({headless:true});
+ try{
+  for(const width of [320,375,768,1440]){
+   const page=await instance.newPage({viewport:{width,height:900},reducedMotion:'reduce'});
+   const errors=[];page.on('pageerror',e=>errors.push(e.message));
+   const at=new Date().toISOString();const today=at.slice(0,10);
+   await page.route('**/data/readiness.json*',r=>r.fulfill({contentType:'application/json',body:JSON.stringify({
+     schema:1,checked_at:at,state:'ready'
+   })}));
+   await page.route('**/data/dependencies.json*',r=>r.fulfill({contentType:'application/json',body:JSON.stringify({
+     schema:1,fetch_status:'ok',checked_at:at,
+     components:['Workers Builds','Pages','Workers','D1','Turnstile','Authoritative DNS','API'].map((name,i)=>({
+       name,status:i===0?'degraded_performance':'operational'
+     })),
+     incidents:[{id:'provider-1',name:'Synthetic test build incident',status:'identified',
+       updated_at:at,url:'https://www.cloudflarestatus.com/',
+       detail:'Test-only provider data; not a live event.'}]
+   })}));
+   await page.route('**/data/status.json*',r=>r.fulfill({contentType:'application/json',body:JSON.stringify({
+     schema:1,checked_at:at,first_checked_at:at,
+     components:{website:{state:'operational',last_success_at:at},
+       access:{state:'operational',last_success_at:at},
+       requests:{state:'operational',last_success_at:at}},
+     daily:{[today]:{website:{ok:1,fail:0},access:{ok:1,fail:0},requests:{ok:1,fail:0}}},
+     incidents:[],maintenance:[]
+   })}));
+   const response=await page.goto('http://127.0.0.1:8765/',{waitUntil:'networkidle'});
+   assert.equal(response.status(),200);
+   assert.equal(await page.locator('#readinessPanel').count(),1);
+   assert.match(await page.locator('#readinessPanel').innerText(),/Configuration ready/);
+   assert.equal(await page.locator('.v2-dependency').count(),7);
+   assert.match(await page.locator('#providerIncidents').innerText(),/Synthetic test build incident/);
+   assert.match(await page.locator('#coverageSummary').innerText(),/sampled calendar days/);
+   const dimensions=await page.evaluate(()=>({document:document.documentElement.scrollWidth,viewport:innerWidth}));
+   assert.ok(dimensions.document<=dimensions.viewport+1,
+    width+'px horizontal overflow '+JSON.stringify(dimensions));
+   assert.deepEqual(errors,[],width+'px JavaScript runtime errors');
+   console.log('ECOS Status v2 passed at '+width+'px');
+   await page.close();
+  }
+ }finally{await instance.close();}
+})().catch(e=>{console.error(e);process.exitCode=1});
