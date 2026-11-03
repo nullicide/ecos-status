@@ -22,7 +22,8 @@ URL = (os.getenv('ECOS_STATUS_PUBLIC_URL') or 'https://status.energycontrolos.co
 TARGETS = {
     'website': ('https://www.energycontrolos.com/', ('ENERGY CONTROL OS',)),
     'access': ('https://app.energycontrolos.com/login/', ('Welcome back', 'ENERGY CONTROL OS')),
-    'requests': ('https://www.energycontrolos.com/request-access/', ('Request enterprise access', 'ACCESS & EVALUATION', 'Request access')),
+    # Use a stable DOM landmark rather than volatile marketing copy to avoid false outages.
+    'requests': ('https://www.energycontrolos.com/request-access/', ('id="request-form"',)),
 }
 TITLES = {'website': 'Public website', 'access': 'Enterprise access page', 'requests': 'Request Access page'}
 UTC = dt.timezone.utc
