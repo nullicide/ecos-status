@@ -1,21 +1,21 @@
 {
   "schema": 1,
-  "checked_at": "2026-11-03T16:55:14Z",
+  "checked_at": "2026-11-03T17:37:41Z",
   "first_checked_at": "2026-10-24T03:34:31Z",
   "components": {
     "website": {
       "state": "operational",
       "fail_streak": 0,
-      "success_streak": 436
+      "success_streak": 437
     },
     "access": {
       "state": "operational",
       "fail_streak": 0,
-      "success_streak": 436
+      "success_streak": 437
     },
     "requests": {
-      "state": "degraded",
-      "fail_streak": 1,
+      "state": "outage",
+      "fail_streak": 2,
       "success_streak": 0
     }
   },
@@ -162,19 +162,37 @@
     },
     "2026-11-03": {
       "website": {
-        "ok": 20,
+        "ok": 21,
         "fail": 0
       },
       "access": {
-        "ok": 20,
+        "ok": 21,
         "fail": 0
       },
       "requests": {
         "ok": 19,
-        "fail": 1
+        "fail": 2
       }
     }
   },
-  "incidents": [],
+  "incidents": [
+    {
+      "id": "f3fcceeb-3cb",
+      "origin": "monitor",
+      "component": "requests",
+      "title": "Request Access page — availability disruption",
+      "detail": "Repeated external requests did not return the expected page. Investigation is in progress.",
+      "status": "investigating",
+      "started_at": "2026-11-03T17:37:41Z",
+      "ended_at": null,
+      "updates": [
+        {
+          "at": "2026-11-03T17:37:41Z",
+          "status": "investigating",
+          "detail": "Repeated external availability checks failed."
+        }
+      ]
+    }
+  ],
   "maintenance": []
 }

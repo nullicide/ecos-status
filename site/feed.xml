@@ -5,5 +5,12 @@
     <link>https://status.energycontrolos.com/</link>
     <description>Public incidents and maintenance notices for Energy Control OS.</description>
     <language>en-us</language>
+    <item>
+      <title>Request Access page — availability disruption — Investigating</title>
+      <description>Repeated external availability checks failed.</description>
+      <link>https://status.energycontrolos.com/#incidents</link>
+      <guid isPermaLink="false">ecos-f3fcceeb-3cb-1</guid>
+      <pubDate>Tue, 03 Nov 2026 17:37:41 +0000</pubDate>
+    </item>
   </channel>
 </rss>
