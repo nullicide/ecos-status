@@ -6,11 +6,11 @@
     <description>Public incidents and maintenance notices for Energy Control OS.</description>
     <language>en-us</language>
     <item>
-      <title>Request Access page — availability disruption — Investigating</title>
-      <description>Repeated external availability checks failed.</description>
+      <title>Request Access page — availability disruption — Resolved</title>
+      <description>External endpoint checks have returned to normal. This does not validate application functions.</description>
       <link>https://status.energycontrolos.com/#incidents</link>
-      <guid isPermaLink="false">ecos-f3fcceeb-3cb-1</guid>
-      <pubDate>Tue, 03 Nov 2026 17:37:41 +0000</pubDate>
+      <guid isPermaLink="false">ecos-f3fcceeb-3cb-2</guid>
+      <pubDate>Tue, 03 Nov 2026 18:11:52 +0000</pubDate>
     </item>
   </channel>
 </rss>

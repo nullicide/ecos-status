@@ -2,7 +2,7 @@
   "schema": 1,
   "source": "ECOS public registration configuration",
   "url": "https://app.energycontrolos.com/api/public/access/config",
-  "checked_at": null,
-  "state": "unverified",
-  "detail": "Awaiting first independent public configuration check."
+  "checked_at": "2026-11-03T18:11:53Z",
+  "state": "ready",
+  "detail": "Public signup configuration is accepting applications. Submission, verification email and approval have not been tested."
 }
