@@ -1,0 +1,43 @@
+name: ECOS Status v2 — Unit and Responsive QA
+on:
+  pull_request:
+    paths:
+      - 'monitor.py'
+      - 'monitor_v2.py'
+      - 'site/index.html'
+      - 'site/styles.css'
+      - 'site/status-v2.js'
+      - 'site/data/readiness.json'
+      - 'site/data/dependencies.json'
+      - 'tests/test_status_v2.py'
+      - 'tests/check_status_v2_browser.cjs'
+      - '.github/workflows/publish-status.yml'
+      - '.github/workflows/status-v2.yml'
+jobs:
+  public-monitor-tests:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate monitor logic and syntax
+        run: |
+          python -m unittest discover -s tests -p 'test_monitor*.py' -v
+          python -m unittest discover -s tests -p 'test_status_v2.py' -v
+          python -m py_compile monitor.py monitor_v2.py monitor_schiller.py
+          node --check site/app.js
+          node --check site/status-v2.js
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium test runner
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Verify Status v2 desktop/tablet/mobile UX
+        run: |
+          python3 -m http.server 8765 --directory site --bind 127.0.0.1 >/tmp/ecos-status-v2.log 2>&1 &
+          node tests/check_status_v2_browser.cjs

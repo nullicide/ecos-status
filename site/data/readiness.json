@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "source": "ECOS public registration configuration",
+  "url": "https://app.energycontrolos.com/api/public/access/config",
+  "checked_at": null,
+  "state": "unverified",
+  "detail": "Awaiting first independent public configuration check."
+}

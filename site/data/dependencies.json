@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "source": "Cloudflare Status API",
+  "source_url": "https://www.cloudflarestatus.com/",
+  "attempted_at": null,
+  "checked_at": null,
+  "fetch_status": "unavailable",
+  "components": [
+    {
+      "key": "workers-builds",
+      "name": "Workers Builds",
+      "status": "unknown",
+      "updated_at": null
+    },
+    {
+      "key": "pages",
+      "name": "Pages",
+      "status": "unknown",
+      "updated_at": null
+    },
+    {
+      "key": "workers",
+      "name": "Workers",
+      "status": "unknown",
+      "updated_at": null
+    },
+    {
+      "key": "d1",
+      "name": "D1",
+      "status": "unknown",
+      "updated_at": null
+    },
+    {
+      "key": "turnstile",
+      "name": "Turnstile",
+      "status": "unknown",
+      "updated_at": null
+    },
+    {
+      "key": "dns",
+      "name": "Authoritative DNS",
+      "status": "unknown",
+      "updated_at": null
+    },
+    {
+      "key": "api",
+      "name": "API",
+      "status": "unknown",
+      "updated_at": null
+    }
+  ],
+  "incidents": [],
+  "scope": "Upstream provider reports; not ECOS endpoint measurements."
+}
