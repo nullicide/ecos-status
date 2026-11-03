@@ -105,6 +105,7 @@ def monitor(data:dict,results:dict[str,bool],instant:dt.datetime)->dict:
         passed=bool(results[name]);obj=data['components'].setdefault(name,{})
         prior=obj.get('state','unknown')
         if passed:
+            obj['last_success_at']=stamp
             obj['success_streak']=obj.get('success_streak',0)+1
             obj['fail_streak']=0
             obj['state']='operational' if obj['success_streak']>=2 or prior in ('unknown','operational') else 'degraded'
