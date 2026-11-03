@@ -230,3 +230,14 @@
   .history-row .day{min-width:3px}
   .history-row{min-width:0;overflow:hidden}
 }
+
+
+/* 320–420px header: maintain in-viewport brand and platform return action.
+   Do not clip the navigation or hide the only available mobile exit link. */
+@media(max-width:420px){
+ .site-header .nav-inner{gap:8px}
+ .site-header .brand{font-size:11px;letter-spacing:.075em;gap:7px;min-width:0}
+ .site-header .brand-symbol{width:27px;height:27px}
+ .site-header .brand small{font-size:7px;letter-spacing:.14em}
+ .site-header .nav-links .back-link{padding:8px;font-size:10px}
+}
