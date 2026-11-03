@@ -36,6 +36,14 @@ const {chromium}=require('playwright');
    assert.match(await page.locator('#providerIncidents').innerText(),/Synthetic test build incident/);
    assert.match(await page.locator('#coverageSummary').innerText(),/sampled calendar days/);
    const dimensions=await page.evaluate(()=>({document:document.documentElement.scrollWidth,viewport:innerWidth}));
+   if(dimensions.document>dimensions.viewport+1){
+     const offenders=await page.evaluate(()=>[...document.querySelectorAll('body *')].map(e=>({
+       tag:e.tagName.toLowerCase(),className:typeof e.className==='string'?e.className:'',
+       id:e.id,scrollWidth:e.scrollWidth,clientWidth:e.clientWidth,
+       rect:e.getBoundingClientRect().toJSON()
+     })).filter(x=>x.rect.right>innerWidth+1).slice(0,18));
+     console.error('Overflow offenders:',JSON.stringify(offenders));
+   }
    assert.ok(dimensions.document<=dimensions.viewport+1,
     width+'px horizontal overflow '+JSON.stringify(dimensions));
    assert.deepEqual(errors,[],width+'px JavaScript runtime errors');
