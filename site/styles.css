@@ -212,3 +212,21 @@
  .v2-provider-incidents-heading{flex-direction:column;gap:4px}
  .v2-meta{align-items:flex-start}
 }
+
+
+/* On 320px devices 90 day cells must scroll inside the history panel,
+   never expand the document (90 grid gaps alone exceeded phone width). */
+@media(max-width:680px){
+  .history-row .days{
+    grid-template-columns:repeat(90,minmax(3px,1fr));
+    gap:2px;
+    max-width:100%;
+    min-width:0;
+    overflow-x:auto;
+    padding-bottom:8px;
+    scrollbar-width:thin;
+    overscroll-behavior-inline:contain;
+  }
+  .history-row .day{min-width:3px}
+  .history-row{min-width:0;overflow:hidden}
+}
