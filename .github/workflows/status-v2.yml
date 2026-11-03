@@ -1,4 +1,4 @@
-name: ECOS Status v2 — Unit and Responsive QA
+name: ECOS Public Service Status — Unit and Responsive QA
 on:
   pull_request:
     paths:
@@ -8,7 +8,6 @@ on:
       - 'site/styles.css'
       - 'site/status-v2.js'
       - 'site/data/readiness.json'
-      - 'site/data/dependencies.json'
       - 'tests/test_status_v2.py'
       - 'tests/check_status_v2_browser.cjs'
       - '.github/workflows/publish-status.yml'

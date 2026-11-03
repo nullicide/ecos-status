@@ -6,19 +6,12 @@ const {chromium}=require('playwright');
  try{
   for(const width of [320,375,768,1440]){
    const page=await instance.newPage({viewport:{width,height:900},reducedMotion:'reduce'});
-   const errors=[];page.on('pageerror',e=>errors.push(e.message));
+   const errors=[];let providerRequests=0;
+   page.on('pageerror',e=>errors.push(e.message));
+   page.on('request',req=>{if(req.url().includes('/data/dependencies.json'))providerRequests++;});
    const at=new Date().toISOString();const today=at.slice(0,10);
    await page.route('**/data/readiness.json*',r=>r.fulfill({contentType:'application/json',body:JSON.stringify({
      schema:1,checked_at:at,state:'ready'
-   })}));
-   await page.route('**/data/dependencies.json*',r=>r.fulfill({contentType:'application/json',body:JSON.stringify({
-     schema:1,fetch_status:'ok',checked_at:at,
-     components:['Workers Builds','Pages','Workers','D1','Turnstile','Authoritative DNS','API'].map((name,i)=>({
-       name,status:i===0?'degraded_performance':'operational'
-     })),
-     incidents:[{id:'provider-1',name:'Synthetic test build incident',status:'identified',
-       updated_at:at,url:'https://www.cloudflarestatus.com/',
-       detail:'Test-only provider data; not a live event.'}]
    })}));
    await page.route('**/data/status.json*',r=>r.fulfill({contentType:'application/json',body:JSON.stringify({
      schema:1,checked_at:at,first_checked_at:at,
@@ -32,8 +25,13 @@ const {chromium}=require('playwright');
    assert.equal(response.status(),200);
    assert.equal(await page.locator('#readinessPanel').count(),1);
    assert.match(await page.locator('#readinessPanel').innerText(),/Configuration ready/);
-   assert.equal(await page.locator('.v2-dependency').count(),7);
-   assert.match(await page.locator('#providerIncidents').innerText(),/Synthetic test build incident/);
+   assert.equal(await page.locator('.v2-experience').count(),7);
+   assert.match(await page.locator('#experienceGrid').innerText(),/ECOS public information/);
+   assert.match(await page.locator('#experienceGrid').innerText(),/Project workspace/);
+   assert.match(await page.locator('#experienceGrid').innerText(),/Not independently tested/);
+   assert.match(await page.locator('#experienceGrid').innerText(),/Intake configured/);
+   assert.equal(providerRequests,0,'Public site must not load infrastructure provider data');
+   assert.equal(await page.locator('a[href*="cloudflarestatus.com"]').count(),0);
    assert.match(await page.locator('#coverageSummary').innerText(),/sampled calendar days/);
    const dimensions=await page.evaluate(()=>({document:document.documentElement.scrollWidth,viewport:innerWidth}));
    if(dimensions.document>dimensions.viewport+1){

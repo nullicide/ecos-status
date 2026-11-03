@@ -1,6 +1,5 @@
 'use strict';
-/* ECOS Status v2: read-only readiness, Cloudflare upstream and observation coverage.
-   Public provider data is produced by monitor_v2.py, never queried with credentials. */
+/* ECOS Status v2.1: independent observed ECOS services, signup readiness and coverage. */
 (() => {
   const $ = id => document.getElementById(id);
   const esc = value => String(value ?? '').replace(/[&<>"']/g, ch =>
@@ -15,18 +14,6 @@
   const age = value => value ? Date.now() - Date.parse(value) : Infinity;
   const fresh = value => Number.isFinite(age(value)) && age(value) >= -300000 && age(value) <= 90*60000;
   const tag = (state,text) => '<span class="v2-state v2-state--'+state+'">'+esc(text)+'</span>';
-  const safeHref = url =>
-    typeof url === 'string' &&
-    (/^https:\/\/www\.cloudflarestatus\.com\//.test(url) ||
-      /^https:\/\/stspg\.io\//.test(url)) ? url : 'https://www.cloudflarestatus.com/';
-  const serviceState = state => ({
-    operational:['operational','Operational'],
-    degraded_performance:['degraded','Degraded'],
-    partial_outage:['outage','Partial outage'],
-    major_outage:['outage','Major outage'],
-    under_maintenance:['maintenance','Maintenance'],
-  })[state] || ['unknown','Unverified'];
-
   function readiness(data) {
     const root = $('readinessPanel');
     if (!root) return;
@@ -49,34 +36,56 @@
       '<a href="https://www.energycontrolos.com/request-access/">Open registration <span aria-hidden="true">↗</span></a></div>';
   }
 
-  function dependencies(data) {
-    const root = $('dependencyGrid'), banner = $('dependencyStatus');
-    const incidents = $('providerIncidents');
-    if (!root || !banner || !incidents) return;
-    const valid = data?.schema === 1 && data?.fetch_status === 'ok' && fresh(data.checked_at);
-    const list = Array.isArray(data?.components) ? data.components : [];
-    const items = list.length ? list : [
-      'Workers Builds','Pages','Workers','D1','Turnstile','Authoritative DNS','API'
-    ].map(name=>({name,status:'unknown'}));
-    root.innerHTML = items.map(item=>{
-      const [kind,label] = valid ? serviceState(item.status) : ['unknown','Not verified'];
-      return '<div class="v2-dependency"><span class="v2-dependency-name">'+esc(item.name)+'</span>'+
-        tag(kind,label)+'</div>';
+  // Only ECOS endpoint checks and its own public configuration can support a
+  // customer-facing signal; never present provider status as feature availability.
+  const SERV=[
+    {title:'ECOS public information',category:'DISCOVER ECOS',audience:'Customers and evaluators',
+     description:'Explore the platform, published capabilities and product information.',
+     check:'Public homepage HTTP response',key:'website',url:'https://www.energycontrolos.com/'},
+    {title:'Enterprise sign-in entry',category:'ACCOUNT ACCESS',audience:'Registered users',
+     description:'Reach the ECOS sign-in screen to begin a protected session. Credentials and MFA are not tested.',
+     check:'Sign-in page HTTP response',key:'access',url:'https://app.energycontrolos.com/login/'},
+    {title:'Account registration page',category:'ACCOUNT ACCESS',audience:'New evaluators',
+     description:'Reach the application form to request individual ECOS access. Submissions are not tested.',
+     check:'Registration page HTTP response',key:'requests',url:'https://www.energycontrolos.com/request-access/'},
+    {title:'New account intake',category:'IDENTITY & APPROVAL',audience:'Prospective customers',
+     description:'Create an identity, verify email, and request review before receiving permissions.',
+     check:'Public registration configuration only',key:'readiness',url:'https://www.energycontrolos.com/request-access/'},
+    {title:'Project workspace',category:'COORDINATION',audience:'Approved project teams',
+     description:'Project context, assigned records and controlled collaboration after sign-in.',
+     check:'No independent functional check',key:null,url:null},
+    {title:'Energy-control documentation',category:'WORK RECORDS',audience:'Energy marshals and field teams',
+     description:'Documentary isolation, verification and handover references; not live energy-state assurance.',
+     check:'No independent functional check',key:null,url:null},
+    {title:'Notifications and tasks',category:'WORKFLOW AWARENESS',audience:'Authorized workspace users',
+     description:'In-app coordination notices, evidence requests and follow-up items where available.',
+     check:'No independent functional check',key:null,url:null}
+  ];
+  function experienceSignal(id,status,readinessReport){
+    if(id==='readiness'){
+      if(!readinessReport || !fresh(readinessReport.checked_at) || readinessReport.schema!==1)
+        return ['unknown','Unverified'];
+      return readinessReport.state==='ready'?['operational','Intake configured']:
+        readinessReport.state==='not_accepting'?['degraded','Intake closed']:['unknown','Unverified'];
+    }
+    if(!id)return ['unknown','Not independently tested'];
+    if(!status || !fresh(status.checked_at) || status.schema!==1 || Date.now()-Date.parse(status.checked_at)>25*60000)
+      return ['unknown','Check not current'];
+    const value=status.components?.[id]?.state;
+    return value==='operational'?['operational','Page reachable']:
+      value==='outage'?['outage','Page unavailable']:
+      value==='degraded'?['degraded','Inconsistent response']:['unknown','Unverified'];
+  }
+  function experiences(status,readinessReport){
+    const root=$('experienceGrid');if(!root)return;
+    root.innerHTML=SERV.map((s,i)=>{
+      const [kind,label]=experienceSignal(s.key,status,readinessReport);
+      const labelRow=s.url?'<a href="'+esc(s.url)+'">Open service ↗</a>':'<span>Authenticated features</span>';
+      return '<article class="v2-experience">'+
+        '<div class="v2-experience-top"><span class="v2-experience-category">'+esc(String(i+1).padStart(2,'0')+' / '+s.category)+'</span>'+
+        tag(kind,label)+'</div><h3>'+esc(s.title)+'</h3><p>'+esc(s.description)+'</p>'+
+        '<div class="v2-experience-meta"><small>'+esc(s.audience)+' · '+esc(s.check)+'</small>'+labelRow+'</div></article>';
     }).join('');
-    banner.innerHTML = (valid
-      ? 'Cloudflare provider report · Checked '+esc(format(data.checked_at))
-      : 'Cloudflare provider status is unavailable or stale. The last stored snapshot is not live evidence.')+
-      ' <a href="https://www.cloudflarestatus.com/" target="_blank" rel="noopener noreferrer">Official provider status ↗</a>';
-    const rows = valid && Array.isArray(data?.incidents) ? data.incidents : [];
-    incidents.innerHTML = rows.length ? rows.slice(0,8).map(i=>
-      '<article class="v2-provider-incident"><div>'+tag('degraded',String(i.status||'Active incident'))+
-      '<span class="v2-incident-time">'+esc(format(i.updated_at))+'</span></div>'+
-      '<h3>'+esc(i.name)+'</h3><p>'+esc(i.detail||'See the provider incident for current details.')+'</p>'+
-      '<a target="_blank" rel="noopener noreferrer" href="'+esc(safeHref(i.url))+'">View Cloudflare update ↗</a></article>'
-    ).join('') : '<p class="v2-empty">'+(valid
-      ? 'No unresolved Cloudflare incidents are associated with the selected dependency components.'
-      : 'Provider incidents cannot currently be verified.')+'</p>';
-    $('dependencyScope').textContent = 'Cloudflare reports its own infrastructure condition. This does not establish ECOS application availability, geographic reachability, or the success of sign-in and registration.';
   }
 
   function coverage(data) {
@@ -119,12 +128,14 @@
   }
   async function refresh() {
     const results = await Promise.allSettled([
-      read('./data/readiness.json'), read('./data/dependencies.json'), read('./data/status.json')
+      read('./data/readiness.json'), read('./data/status.json')
     ]);
-    readiness(results[0].status==='fulfilled'?results[0].value:null);
-    dependencies(results[1].status==='fulfilled'?results[1].value:null);
-    coverage(results[2].status==='fulfilled'?results[2].value:null);
-    if(results[2].status!=='fulfilled' && $('coverageSummary'))
+    const registration=results[0].status==='fulfilled'?results[0].value:null;
+    const status=results[1].status==='fulfilled'?results[1].value:null;
+    readiness(registration);
+    experiences(status,registration);
+    coverage(status);
+    if(results[1].status!=='fulfilled' && $('coverageSummary'))
       $('coverageSummary').textContent='Monitoring coverage is unavailable.';
   }
   refresh();
