@@ -1,0 +1,23 @@
+name: ECOS Status Monitor — Regression Tests
+on:
+  pull_request:
+    paths:
+      - 'monitor.py'
+      - 'tests/test_monitor_ecos.py'
+      - 'tests/test_monitor_schiller.py'
+      - '.github/workflows/publish-status.yml'
+      - '.github/workflows/status-monitor-tests.yml'
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate ECOS and Schiller probes
+        run: python -m unittest discover -s tests -p 'test_monitor*.py' -v
+      - name: Validate monitoring scripts
+        run: python -m py_compile monitor.py monitor_schiller.py
