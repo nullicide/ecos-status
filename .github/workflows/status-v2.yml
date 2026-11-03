@@ -1,15 +1,10 @@
-name: ECOS Public Service Status — Unit and Responsive QA
+name: ECOS Status — Public Monitoring QA
 on:
   pull_request:
     paths:
       - 'monitor.py'
-      - 'monitor_v2.py'
       - 'site/index.html'
       - 'site/styles.css'
-      - 'site/status-v2.js'
-      - 'site/data/readiness.json'
-      - 'tests/test_status_v2.py'
-      - 'tests/check_status_v2_browser.cjs'
       - '.github/workflows/publish-status.yml'
       - '.github/workflows/status-v2.yml'
 jobs:
@@ -25,10 +20,8 @@ jobs:
       - name: Validate monitor logic and syntax
         run: |
           python -m unittest discover -s tests -p 'test_monitor*.py' -v
-          python -m unittest discover -s tests -p 'test_status_v2.py' -v
-          python -m py_compile monitor.py monitor_v2.py monitor_schiller.py
+          python -m py_compile monitor.py monitor_schiller.py
           node --check site/app.js
-          node --check site/status-v2.js
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
