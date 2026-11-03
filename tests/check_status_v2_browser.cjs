@@ -10,9 +10,6 @@ const {chromium}=require('playwright');
    page.on('pageerror',e=>errors.push(e.message));
    page.on('request',req=>{if(req.url().includes('/data/dependencies.json'))providerRequests++;});
    const at=new Date().toISOString();const today=at.slice(0,10);
-   await page.route('**/data/readiness.json*',r=>r.fulfill({contentType:'application/json',body:JSON.stringify({
-     schema:1,checked_at:at,state:'ready'
-   })}));
    await page.route('**/data/status.json*',r=>r.fulfill({contentType:'application/json',body:JSON.stringify({
      schema:1,checked_at:at,first_checked_at:at,
      components:{website:{state:'operational',last_success_at:at},
@@ -23,16 +20,13 @@ const {chromium}=require('playwright');
    })}));
    const response=await page.goto('http://127.0.0.1:8765/',{waitUntil:'networkidle'});
    assert.equal(response.status(),200);
-   assert.equal(await page.locator('#readinessPanel').count(),1);
-   assert.match(await page.locator('#readinessPanel').innerText(),/Configuration ready/);
-   assert.equal(await page.locator('.v2-experience').count(),7);
-   assert.match(await page.locator('#experienceGrid').innerText(),/ECOS public information/);
-   assert.match(await page.locator('#experienceGrid').innerText(),/Project workspace/);
-   assert.match(await page.locator('#experienceGrid').innerText(),/Not independently tested/);
-   assert.match(await page.locator('#experienceGrid').innerText(),/Intake configured/);
-   assert.equal(providerRequests,0,'Public site must not load infrastructure provider data');
-   assert.equal(await page.locator('a[href*="cloudflarestatus.com"]').count(),0);
-   assert.match(await page.locator('#coverageSummary').innerText(),/sampled calendar days/);
+   for(const id of ['components','history','incidents','maintenance','subscribe'])
+      assert.equal(await page.locator('#'+id).count(),1,'Public section '+id);
+   assert.equal(await page.locator('.component').count(),3,'Three monitored public services');
+   assert.equal(await page.locator('.history-row').count(),3,'Three uptime histories');
+   for(const id of ['readiness','experiences','coverageSummary'])
+      assert.equal(await page.locator('#'+id).count(),0,'Removed panel '+id);
+   assert.equal(await page.locator('script[src*="status-v2"]').count(),0);
    const dimensions=await page.evaluate(()=>({document:document.documentElement.scrollWidth,viewport:innerWidth}));
    if(dimensions.document>dimensions.viewport+1){
      const offenders=await page.evaluate(()=>[...document.querySelectorAll('body *')].map(e=>({
