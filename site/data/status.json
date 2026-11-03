@@ -1,22 +1,22 @@
 {
   "schema": 1,
-  "checked_at": "2026-11-03T17:37:41Z",
+  "checked_at": "2026-11-03T17:54:39Z",
   "first_checked_at": "2026-10-24T03:34:31Z",
   "components": {
     "website": {
       "state": "operational",
       "fail_streak": 0,
-      "success_streak": 437
+      "success_streak": 438
     },
     "access": {
       "state": "operational",
       "fail_streak": 0,
-      "success_streak": 437
+      "success_streak": 438
     },
     "requests": {
-      "state": "outage",
-      "fail_streak": 2,
-      "success_streak": 0
+      "state": "degraded",
+      "fail_streak": 0,
+      "success_streak": 1
     }
   },
   "daily": {
@@ -162,15 +162,15 @@
     },
     "2026-11-03": {
       "website": {
-        "ok": 21,
+        "ok": 22,
         "fail": 0
       },
       "access": {
-        "ok": 21,
+        "ok": 22,
         "fail": 0
       },
       "requests": {
-        "ok": 19,
+        "ok": 20,
         "fail": 2
       }
     }
