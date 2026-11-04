@@ -6,7 +6,7 @@ const live=['website','operating_picture','standards','signup','enterprise','acc
 (async()=>{
  const instance=await chromium.launch({headless:true});
  try{
-  for(const width of [320,375,768,1024,1440]){
+  for(const width of [320,360,375,390,744,768,820,1024,1280,1440,1920]){
    const page=await instance.newPage({viewport:{width,height:900},reducedMotion:'reduce'});
    const errors=[];let providerRequests=0;
    page.on('pageerror',e=>errors.push(e.message));
@@ -45,6 +45,14 @@ const live=['website','operating_picture','standards','signup','enterprise','acc
     'HTTP checks · 1/1 successful · Early monitoring data');
    for(const id of ['readiness','experiences','coverageSummary'])
     assert.equal(await page.locator('#'+id).count(),0,'Removed panel '+id);
+   const signin=page.locator('.site-header .nav-links .status-signin');
+   assert.equal(await signin.count(),1,'Canonical sign-in link in status header');
+   assert.equal(await signin.getAttribute('href'),'https://app.energycontrolos.com/login/');
+   assert.ok(await signin.isVisible(),width+'px sign-in control remains visible');
+   assert.ok(await page.locator('.site-header .nav-links .back-link').isVisible(),width+'px platform return is visible');
+   const navBounds=await signin.boundingBox();
+   assert.ok(navBounds&&navBounds.x>=-1&&navBounds.x+navBounds.width<=width+1,
+     width+'px sign-in link fits within viewport');
    const dimensions=await page.evaluate(()=>({document:document.documentElement.scrollWidth,viewport:innerWidth}));
    if(dimensions.document>dimensions.viewport+1){
     const offenders=await page.evaluate(()=>[...document.querySelectorAll('body *')].map(e=>({

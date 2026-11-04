@@ -279,3 +279,21 @@
 .retired-history small{color:#a4bdca;font-size:11px}
 @media(max-width:680px){.component-target{font-size:15px}.retired-history{padding:20px 16px}}
 @media(prefers-reduced-motion:reduce){.component-target::after{transition:none}}
+
+
+/* Site-wide navigation continuity: compact, accessible status-to-platform routes. */
+.site-header .nav-links .status-signin{display:inline-flex;align-items:center;justify-content:center;min-height:42px;color:#e5f4fc;font-weight:750;text-decoration:underline;text-decoration-color:#547f97;text-underline-offset:5px}
+.site-header .nav-links .status-signin:hover{color:#9cd5f0;text-decoration-color:currentColor}
+@media(max-width:680px){
+ .site-header .nav-inner{height:auto;min-height:78px;flex-wrap:wrap;padding-block:12px;row-gap:9px}
+ .site-header .nav-links{width:100%;justify-content:space-between;gap:8px;min-width:0}
+ .site-header .nav-links a{min-height:44px;align-items:center;justify-content:center;white-space:nowrap}
+ .site-header .nav-links a[href="#components"],.site-header .nav-links .status-signin{display:inline-flex}
+ .site-header .nav-links a[href="#components"]{font-size:12px}
+ .site-header .nav-links .back-link{display:inline-flex;padding:9px 12px;font-size:12px}
+}
+@media(max-width:420px){
+ .site-header .nav-inner{gap:8px}
+ .site-header .nav-links{gap:6px}
+ .site-header .nav-links .back-link{padding:8px 10px;font-size:11px}
+}
