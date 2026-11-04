@@ -12,6 +12,7 @@ from pathlib import Path
 import time
 import urllib.error
 import urllib.request
+import urllib.parse
 import uuid
 import xml.etree.ElementTree as ET
 
@@ -19,13 +20,45 @@ ROOT = Path(__file__).resolve().parent
 STATE = ROOT / 'site' / 'data' / 'status.json'
 FEED = ROOT / 'site' / 'feed.xml'
 URL = (os.getenv('ECOS_STATUS_PUBLIC_URL') or 'https://status.energycontrolos.com/').rstrip('/') + '/'
+# Only actual public HTML endpoints are monitored; never represent these GETs
+# as authentication, Turnstile, API, workspace or electrical-safety validation.
+# Retired key "requests" is deliberately not reused: its historic checks remain
+# associated with the old /request-access/ URL in stored daily and incident data.
 TARGETS = {
-    'website': ('https://www.energycontrolos.com/', ('ENERGY CONTROL OS',)),
-    'access': ('https://app.energycontrolos.com/login/', ('Welcome back', 'ENERGY CONTROL OS')),
-    # Use a stable DOM landmark rather than volatile marketing copy to avoid false outages.
-    'requests': ('https://www.energycontrolos.com/request-access/', ('id="request-form"',)),
+    'website': (
+        'https://www.energycontrolos.com/',
+        ('id="platform"', 'id="scenario-systems"')
+    ),
+    'operating_picture': (
+        'https://www.energycontrolos.com/operating-picture/',
+        ('id="op-hero-title"', 'id="op-stage-panel"')
+    ),
+    'standards': (
+        'https://www.energycontrolos.com/standards/',
+        ('<title>Standards | Energy Control OS</title>',)
+    ),
+    'signup': (
+        'https://www.energycontrolos.com/create-account/',
+        ('id="request-form"', '<title>Create your account | Energy Control OS</title>')
+    ),
+    'enterprise': (
+        'https://www.energycontrolos.com/enterprise-access/',
+        ('id="enterprise-form"', '<title>Request enterprise access | Energy Control OS</title>')
+    ),
+    'access': (
+        'https://app.energycontrolos.com/login/',
+        ('id="login-form"', '<title>Enterprise Access | Energy Control OS</title>')
+    ),
 }
-TITLES = {'website': 'Public website', 'access': 'Enterprise access page', 'requests': 'Request Access page'}
+TITLES = {
+    'website': 'Public website',
+    'operating_picture': 'Operating picture',
+    'standards': 'Standards & governance',
+    'signup': 'Create account',
+    'enterprise': 'Enterprise access inquiry',
+    'access': 'Application sign-in',
+    'requests': 'Legacy Request Access URL (retired)',
+}
 UTC = dt.timezone.utc
 
 def now() -> dt.datetime:
@@ -73,7 +106,15 @@ def check_http(url:str,fragments:tuple[str,...])->bool:
                 if not 200<=response.status<300: raise ValueError('Non-success status')
                 if 'text/html' not in response.headers.get('content-type','').lower(): raise ValueError('Non-HTML response')
                 body=response.read(220_000).decode('utf-8',errors='replace')
-                if not any(frag.lower() in body.lower() for frag in fragments): raise ValueError('Expected page marker absent')
+                if not all(frag.lower() in body.lower() for frag in fragments): raise ValueError('Expected page markers absent')
+                # No redirected/retired URL should inherit another page's uptime.
+                final_url = response.geturl() if callable(getattr(response, 'geturl', None)) else url
+                actual = urllib.parse.urlsplit(final_url)
+                expected = urllib.parse.urlsplit(url)
+                if (actual.scheme, actual.netloc.lower(), actual.path.rstrip('/')) != (
+                    expected.scheme, expected.netloc.lower(), expected.path.rstrip('/')
+                ):
+                    raise ValueError('Unexpected redirect target')
                 if 'http error 403' in body.lower() or 'access to ' in body.lower() and 'was denied' in body.lower():
                     raise ValueError('Intermediary denial body')
                 return True
@@ -185,7 +226,7 @@ def alert_operator(message:str)->None:
 
 def main():
     data=read();action=os.getenv('ACTION','check').strip() or 'check';instant=now()
-    previous={name:obj.get('state','unknown') for name,obj in data['components'].items()}
+    previous={name:data.get('components',{}).get(name,{}).get('state','unknown') for name in TARGETS}
     if action=='check':
         results={name:check_http(*target) for name,target in TARGETS.items()}
         print('External checks:',', '.join(f'{name}={"reachable" if passed else "unreachable"}' for name,passed in results.items()))
