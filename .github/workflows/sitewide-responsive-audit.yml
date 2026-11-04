@@ -1,0 +1,36 @@
+name: ECOS ecos-status responsive and cross-domain audit
+on:
+  push:
+    branches:
+      - audit/sitewide-responsive-20261104
+  workflow_dispatch:
+jobs:
+  responsive-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install read-only browser testing tools
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Run static server and viewport audit
+        run: |
+          python3 -m http.server 8765 --directory site --bind 127.0.0.1 > /tmp/ecos-responsive-server.log 2>&1 &
+          sleep 2
+          node scripts/sitewide-responsive-audit.cjs | tee sitewide-audit.log
+      - name: Upload audit findings and layout screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ecos-sitewide-responsive-audit
+          if-no-files-found: warn
+          path: |
+            audit-responsive.json
+            sitewide-audit.log
+            audit-screens/
