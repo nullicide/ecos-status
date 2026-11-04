@@ -4,6 +4,9 @@ on:
     paths:
       - 'monitor.py'
       - 'site/index.html'
+      - 'site/app.js'
+      - 'tests/check_status_v2_browser.cjs'
+      - 'tests/test_monitor_ecos.py'
       - 'site/styles.css'
       - '.github/workflows/publish-status.yml'
       - '.github/workflows/status-v2.yml'
