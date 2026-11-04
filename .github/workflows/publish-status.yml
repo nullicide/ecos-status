@@ -16,7 +16,7 @@ on:
         description: 'Affected service'
         type: choice
         default: website
-        options: [website, access, requests]
+        options: [website, operating_picture, standards, signup, enterprise, access]
       title:
         description: 'Public title for incident or maintenance'
         type: string
