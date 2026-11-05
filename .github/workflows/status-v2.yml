@@ -1,5 +1,13 @@
 name: ECOS Status — Public Monitoring QA
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/index.html'
+      - 'site/app.js'
+      - 'site/styles.css'
+      - 'tests/check_status_v2_browser.cjs'
+      - '.github/workflows/status-v2.yml'
   pull_request:
     paths:
       - 'monitor.py'
