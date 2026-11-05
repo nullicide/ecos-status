@@ -62,7 +62,7 @@ const live=['website','operating_picture','standards','signup','enterprise','acc
      width+'px brand and platform sit on one header row');
     const days=page.locator('.history-row').first().locator('.days .day');
     assert.equal(await days.count(),90,'Keep the full 90-day history in DOM');
-    assert.equal(await days.locator(':visible').count(),30,width+'px renders 30 recent daily cells');
+    assert.equal(await page.locator('.history-row').first().locator('.days .day:visible').count(),30,width+'px renders 30 recent daily cells');
     assert.ok(await days.last().evaluate(e=>getComputedStyle(e).backgroundColor!=='rgb(51, 72, 88)'),
      width+'px latest successful day remains colored');
     assert.ok(await page.locator('.history-window-mobile').first().isVisible());
