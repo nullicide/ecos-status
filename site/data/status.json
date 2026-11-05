@@ -1,19 +1,19 @@
 {
   "schema": 1,
-  "checked_at": "2026-11-04T23:45:58Z",
+  "checked_at": "2026-11-05T00:25:14Z",
   "first_checked_at": "2026-10-24T03:34:31Z",
   "components": {
     "website": {
       "state": "operational",
       "fail_streak": 0,
-      "success_streak": 480,
-      "last_success_at": "2026-11-04T23:45:58Z"
+      "success_streak": 481,
+      "last_success_at": "2026-11-05T00:25:14Z"
     },
     "access": {
       "state": "operational",
       "fail_streak": 0,
-      "success_streak": 480,
-      "last_success_at": "2026-11-04T23:45:58Z"
+      "success_streak": 481,
+      "last_success_at": "2026-11-05T00:25:14Z"
     },
     "requests": {
       "state": "degraded",
@@ -22,26 +22,26 @@
       "last_success_at": "2026-11-04T14:29:10Z"
     },
     "operating_picture": {
-      "last_success_at": "2026-11-04T23:45:58Z",
-      "success_streak": 13,
+      "last_success_at": "2026-11-05T00:25:14Z",
+      "success_streak": 14,
       "fail_streak": 0,
       "state": "operational"
     },
     "standards": {
-      "last_success_at": "2026-11-04T23:45:58Z",
-      "success_streak": 13,
+      "last_success_at": "2026-11-05T00:25:14Z",
+      "success_streak": 14,
       "fail_streak": 0,
       "state": "operational"
     },
     "signup": {
-      "last_success_at": "2026-11-04T23:45:58Z",
-      "success_streak": 13,
+      "last_success_at": "2026-11-05T00:25:14Z",
+      "success_streak": 14,
       "fail_streak": 0,
       "state": "operational"
     },
     "enterprise": {
-      "last_success_at": "2026-11-04T23:45:58Z",
-      "success_streak": 13,
+      "last_success_at": "2026-11-05T00:25:14Z",
+      "success_streak": 14,
       "fail_streak": 0,
       "state": "operational"
     }
@@ -228,6 +228,32 @@
       },
       "enterprise": {
         "ok": 13,
+        "fail": 0
+      }
+    },
+    "2026-11-05": {
+      "website": {
+        "ok": 1,
+        "fail": 0
+      },
+      "operating_picture": {
+        "ok": 1,
+        "fail": 0
+      },
+      "standards": {
+        "ok": 1,
+        "fail": 0
+      },
+      "signup": {
+        "ok": 1,
+        "fail": 0
+      },
+      "enterprise": {
+        "ok": 1,
+        "fail": 0
+      },
+      "access": {
+        "ok": 1,
         "fail": 0
       }
     }
