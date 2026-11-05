@@ -48,11 +48,28 @@ const live=['website','operating_picture','standards','signup','enterprise','acc
    const signin=page.locator('.site-header .nav-links .status-signin');
    assert.equal(await signin.count(),1,'Canonical sign-in link in status header');
    assert.equal(await signin.getAttribute('href'),'https://app.energycontrolos.com/login/');
-   assert.ok(await signin.isVisible(),width+'px sign-in control remains visible');
-   assert.ok(await page.locator('.site-header .nav-links .back-link').isVisible(),width+'px platform return is visible');
-   const navBounds=await signin.boundingBox();
+   const platform=page.locator('.site-header .nav-links .back-link');
+   assert.ok(await platform.isVisible(),width+'px platform return is visible');
+   const navBounds=await platform.boundingBox();
    assert.ok(navBounds&&navBounds.x>=-1&&navBounds.x+navBounds.width<=width+1,
-     width+'px sign-in link fits within viewport');
+     width+'px platform link fits within viewport');
+   if(width<=680){
+    assert.equal(await signin.isVisible(),false,width+'px hides sign-in from mobile header');
+    assert.equal(await page.locator('.site-header .nav-links a[href="#components"]').isVisible(),false,
+     width+'px hides the redundant services nav item');
+    const brand=await page.locator('.site-header .brand').boundingBox();
+    assert.ok(brand&&navBounds&&Math.abs((brand.y+brand.height/2)-(navBounds.y+navBounds.height/2))<10,
+     width+'px brand and platform sit on one header row');
+    const days=page.locator('.history-row').first().locator('.days .day');
+    assert.equal(await days.count(),90,'Keep the full 90-day history in DOM');
+    assert.equal(await days.locator(':visible').count(),30,width+'px renders 30 recent daily cells');
+    assert.ok(await days.last().evaluate(e=>getComputedStyle(e).backgroundColor!=='rgb(51, 72, 88)'),
+     width+'px latest successful day remains colored');
+    assert.ok(await page.locator('.history-window-mobile').first().isVisible());
+   }else{
+    assert.ok(await signin.isVisible(),width+'px sign-in control remains visible on desktop');
+    assert.equal(await page.locator('.history-row').first().locator('.days .day:visible').count(),90);
+   }
    const dimensions=await page.evaluate(()=>({document:document.documentElement.scrollWidth,viewport:innerWidth}));
    if(dimensions.document>dimensions.viewport+1){
     const offenders=await page.evaluate(()=>[...document.querySelectorAll('body *')].map(e=>({
