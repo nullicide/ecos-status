@@ -61,7 +61,34 @@
   const maintenance=(payload.maintenance||[]).slice().sort((a,b)=>String(a.starts_at).localeCompare(String(b.starts_at))).filter(m=>!m.completed_at && Date.parse(m.ends_at||m.starts_at)>(now-24*3600*1000)).slice(0,8);
   el('maintenanceList').innerHTML=maintenance.length?maintenance.map(m=>`<article class="timeline-item"><div class="timeline-date">${esc(date(m.starts_at))}</div><div class="timeline-main"><strong>${esc(m.title)}</strong><p>${esc(m.detail||'')}</p><p>Expected end: ${esc(date(m.ends_at))} · Component: ${esc(DISPLAY[m.component]||'Multiple services')}</p><span class="timeline-status">Scheduled</span></div></article>`).join(''):'<div class="loading-item">No maintenance windows have been published.</div>';
  }
- async function load(){try{const r=await fetch('./data/status.json?at='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('No report');const j=await r.json();render(j)}catch(e){render({components:{},incidents:[],maintenance:[],daily:{}})}}
+ // Cloudflare Pages only builds for website changes. Scheduled checks commit with
+ // [skip ci], so load the live monitoring record independently of site deployments.
+ // GitHub Pages is a second published source; the bundled snapshot is last resort.
+ const STATUS_SOURCES=[
+  'https://raw.githubusercontent.com/nullicide/ecos-status/main/site/data/status.json',
+  'https://nullicide.github.io/ecos-status/data/status.json',
+  './data/status.json'
+ ];
+ const validReport=j=>j&&j.schema===1&&typeof j.checked_at==='string'&&
+  Number.isFinite(Date.parse(j.checked_at))&&j.components&&typeof j.components==='object'&&
+  j.daily&&typeof j.daily==='object';
+ async function load(){
+  let latest=null;
+  for(const source of STATUS_SOURCES){
+   try{
+    const r=await fetch(source+'?at='+Date.now(),{cache:'no-store'});
+    if(!r.ok)continue;
+    const report=await r.json();
+    if(!validReport(report))continue;
+    if(!latest||Date.parse(report.checked_at)>Date.parse(latest.checked_at))latest=report;
+    // Continue to another source only when this report is old or future-dated.
+    // Never turn old monitoring data green merely because a fetch succeeded.
+    const age=Date.now()-Date.parse(report.checked_at);
+    if(age>=-5*60*1000&&age<=90*60*1000)break;
+   }catch(_e){/* Try the next independent source. */}
+  }
+  render(latest||{components:{},incidents:[],maintenance:[],daily:{}});
+ }
  // RSS subscription disclosure: a feed reader subscribes, not this static website.
  function initSubscription(){
   const trigger=el('openSubscribe'),dialog=el('subscribeDialog'),close=el('closeSubscribe');

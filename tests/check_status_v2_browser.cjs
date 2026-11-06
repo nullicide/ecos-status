@@ -103,5 +103,43 @@ const live=['website','operating_picture','standards','signup','enterprise','acc
   assert.match(await page.locator('#retiredHistory').innerText(),/467\/467 historic/);
   await page.close();
   console.log('PASS: legacy checks do not transfer to new enterprise access');
+
+  // The current GitHub monitoring record must override an old Cloudflare build.
+  const sourcePage=await instance.newPage();
+  let remoteReads=0;
+  const updatedAt=new Date().toISOString(),updatedDay=updatedAt.slice(0,10);
+  const latestReport={
+   schema:1,checked_at:updatedAt,first_checked_at:'2026-10-24T03:34:31Z',
+   components:Object.fromEntries(live.map(id=>[id,{state:'operational',last_success_at:updatedAt}])),
+   daily:{[updatedDay]:Object.fromEntries(live.map(id=>[id,{ok:1,fail:0}]))},
+   incidents:[],maintenance:[]
+  };
+  const oldReport={...latestReport,checked_at:'2026-10-24T03:34:31Z'};
+  await sourcePage.route('**/data/status.json*',route=>route.fulfill({
+   contentType:'application/json',body:JSON.stringify(oldReport)
+  }));
+  await sourcePage.route('https://raw.githubusercontent.com/nullicide/ecos-status/main/site/data/status.json*',route=>{
+   remoteReads++;
+   return route.fulfill({contentType:'application/json',body:JSON.stringify(latestReport)});
+  });
+  await sourcePage.goto('http://127.0.0.1:8765/',{waitUntil:'networkidle'});
+  assert.ok(remoteReads>0,'Browser actually requests live monitoring JSON from GitHub');
+  assert.equal(await sourcePage.locator('#globalStatus').getAttribute('data-state'),'operational',
+   'Latest checked GitHub data beats the stale bundled snapshot');
+  await sourcePage.close();
+  console.log('PASS: live GitHub report overrides stale Cloudflare build');
+
+  // If upstream monitoring sources are unavailable, don't imply last-known green is current.
+  const fallbackPage=await instance.newPage();
+  await fallbackPage.route('**/data/status.json*',route=>route.fulfill({
+   contentType:'application/json',body:JSON.stringify(oldReport)
+  }));
+  await fallbackPage.route('https://raw.githubusercontent.com/nullicide/ecos-status/main/site/data/status.json*',route=>route.abort());
+  await fallbackPage.route('https://nullicide.github.io/ecos-status/data/status.json*',route=>route.abort());
+  await fallbackPage.goto('http://127.0.0.1:8765/',{waitUntil:'networkidle'});
+  assert.equal(await fallbackPage.locator('#globalStatus').getAttribute('data-state'),'unknown',
+   'Old Cloudflare snapshot must remain unverified when live sources fail');
+  await fallbackPage.close();
+  console.log('PASS: upstream failure does not silently restore green status');
  }finally{await instance.close();}
 })().catch(e=>{console.error(e);process.exitCode=1});
