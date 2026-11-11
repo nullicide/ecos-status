@@ -1,19 +1,19 @@
 {
   "schema": 1,
-  "checked_at": "2026-11-10T23:57:43Z",
+  "checked_at": "2026-11-11T00:36:15Z",
   "first_checked_at": "2026-10-24T03:34:31Z",
   "components": {
     "website": {
       "state": "operational",
       "fail_streak": 0,
-      "success_streak": 673,
-      "last_success_at": "2026-11-10T23:57:43Z"
+      "success_streak": 674,
+      "last_success_at": "2026-11-11T00:36:15Z"
     },
     "access": {
       "state": "operational",
       "fail_streak": 0,
-      "success_streak": 673,
-      "last_success_at": "2026-11-10T23:57:43Z"
+      "success_streak": 674,
+      "last_success_at": "2026-11-11T00:36:15Z"
     },
     "requests": {
       "state": "degraded",
@@ -22,26 +22,26 @@
       "last_success_at": "2026-11-04T14:29:10Z"
     },
     "operating_picture": {
-      "last_success_at": "2026-11-10T23:57:43Z",
-      "success_streak": 206,
+      "last_success_at": "2026-11-11T00:36:15Z",
+      "success_streak": 207,
       "fail_streak": 0,
       "state": "operational"
     },
     "standards": {
-      "last_success_at": "2026-11-10T23:57:43Z",
-      "success_streak": 206,
+      "last_success_at": "2026-11-11T00:36:15Z",
+      "success_streak": 207,
       "fail_streak": 0,
       "state": "operational"
     },
     "signup": {
-      "last_success_at": "2026-11-10T23:57:43Z",
-      "success_streak": 206,
+      "last_success_at": "2026-11-11T00:36:15Z",
+      "success_streak": 207,
       "fail_streak": 0,
       "state": "operational"
     },
     "enterprise": {
-      "last_success_at": "2026-11-10T23:57:43Z",
-      "success_streak": 206,
+      "last_success_at": "2026-11-11T00:36:15Z",
+      "success_streak": 207,
       "fail_streak": 0,
       "state": "operational"
     }
@@ -384,6 +384,32 @@
       },
       "access": {
         "ok": 31,
+        "fail": 0
+      }
+    },
+    "2026-11-11": {
+      "website": {
+        "ok": 1,
+        "fail": 0
+      },
+      "operating_picture": {
+        "ok": 1,
+        "fail": 0
+      },
+      "standards": {
+        "ok": 1,
+        "fail": 0
+      },
+      "signup": {
+        "ok": 1,
+        "fail": 0
+      },
+      "enterprise": {
+        "ok": 1,
+        "fail": 0
+      },
+      "access": {
+        "ok": 1,
         "fail": 0
       }
     }
