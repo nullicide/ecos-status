@@ -1,33 +1,33 @@
 {
   "schema": 1,
   "project": "115-schiller",
-  "checked_at": "2026-11-12T16:27:25Z",
+  "checked_at": "2026-11-12T17:21:30Z",
   "first_checked_at": "2026-10-26T22:20:17Z",
   "components": {
     "website": {
-      "state": "degraded",
+      "state": "outage",
       "success_streak": 0,
-      "fail_streak": 1
+      "fail_streak": 2
     },
     "booking": {
-      "state": "degraded",
+      "state": "outage",
       "success_streak": 0,
-      "fail_streak": 1
+      "fail_streak": 2
     },
     "guest": {
-      "state": "degraded",
+      "state": "outage",
       "success_streak": 0,
-      "fail_streak": 1
+      "fail_streak": 2
     },
     "owner": {
-      "state": "degraded",
+      "state": "outage",
       "success_streak": 0,
-      "fail_streak": 1
+      "fail_streak": 2
     },
     "team": {
-      "state": "degraded",
+      "state": "outage",
       "success_streak": 0,
-      "fail_streak": 1
+      "fail_streak": 2
     }
   },
   "daily": {
@@ -408,23 +408,23 @@
     "2026-11-12": {
       "website": {
         "ok": 17,
-        "fail": 1
+        "fail": 2
       },
       "booking": {
         "ok": 17,
-        "fail": 1
+        "fail": 2
       },
       "guest": {
         "ok": 17,
-        "fail": 1
+        "fail": 2
       },
       "owner": {
         "ok": 17,
-        "fail": 1
+        "fail": 2
       },
       "team": {
         "ok": 17,
-        "fail": 1
+        "fail": 2
       }
     }
   },
@@ -482,6 +482,91 @@
           "at": "2026-10-28T03:12:17Z",
           "status": "resolved",
           "detail": "Two successful monitor samples recorded after the corrected target. Earlier failed observation retained; no confirmed authenticated-workflow outage."
+        }
+      ]
+    },
+    {
+      "id": "2e2ffdaf-44b",
+      "origin": "monitor",
+      "component": "website",
+      "title": "Public website — page reachability disruption",
+      "detail": "Two consecutive external page checks failed. The cause has not been established.",
+      "status": "investigating",
+      "started_at": "2026-11-12T17:21:30Z",
+      "ended_at": null,
+      "updates": [
+        {
+          "at": "2026-11-12T17:21:30Z",
+          "status": "investigating",
+          "detail": "Two consecutive external page checks failed. The cause has not been established."
+        }
+      ]
+    },
+    {
+      "id": "d91eec0c-15f",
+      "origin": "monitor",
+      "component": "booking",
+      "title": "Booking information page — page reachability disruption",
+      "detail": "Two consecutive external page checks failed. The cause has not been established.",
+      "status": "investigating",
+      "started_at": "2026-11-12T17:21:30Z",
+      "ended_at": null,
+      "updates": [
+        {
+          "at": "2026-11-12T17:21:30Z",
+          "status": "investigating",
+          "detail": "Two consecutive external page checks failed. The cause has not been established."
+        }
+      ]
+    },
+    {
+      "id": "dc862062-d7f",
+      "origin": "monitor",
+      "component": "guest",
+      "title": "Guest portal entry — page reachability disruption",
+      "detail": "Two consecutive external page checks failed. The cause has not been established.",
+      "status": "investigating",
+      "started_at": "2026-11-12T17:21:30Z",
+      "ended_at": null,
+      "updates": [
+        {
+          "at": "2026-11-12T17:21:30Z",
+          "status": "investigating",
+          "detail": "Two consecutive external page checks failed. The cause has not been established."
+        }
+      ]
+    },
+    {
+      "id": "296df885-0a4",
+      "origin": "monitor",
+      "component": "owner",
+      "title": "Owner portal entry — page reachability disruption",
+      "detail": "Two consecutive external page checks failed. The cause has not been established.",
+      "status": "investigating",
+      "started_at": "2026-11-12T17:21:30Z",
+      "ended_at": null,
+      "updates": [
+        {
+          "at": "2026-11-12T17:21:30Z",
+          "status": "investigating",
+          "detail": "Two consecutive external page checks failed. The cause has not been established."
+        }
+      ]
+    },
+    {
+      "id": "50f53d1f-1cf",
+      "origin": "monitor",
+      "component": "team",
+      "title": "Property team entry — page reachability disruption",
+      "detail": "Two consecutive external page checks failed. The cause has not been established.",
+      "status": "investigating",
+      "started_at": "2026-11-12T17:21:30Z",
+      "ended_at": null,
+      "updates": [
+        {
+          "at": "2026-11-12T17:21:30Z",
+          "status": "investigating",
+          "detail": "Two consecutive external page checks failed. The cause has not been established."
         }
       ]
     }
