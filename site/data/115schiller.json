@@ -1,32 +1,32 @@
 {
   "schema": 1,
   "project": "115-schiller",
-  "checked_at": "2026-11-15T17:29:12Z",
+  "checked_at": "2026-11-15T18:00:26Z",
   "first_checked_at": "2026-10-26T22:20:17Z",
   "components": {
     "website": {
-      "state": "degraded",
-      "success_streak": 1,
+      "state": "operational",
+      "success_streak": 2,
       "fail_streak": 0
     },
     "booking": {
-      "state": "degraded",
-      "success_streak": 1,
+      "state": "operational",
+      "success_streak": 2,
       "fail_streak": 0
     },
     "guest": {
-      "state": "degraded",
-      "success_streak": 1,
+      "state": "operational",
+      "success_streak": 2,
       "fail_streak": 0
     },
     "owner": {
-      "state": "degraded",
-      "success_streak": 1,
+      "state": "operational",
+      "success_streak": 2,
       "fail_streak": 0
     },
     "team": {
-      "state": "degraded",
-      "success_streak": 1,
+      "state": "operational",
+      "success_streak": 2,
       "fail_streak": 0
     }
   },
@@ -473,23 +473,23 @@
     },
     "2026-11-15": {
       "website": {
-        "ok": 1,
+        "ok": 2,
         "fail": 23
       },
       "booking": {
-        "ok": 1,
+        "ok": 2,
         "fail": 23
       },
       "guest": {
-        "ok": 1,
+        "ok": 2,
         "fail": 23
       },
       "owner": {
-        "ok": 1,
+        "ok": 2,
         "fail": 23
       },
       "team": {
-        "ok": 1,
+        "ok": 2,
         "fail": 23
       }
     }
@@ -556,15 +556,20 @@
       "origin": "monitor",
       "component": "website",
       "title": "Public website — page reachability disruption",
-      "detail": "Two consecutive external page checks failed. The cause has not been established.",
-      "status": "investigating",
+      "detail": "External page responses recovered. Functional workflows remain unverified.",
+      "status": "resolved",
       "started_at": "2026-11-12T17:21:30Z",
-      "ended_at": null,
+      "ended_at": "2026-11-15T18:00:26Z",
       "updates": [
         {
           "at": "2026-11-12T17:21:30Z",
           "status": "investigating",
           "detail": "Two consecutive external page checks failed. The cause has not been established."
+        },
+        {
+          "at": "2026-11-15T18:00:26Z",
+          "status": "resolved",
+          "detail": "External page responses recovered. Functional workflows remain unverified."
         }
       ]
     },
@@ -573,15 +578,20 @@
       "origin": "monitor",
       "component": "booking",
       "title": "Booking information page — page reachability disruption",
-      "detail": "Two consecutive external page checks failed. The cause has not been established.",
-      "status": "investigating",
+      "detail": "External page responses recovered. Functional workflows remain unverified.",
+      "status": "resolved",
       "started_at": "2026-11-12T17:21:30Z",
-      "ended_at": null,
+      "ended_at": "2026-11-15T18:00:26Z",
       "updates": [
         {
           "at": "2026-11-12T17:21:30Z",
           "status": "investigating",
           "detail": "Two consecutive external page checks failed. The cause has not been established."
+        },
+        {
+          "at": "2026-11-15T18:00:26Z",
+          "status": "resolved",
+          "detail": "External page responses recovered. Functional workflows remain unverified."
         }
       ]
     },
@@ -590,15 +600,20 @@
       "origin": "monitor",
       "component": "guest",
       "title": "Guest portal entry — page reachability disruption",
-      "detail": "Two consecutive external page checks failed. The cause has not been established.",
-      "status": "investigating",
+      "detail": "External page responses recovered. Functional workflows remain unverified.",
+      "status": "resolved",
       "started_at": "2026-11-12T17:21:30Z",
-      "ended_at": null,
+      "ended_at": "2026-11-15T18:00:26Z",
       "updates": [
         {
           "at": "2026-11-12T17:21:30Z",
           "status": "investigating",
           "detail": "Two consecutive external page checks failed. The cause has not been established."
+        },
+        {
+          "at": "2026-11-15T18:00:26Z",
+          "status": "resolved",
+          "detail": "External page responses recovered. Functional workflows remain unverified."
         }
       ]
     },
@@ -607,15 +622,20 @@
       "origin": "monitor",
       "component": "owner",
       "title": "Owner portal entry — page reachability disruption",
-      "detail": "Two consecutive external page checks failed. The cause has not been established.",
-      "status": "investigating",
+      "detail": "External page responses recovered. Functional workflows remain unverified.",
+      "status": "resolved",
       "started_at": "2026-11-12T17:21:30Z",
-      "ended_at": null,
+      "ended_at": "2026-11-15T18:00:26Z",
       "updates": [
         {
           "at": "2026-11-12T17:21:30Z",
           "status": "investigating",
           "detail": "Two consecutive external page checks failed. The cause has not been established."
+        },
+        {
+          "at": "2026-11-15T18:00:26Z",
+          "status": "resolved",
+          "detail": "External page responses recovered. Functional workflows remain unverified."
         }
       ]
     },
@@ -624,15 +644,20 @@
       "origin": "monitor",
       "component": "team",
       "title": "Property team entry — page reachability disruption",
-      "detail": "Two consecutive external page checks failed. The cause has not been established.",
-      "status": "investigating",
+      "detail": "External page responses recovered. Functional workflows remain unverified.",
+      "status": "resolved",
       "started_at": "2026-11-12T17:21:30Z",
-      "ended_at": null,
+      "ended_at": "2026-11-15T18:00:26Z",
       "updates": [
         {
           "at": "2026-11-12T17:21:30Z",
           "status": "investigating",
           "detail": "Two consecutive external page checks failed. The cause has not been established."
+        },
+        {
+          "at": "2026-11-15T18:00:26Z",
+          "status": "resolved",
+          "detail": "External page responses recovered. Functional workflows remain unverified."
         }
       ]
     }
