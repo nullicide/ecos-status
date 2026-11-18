@@ -137,8 +137,49 @@ def resolve_auto(data,component,tstamp):
             i['detail']='External endpoint checks have returned to normal. This does not validate application functions.'
             i.setdefault('updates',[]).append({'at':tstamp,'status':'resolved','detail':i['detail']})
 
+def record_monitoring_gap(data:dict,previous_stamp:str|None,instant:dt.datetime)->bool:
+    """Record a missing-report interval without classifying monitored services as down.
+
+    GitHub Actions cron is best-effort: a missing run is not an HTTP failure.
+    Keep one open monitoring incident and append grounded, date-stamped gap observations.
+    """
+    if not previous_stamp:
+        return False
+    try:
+        previous=parse(previous_stamp)
+    except ValueError:
+        return False
+    gap=instant-previous
+    if gap<=dt.timedelta(minutes=90):
+        return False
+    stamp=iso(instant)
+    detail=(f'No new monitoring report was recorded between {iso(previous)} and {stamp} '
+            f'({round(gap.total_seconds()/60)} minutes). '
+            'This is a monitoring-reporting gap, not evidence that a monitored service was down.')
+    open_incident=next((i for i in reversed(data.setdefault('incidents',[]))
+                        if i.get('component')=='monitoring' and not i.get('ended_at')),None)
+    if open_incident is None:
+        open_incident={
+            'id':str(uuid.uuid4())[:12],
+            'origin':'monitoring-schedule',
+            'component':'monitoring',
+            'title':'Status monitoring reports delayed',
+            'detail':detail,
+            'status':'identified',
+            'started_at':stamp,
+            'ended_at':None,
+            'updates':[]
+        }
+        data['incidents'].append(open_incident)
+    open_incident['detail']=detail
+    open_incident['status']='identified'
+    open_incident.setdefault('updates',[]).append(
+        {'at':stamp,'status':'identified','detail':detail})
+    return True
+
 def monitor(data:dict,results:dict[str,bool],instant:dt.datetime)->dict:
     stamp=iso(instant)
+    record_monitoring_gap(data,data.get('checked_at'),instant)
     if not data.get('first_checked_at'):data['first_checked_at']=stamp
     data['checked_at']=stamp
     day=instant.date().isoformat();daily=data.setdefault('daily',{}).setdefault(day,{})

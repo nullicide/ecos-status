@@ -618,6 +618,33 @@
           "detail": "External endpoint checks have returned to normal. This does not validate application functions."
         }
       ]
+    },
+    {
+      "id": "monitoring-delays-20261116",
+      "origin": "monitoring-schedule",
+      "component": "monitoring",
+      "title": "Status monitoring — scheduled report delays",
+      "detail": "The automated status-report publisher has run irregularly since November 16, leaving intervals longer than 90 minutes without new reports. The latest available external checks passed for all six active ECOS endpoints. Missing reports are not evidence of endpoint outages. The monitoring schedule is being adjusted and reviewed.",
+      "status": "identified",
+      "started_at": "2026-11-16T08:36:31Z",
+      "ended_at": null,
+      "updates": [
+        {
+          "at": "2026-11-16T08:36:31Z",
+          "status": "identified",
+          "detail": "A monitoring run began after a 2-hour 34-minute interval without a scheduled run. Service availability during the missing-report interval was unverified."
+        },
+        {
+          "at": "2026-11-17T17:06:05Z",
+          "status": "identified",
+          "detail": "A 9-hour 15-minute gap between scheduled run starts was observed. This is a reporting gap; no service outage is established by the missing data."
+        },
+        {
+          "at": "2026-11-18T13:27:43Z",
+          "status": "identified",
+          "detail": "Latest completed run recorded successful checks for all six active ECOS endpoints; irregular scheduling remains under investigation."
+        }
+      ]
     }
   ],
   "maintenance": []
