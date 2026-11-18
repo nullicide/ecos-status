@@ -127,6 +127,52 @@ class ECOSPublicStatusTests(unittest.TestCase):
                            "requests", "Legacy incident", "", "", "",
                            dt.datetime.now(dt.timezone.utc))
 
+    def test_missing_schedule_report_is_not_classified_as_endpoint_outage(self):
+        previous = "2026-11-17T07:51:11Z"
+        instant = dt.datetime(2026, 11, 17, 17, 6, 5, tzinfo=dt.timezone.utc)
+        data = {
+            "schema": 1, "checked_at": previous,
+            "first_checked_at": "2026-10-24T03:34:31Z",
+            "components": {}, "daily": {}, "incidents": [], "maintenance": []
+        }
+        out = monitor.monitor(data, {key: True for key in monitor.TARGETS}, instant)
+        self.assertEqual(out["checked_at"], "2026-11-17T17:06:05Z")
+        self.assertTrue(all(out["components"][k]["state"] == "operational"
+                            for k in monitor.TARGETS))
+        self.assertEqual(len(out["incidents"]), 1)
+        incident = out["incidents"][0]
+        self.assertEqual(incident["component"], "monitoring")
+        self.assertEqual(incident["status"], "identified")
+        self.assertIn("not evidence", incident["detail"])
+        self.assertEqual(incident["updates"][0]["at"], out["checked_at"])
+
+    def test_quick_monitor_cycles_do_not_create_gap_incidents(self):
+        data = {
+            "schema": 1, "checked_at": "2026-11-18T13:20:00Z",
+            "first_checked_at": "2026-10-24T03:34:31Z",
+            "components": {}, "daily": {}, "incidents": [], "maintenance": []
+        }
+        instant = dt.datetime(2026, 11, 18, 13, 27, 0, tzinfo=dt.timezone.utc)
+        monitor.monitor(data, {key: True for key in monitor.TARGETS}, instant)
+        self.assertEqual(data["incidents"], [])
+
+    def test_existing_open_monitoring_incident_is_updated_not_duplicated(self):
+        incident = {"id": "existing", "component": "monitoring", "origin": "monitoring-schedule",
+                    "started_at": "2026-11-16T08:36:31Z", "ended_at": None,
+                    "status": "identified", "title": "Status monitoring delayed",
+                    "detail": "Earlier gap", "updates": []}
+        data = {
+            "schema": 1, "checked_at": "2026-11-17T07:51:11Z",
+            "first_checked_at": "2026-10-24T03:34:31Z",
+            "components": {}, "daily": {}, "incidents": [incident], "maintenance": []
+        }
+        instant = dt.datetime(2026, 11, 17, 17, 6, 5, tzinfo=dt.timezone.utc)
+        monitor.monitor(data, {key: True for key in monitor.TARGETS}, instant)
+        self.assertEqual(len(data["incidents"]), 1)
+        self.assertEqual(data["incidents"][0]["id"], "existing")
+        self.assertEqual(len(data["incidents"][0]["updates"]), 1)
+
+
 
 if __name__ == "__main__":
     unittest.main()
