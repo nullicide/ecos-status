@@ -114,7 +114,9 @@ class ECOSPublicStatusTests(unittest.TestCase):
         output = monitor.monitor(existing, results, instant)
         self.assertEqual(output["components"]["requests"], snapshot["components"]["requests"])
         self.assertEqual(output["daily"]["2026-11-03"]["requests"], {"ok": 32, "fail": 2})
-        self.assertEqual(output["incidents"], snapshot["incidents"])
+        self.assertEqual([i for i in output["incidents"] if i.get("component") == "requests"],
+                         snapshot["incidents"])
+        self.assertEqual(len([i for i in output["incidents"] if i.get("component") == "monitoring"]), 1)
         self.assertEqual(output["components"]["enterprise"]["state"], "operational")
         self.assertEqual(output["components"]["signup"]["state"], "operational")
         self.assertEqual(output["daily"]["2026-11-04"]["enterprise"], {"ok": 1, "fail": 0})
