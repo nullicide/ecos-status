@@ -1,19 +1,19 @@
 {
   "schema": 1,
-  "checked_at": "2026-11-22T01:17:31Z",
+  "checked_at": "2026-11-22T08:14:22Z",
   "first_checked_at": "2026-10-24T03:34:31Z",
   "components": {
     "website": {
       "state": "operational",
       "fail_streak": 0,
-      "success_streak": 871,
-      "last_success_at": "2026-11-22T01:17:31Z"
+      "success_streak": 872,
+      "last_success_at": "2026-11-22T08:14:22Z"
     },
     "access": {
       "state": "operational",
       "fail_streak": 0,
-      "success_streak": 871,
-      "last_success_at": "2026-11-22T01:17:31Z"
+      "success_streak": 872,
+      "last_success_at": "2026-11-22T08:14:22Z"
     },
     "requests": {
       "state": "degraded",
@@ -22,26 +22,26 @@
       "last_success_at": "2026-11-04T14:29:10Z"
     },
     "operating_picture": {
-      "last_success_at": "2026-11-22T01:17:31Z",
-      "success_streak": 404,
+      "last_success_at": "2026-11-22T08:14:22Z",
+      "success_streak": 405,
       "fail_streak": 0,
       "state": "operational"
     },
     "standards": {
-      "last_success_at": "2026-11-22T01:17:31Z",
-      "success_streak": 404,
+      "last_success_at": "2026-11-22T08:14:22Z",
+      "success_streak": 405,
       "fail_streak": 0,
       "state": "operational"
     },
     "signup": {
-      "last_success_at": "2026-11-22T01:17:31Z",
-      "success_streak": 404,
+      "last_success_at": "2026-11-22T08:14:22Z",
+      "success_streak": 405,
       "fail_streak": 0,
       "state": "operational"
     },
     "enterprise": {
-      "last_success_at": "2026-11-22T01:17:31Z",
-      "success_streak": 404,
+      "last_success_at": "2026-11-22T08:14:22Z",
+      "success_streak": 405,
       "fail_streak": 0,
       "state": "operational"
     }
@@ -675,27 +675,27 @@
     },
     "2026-11-22": {
       "website": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "operating_picture": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "standards": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "signup": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "enterprise": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "access": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       }
     }
@@ -728,7 +728,7 @@
       "origin": "monitoring-schedule",
       "component": "monitoring",
       "title": "Status monitoring — scheduled report delays",
-      "detail": "No new monitoring report was recorded between 2026-11-21T21:07:33Z and 2026-11-22T01:17:31Z (250 minutes). This is a monitoring-reporting gap, not evidence that a monitored service was down.",
+      "detail": "No new monitoring report was recorded between 2026-11-22T01:17:31Z and 2026-11-22T08:14:22Z (417 minutes). This is a monitoring-reporting gap, not evidence that a monitored service was down.",
       "status": "identified",
       "started_at": "2026-11-16T08:36:31Z",
       "ended_at": null,
@@ -812,6 +812,11 @@
           "at": "2026-11-22T01:17:31Z",
           "status": "identified",
           "detail": "No new monitoring report was recorded between 2026-11-21T21:07:33Z and 2026-11-22T01:17:31Z (250 minutes). This is a monitoring-reporting gap, not evidence that a monitored service was down."
+        },
+        {
+          "at": "2026-11-22T08:14:22Z",
+          "status": "identified",
+          "detail": "No new monitoring report was recorded between 2026-11-22T01:17:31Z and 2026-11-22T08:14:22Z (417 minutes). This is a monitoring-reporting gap, not evidence that a monitored service was down."
         }
       ]
     }
