@@ -7,10 +7,10 @@
     <language>en-us</language>
     <item>
       <title>Status monitoring — scheduled report delays — Identified</title>
-      <description>No new monitoring report was recorded between 2026-11-23T22:39:28Z and 2026-11-24T06:26:48Z (467 minutes). This is a monitoring-reporting gap, not evidence that a monitored service was down.</description>
+      <description>No new monitoring report was recorded between 2026-11-24T06:26:48Z and 2026-11-24T18:10:43Z (704 minutes). This is a monitoring-reporting gap, not evidence that a monitored service was down.</description>
       <link>https://status.energycontrolos.com/#incidents</link>
-      <guid isPermaLink="false">ecos-monitoring-delays-20261116-23</guid>
-      <pubDate>Tue, 24 Nov 2026 06:26:48 +0000</pubDate>
+      <guid isPermaLink="false">ecos-monitoring-delays-20261116-24</guid>
+      <pubDate>Tue, 24 Nov 2026 18:10:43 +0000</pubDate>
     </item>
     <item>
       <title>Request Access page — availability disruption — Resolved</title>
