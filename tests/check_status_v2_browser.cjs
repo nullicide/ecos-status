@@ -13,7 +13,8 @@ const ids=['platform','identity','academy','public_website','investor'];
    archived_monitoring:{daily:{'2026-10-24':{website:{ok:467,fail:0}}}},
    incidents:[],maintenance:[],probes:{}};
   for(const width of [320,390,768,1440]){
-   const page=await browser.newPage({viewport:{width,height:900},reducedMotion:'reduce'});
+   const context=await browser.newContext({viewport:{width,height:900},reducedMotion:'reduce'});
+   const page=await context.newPage();
    const errors=[];page.on('pageerror',e=>errors.push(e.message));
    await page.route('**/data/status.json*',r=>r.fulfill({contentType:'application/json',body:JSON.stringify(report)}));
    await page.goto('http://127.0.0.1:8765/',{waitUntil:'networkidle'});
@@ -31,7 +32,7 @@ const ids=['platform','identity','academy','public_website','investor'];
    assert.equal(await page.locator('#subscribeDialog').isVisible(),false);
    const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze();
    assert.deepEqual(axe.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)})),[]);
-   assert.deepEqual(errors,[]);await page.close();console.log('IRI-001 verified '+width);
+   assert.deepEqual(errors,[]);await context.close();console.log('IRI-001 verified '+width);
   }
   const p=await browser.newPage();
   const stale={...report,checked_at:new Date(Date.now()-120*60000).toISOString(),published_at:new Date(Date.now()-120*60000).toISOString()};
