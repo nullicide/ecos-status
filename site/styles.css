@@ -356,3 +356,28 @@
   .site-header .nav-links .back-link svg{width:12px;height:12px;margin-left:5px}
   .history-row{padding-inline:12px}
 }
+
+/* Compact status-first layout; keep all mobile navigation accessible. */
+.intro{padding-block:48px 32px}
+.intro-grid{margin-top:18px;gap:32px}
+.intro h1{font-size:clamp(42px,5vw,72px)}
+.intro .lede{margin-top:14px}
+.intro-aside{padding-top:12px}
+.intro-aside p{margin-top:8px}
+.section{padding-block:48px}
+@media(max-width:680px){
+ .intro{padding-block:28px 22px}
+ .intro-grid{grid-template-columns:minmax(0,1fr);gap:12px;margin-top:12px}
+ .intro .lede{font-size:15px;line-height:1.5;margin-top:10px}
+ .intro-aside{display:none}
+ .section{padding-block:34px}
+ .site-header .nav-inner{height:auto;min-height:0;flex-wrap:wrap;padding-block:12px;gap:8px}
+ .site-header .brand{max-width:100%;white-space:normal}
+ .site-header .nav-links{width:100%;flex:1 1 100%;margin:0;justify-content:space-between;flex-wrap:wrap;gap:4px 8px}
+ .site-header .nav-links a:not(.back-link),.site-header .nav-links .status-signin,.site-header .nav-links a[href="#components"]{display:inline-flex;align-items:center;min-height:44px;font-size:11px}
+ .site-header .nav-links .back-link{min-height:44px}
+ .global-timestamp,.metric-label,.state-label{overflow-wrap:anywhere}
+ .component>div,.component-title,.component-target{min-width:0}
+ .component-target{overflow-wrap:anywhere}
+ .timeline-main{min-width:0;overflow-wrap:anywhere}
+}
