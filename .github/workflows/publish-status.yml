@@ -44,7 +44,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
         with:
@@ -52,7 +52,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Verify ECOS and 115 Schiller monitoring assertions
+      - name: Verify monitor changes on code pushes
+        if: github.event_name == 'push'
         run: python -m unittest discover -s tests -p 'test_*.py' -v
       - name: Collect checks or publish status update
         env:
@@ -78,17 +79,21 @@ jobs:
             git push origin HEAD:main
           fi
       - name: Stage versioned mirror report
+        if: github.event_name != 'schedule'
         run: |
           python -c 'import json; d=json.load(open("site/data/status.json")); assert d["monitoring_version"] == 2'
           cp site/data/status.json site/data/service-status-v2.json
           cmp site/data/status.json site/data/service-status-v2.json
       - uses: actions/configure-pages@v5
+        if: github.event_name != 'schedule'
       - uses: actions/upload-pages-artifact@v4
+        if: github.event_name != 'schedule'
         with:
           path: site
   deploy:
+    if: github.event_name != 'schedule'
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -99,7 +104,7 @@ jobs:
   verify-production:
     if: github.event_name == 'push'
     needs: deploy
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     steps:
