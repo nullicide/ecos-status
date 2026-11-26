@@ -53,7 +53,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Verify ECOS and 115 Schiller monitoring assertions
-        run: python -m unittest discover -s tests -p 'test_monitor*.py' -v
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
       - name: Collect checks or publish status update
         env:
           ACTION: ${{ github.event.inputs.action || 'check' }}

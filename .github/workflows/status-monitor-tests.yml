@@ -3,6 +3,8 @@ on:
   pull_request:
     paths:
       - 'monitor.py'
+      - 'reliability.py'
+      - 'tests/test_reliability.py'
       - 'tests/test_monitor_ecos.py'
       - 'tests/test_monitor_schiller.py'
       - '.github/workflows/publish-status.yml'
@@ -18,6 +20,6 @@ jobs:
         with:
           python-version: '3.12'
       - name: Validate ECOS and Schiller probes
-        run: python -m unittest discover -s tests -p 'test_monitor*.py' -v
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
       - name: Validate monitoring scripts
-        run: python -m py_compile monitor.py monitor_schiller.py
+        run: python -m py_compile monitor.py monitor_schiller.py reliability.py

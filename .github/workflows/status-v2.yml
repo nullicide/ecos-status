@@ -35,7 +35,7 @@ jobs:
           python-version: '3.12'
       - name: Validate monitor logic and syntax
         run: |
-          python -m unittest discover -s tests -p 'test_monitor*.py' -v
+          python -m unittest discover -s tests -p 'test_*.py' -v
           python -m py_compile monitor.py monitor_schiller.py reliability.py
           node --check site/app.js
       - uses: actions/setup-node@v4
