@@ -23,9 +23,9 @@ def verify():
         assert "iri001-20261126" in html and 'id="activeIncidents"' in html, "Old or unexpected public shell"
         assert "System status" in html, "Missing public status title"
         print("Verified public shell:",origin)
-    for url in (RAW,MIRROR+"data/status.json"):
+    for url in (RAW,MIRROR+"data/service-status-v2.json"):
         data=json.loads(get(url))
-        assert data.get("monitoring_version")==2 and set(data["components"])==IDS, "Legacy or incomplete report"
+        assert data.get("monitoring_version")==2 and set(data["components"])==IDS, "Legacy or incomplete report: "+url
         assert data.get("archived_monitoring",{}).get("daily"), "Legacy history missing"
         checked=dt.datetime.fromisoformat(data["checked_at"].replace("Z","+00:00"))
         age=(dt.datetime.now(dt.timezone.utc)-checked).total_seconds()

@@ -68,7 +68,7 @@
   const oldMaintenance=(payload.maintenance||[]).filter(m=>!maintenance.includes(m));
   if(oldMaintenance.length)el('incidentList').insertAdjacentHTML('beforeend','<details class="methodology"><summary>Historical maintenance</summary>'+oldMaintenance.map(m=>'<p>'+esc(m.title)+' · '+esc(date(m.starts_at))+' to '+esc(date(m.ends_at))+'</p>').join('')+'</details>');
  }
- const sources=['https://raw.githubusercontent.com/nullicide/ecos-status/main/site/data/status.json','https://nullicide.github.io/ecos-status/data/status.json','./data/status.json'];
+ const sources=['https://raw.githubusercontent.com/nullicide/ecos-status/main/site/data/status.json','https://nullicide.github.io/ecos-status/data/service-status-v2.json','./data/status.json'];
  let last=null,loading=false;
  async function fetchReport(source){
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);

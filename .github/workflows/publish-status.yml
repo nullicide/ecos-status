@@ -77,6 +77,11 @@ jobs:
             git commit -m "Update observed status [skip ci]"
             git push origin HEAD:main
           fi
+      - name: Stage versioned mirror report
+        run: |
+          python -c 'import json; d=json.load(open("site/data/status.json")); assert d["monitoring_version"] == 2'
+          cp site/data/status.json site/data/service-status-v2.json
+          cmp site/data/status.json site/data/service-status-v2.json
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:
