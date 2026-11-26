@@ -2,15 +2,15 @@
 (() => {
  const DISPLAY={
   website:'Public website',operating_picture:'Operating picture',standards:'Standards & governance',
-  signup:'Create account',enterprise:'Enterprise access inquiry',
+  signup:'Create account',enterprise:'Project evaluation inquiry',
   access:'Application sign-in',requests:'Previous Request Access URL (retired)',monitoring:'Status monitoring'
  };
  const DESC={
-  website:'Homepage, capabilities and interactive demo page reachability',
-  operating_picture:'Public infrastructure lifecycle and operating-picture page',
+  website:'Public homepage reachability',
+  operating_picture:'Public operating picture and coordination overview',
   standards:'Public standards and governance reference',
   signup:'Individual registration page; registration and email verification are not tested',
-  enterprise:'Enterprise inquiry page; form submission and delivery are not tested',
+  enterprise:'Project evaluation inquiry page; submission and delivery are not tested',
   access:'Application sign-in page; authentication and workspace access are not tested'
  };
  const HREF={
@@ -21,13 +21,13 @@
   enterprise:'https://www.energycontrolos.com/enterprise-access/',
   access:'https://app.energycontrolos.com/login/'
  };
- const LABEL={operational:'Operational',degraded:'Intermittent response',outage:'Unavailable',unknown:'Not currently verified',maintenance:'Maintenance'};
+ const LABEL={operational:'Operational',degraded:'Intermittent response',outage:'Repeated check failures',unknown:'Not currently verified',maintenance:'Maintenance'};
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const el=id=>document.getElementById(id);
  const date=s=>{if(!s)return 'Not available';const d=new Date(s);return Number.isFinite(d.getTime())?d.toLocaleString(undefined,{year:'numeric',month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'}):'Not available'};
  const dayKey=(d)=>d.toISOString().slice(0,10);
  const monitoredOrder=['website','operating_picture','standards','signup','enterprise','access'];
- function global(state,report,title){const box=el('globalStatus');box.dataset.state=state;const headline={operational:'All monitored endpoints reachable',degraded:'Some endpoints need attention',outage:'Service disruption detected',unknown:'Monitoring unavailable'};el('globalTitle').textContent=title||headline[state];el('globalDetail').textContent=report||'No verified monitoring result is available.';}
+ function global(state,report,title){const box=el('globalStatus');box.dataset.state=state;const headline={operational:'All monitored endpoints reachable',degraded:'Some endpoints need attention',outage:'Endpoint check failures',unknown:'Monitoring unavailable'};el('globalTitle').textContent=title||headline[state];el('globalDetail').textContent=report||'No verified monitoring result is available.';}
  function historyCells(rows,id){let success=0,fail=0;const now=new Date();const cells=[];let observedDays=0;for(let n=89;n>=0;n--){let d=new Date(now);d.setUTCDate(d.getUTCDate()-n);const k=dayKey(d),v=rows[k]?.[id]||{},ok=v.ok||0,bad=v.fail||0,total=ok+bad;success+=ok;fail+=bad;if(total)observedDays++;const cls=total===0?'none':bad===0?'good':ok===0?'bad':'partial';cells.push(`<span class="day ${cls}" aria-label="${esc(k)}: ${total?ok+' passed, '+bad+' failed':'no observations'}" title="${esc(k)}: ${total?ok+' passed, '+bad+' failed':'no observations'}"></span>`)}return {cells:cells.join(''),success,fail,observedDays};}
  function render(payload){
   const now=Date.now(),checked=payload.checked_at?Date.parse(payload.checked_at):NaN;
@@ -42,7 +42,7 @@
   const anyOut=statuses.includes('outage'),anyDeg=statuses.includes('degraded'),allOk=statuses.every(s=>s==='operational');
   const measured=anyOut?'outage':anyDeg?'degraded':allOk?'operational':'unknown';
   const state=stale?'unknown':delayed?(measured==='outage'?'outage':'degraded'):measured;
-  global(state,stale?(Number.isFinite(checked)?'No new external monitoring report has been recorded for '+gapTime+'. Last report: '+lastReport+'. This is a monitoring-data gap; it does not establish that the listed services are down.':'No external monitoring report has been recorded. Current service health is unverified.'):delayed?'The most recent external check was '+date(payload.checked_at)+'. Scheduled monitoring is delayed; the last known results are shown below, not confirmed current.':state==='operational'?'All listed public pages returned the expected HTML in the latest external checks. This does not verify registrations, inquiries, authentication, operational workflows or electrical safety.':state==='outage'?'At least one monitored endpoint failed repeated external availability checks. See incidents below.':state==='degraded'?'A monitored endpoint has returned inconsistent responses or is recovering.':'Some endpoints have not yet completed a verified check.',delayed&&state!=='outage'?'Monitoring delayed':stale&&Number.isFinite(checked)?'Monitoring data unavailable':undefined);
+  global(state,stale?(Number.isFinite(checked)?'No new external monitoring report has been recorded for '+gapTime+'. Last report: '+lastReport+'. This is a monitoring-data gap; it does not establish that the listed services are down.':'No external monitoring report has been recorded. Current service health is unverified.'):delayed?'The most recent external check was '+date(payload.checked_at)+'. Scheduled monitoring is delayed; the last known results are shown below, not confirmed current.':state==='operational'?'All listed public pages returned the expected HTML in the latest external checks. This does not verify registrations, inquiries, authentication, operational workflows or electrical safety.':state==='outage'?'At least one endpoint failed repeated external checks. The underlying cause is not confirmed. See incidents below.':state==='degraded'?'A monitored endpoint has returned inconsistent responses or is recovering.':'Some endpoints have not yet completed a verified check.',delayed&&state!=='outage'?'Monitoring delayed':stale&&Number.isFinite(checked)?'Monitoring data unavailable':undefined);
   el('lastChecked').textContent=Number.isFinite(checked)?lastReport+(stale?' · Stale':delayed?' · Delayed':''):'No report';el('globalTime').textContent=Number.isFinite(checked)?'LAST REPORT '+lastReport.toUpperCase():'NO REPORT AVAILABLE';
   el('componentList').innerHTML=monitoredOrder.map(id=>{const verified=raw[id]?.state||'unknown';const s=stale?'unknown':delayed&&verified!=='outage'?'degraded':verified;const title=delayed&&s!=='outage'?'Last check delayed':LABEL[s]||LABEL.unknown;return `<article class="component"><div><div class="component-title"><span class="state-dot ${esc(s)}" aria-hidden="true"></span><a class="component-target" href="${esc(HREF[id])}" target="_blank" rel="noopener noreferrer" aria-label="Open ${esc(DISPLAY[id])} in a new tab">${esc(DISPLAY[id])}</a></div><p>${esc(DESC[id])}</p></div><span class="state-label ${esc(s)}">${esc(title)}</span></article>`}).join('');
   const hist=payload.daily||{};
@@ -55,7 +55,7 @@
    archive.hidden=oldChecks===0;
    archive.innerHTML=oldChecks?
     '<div class="retired-top"><strong>Previous Request Access URL</strong><span>RETIRED MONITOR</span></div>'+
-    '<p>Historical checks for the old /request-access/ URL are retained. This URL is no longer actively monitored, and its check history is not counted toward the new Enterprise access page.</p>'+
+    '<p>Historical checks for the old /request-access/ URL are retained. This URL is no longer actively monitored, and its check history is not counted toward the current Project evaluation page.</p>'+
     '<small>'+legacy.success+'/'+oldChecks+' historic HTTP checks passed · '+legacy.observedDays+' observed days in the rolling window</small>':'';
   }
   const entries=(payload.incidents||[]).slice().sort((a,b)=>String(b.started_at).localeCompare(String(a.started_at))).slice(0,20);
@@ -74,22 +74,30 @@
  const validReport=j=>j&&j.schema===1&&typeof j.checked_at==='string'&&
   Number.isFinite(Date.parse(j.checked_at))&&j.components&&typeof j.components==='object'&&
   j.daily&&typeof j.daily==='object';
+ let lastReport=null,loading=false;
+ async function fetchReport(source){
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),8000);
+  try{
+   const response=await fetch(source+'?at='+Date.now(),{cache:'no-store',signal:controller.signal});
+   if(!response.ok)return null;
+   const report=await response.json();
+   if(!validReport(report)||Date.parse(report.checked_at)>Date.now()+5*60*1000)return null;
+   return report;
+  }catch(_error){return null;}
+  finally{clearTimeout(timer);}
+ }
  async function load(){
-  let latest=null;
-  for(const source of STATUS_SOURCES){
-   try{
-    const r=await fetch(source+'?at='+Date.now(),{cache:'no-store'});
-    if(!r.ok)continue;
-    const report=await r.json();
-    if(!validReport(report))continue;
-    if(!latest||Date.parse(report.checked_at)>Date.parse(latest.checked_at))latest=report;
-    // Continue to another source only when this report is old or future-dated.
-    // Never turn old monitoring data green merely because a fetch succeeded.
-    const age=Date.now()-Date.parse(report.checked_at);
-    if(age>=-5*60*1000&&age<=90*60*1000)break;
-   }catch(_e){/* Try the next independent source. */}
-  }
-  render(latest||{components:{},incidents:[],maintenance:[],daily:{}});
+  if(loading)return;
+  loading=true;
+  try{
+   // Race-independent selection: a fresh-but-older mirror must not hide a newer report.
+   const reports=(await Promise.all(STATUS_SOURCES.map(fetchReport))).filter(Boolean);
+   if(lastReport)reports.push(lastReport);
+   reports.sort((a,b)=>Date.parse(b.checked_at)-Date.parse(a.checked_at));
+   lastReport=reports[0]||null;
+   render(lastReport||{components:{},incidents:[],maintenance:[],daily:{}});
+  }finally{loading=false;}
  }
  // RSS subscription disclosure: a feed reader subscribes, not this static website.
  function initSubscription(){

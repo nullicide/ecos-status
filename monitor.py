@@ -22,16 +22,18 @@ FEED = ROOT / 'site' / 'feed.xml'
 URL = (os.getenv('ECOS_STATUS_PUBLIC_URL') or 'https://status.energycontrolos.com/').rstrip('/') + '/'
 # Only actual public HTML endpoints are monitored; never represent these GETs
 # as authentication, Turnstile, API, workspace or electrical-safety validation.
+# Alternatives separated by || permit verified old/new landmarks during rolling deployments.
+# Every marker group must match; generic success pages remain invalid.
 # Retired key "requests" is deliberately not reused: its historic checks remain
 # associated with the old /request-access/ URL in stored daily and incident data.
 TARGETS = {
     'website': (
         'https://www.energycontrolos.com/',
-        ('id="platform"', 'id="scenario-systems"')
+        ('id="platform"', 'id="scenario-systems"||id="hero-title"')
     ),
     'operating_picture': (
         'https://www.energycontrolos.com/operating-picture/',
-        ('id="op-hero-title"', 'id="op-stage-panel"')
+        ('id="op-hero-title"||id="op-title"', 'id="op-stage-panel"||id="op-work-spec"')
     ),
     'standards': (
         'https://www.energycontrolos.com/standards/',
@@ -43,11 +45,11 @@ TARGETS = {
     ),
     'enterprise': (
         'https://www.energycontrolos.com/enterprise-access/',
-        ('id="enterprise-form"', '<title>Request enterprise access | Energy Control OS</title>')
+        ('id="enterprise-form"', '<title>Request enterprise access | Energy Control OS</title>||<title>Request project evaluation | Energy Control OS</title>')
     ),
     'access': (
         'https://app.energycontrolos.com/login/',
-        ('id="login-form"', '<title>Enterprise Access | Energy Control OS</title>')
+        ('id="login-form"', '<title>Enterprise Access | Energy Control OS</title>||<title>Sign in to ECOS | Energy Control OS</title>')
     ),
 }
 TITLES = {
@@ -55,7 +57,7 @@ TITLES = {
     'operating_picture': 'Operating picture',
     'standards': 'Standards & governance',
     'signup': 'Create account',
-    'enterprise': 'Enterprise access inquiry',
+    'enterprise': 'Project evaluation inquiry',
     'access': 'Application sign-in',
     'requests': 'Legacy Request Access URL (retired)',
 }
@@ -106,7 +108,7 @@ def check_http(url:str,fragments:tuple[str,...])->bool:
                 if not 200<=response.status<300: raise ValueError('Non-success status')
                 if 'text/html' not in response.headers.get('content-type','').lower(): raise ValueError('Non-HTML response')
                 body=response.read(220_000).decode('utf-8',errors='replace')
-                if not all(frag.lower() in body.lower() for frag in fragments): raise ValueError('Expected page markers absent')
+                if not all(any(option.lower() in body.lower() for option in frag.split('||')) for frag in fragments): raise ValueError('Expected page markers absent')
                 # No redirected/retired URL should inherit another page's uptime.
                 final_url = response.geturl() if callable(getattr(response, 'geturl', None)) else url
                 actual = urllib.parse.urlsplit(final_url)
@@ -118,17 +120,18 @@ def check_http(url:str,fragments:tuple[str,...])->bool:
                 if 'http error 403' in body.lower() or 'access to ' in body.lower() and 'was denied' in body.lower():
                     raise ValueError('Intermediary denial body')
                 return True
-        except (urllib.error.URLError,TimeoutError,ValueError,OSError):
+        except (urllib.error.URLError,TimeoutError,ValueError,OSError) as error:
+            print(f'Probe {url} attempt {attempt+1}: {type(error).__name__}: {error}')
             if attempt==0: time.sleep(1)
     return False
 
 def new_incident(data,component,tstamp):
     if any(not it.get('ended_at') and it.get('component')==component and it.get('origin')=='monitor' for it in data['incidents']):return
     data['incidents'].append({'id':str(uuid.uuid4())[:12],'origin':'monitor','component':component,
-       'title':TITLES[component]+' — availability disruption',
-       'detail':'Repeated external requests did not return the expected page. Investigation is in progress.',
+       'title':TITLES[component]+' — endpoint check failures',
+       'detail':'Repeated external checks did not verify the expected page. This may reflect reachability, an intermediary response, or changed page markup; the cause is not yet confirmed.',
        'status':'investigating','started_at':tstamp,'ended_at':None,
-       'updates':[{'at':tstamp,'status':'investigating','detail':'Repeated external availability checks failed.'}]})
+       'updates':[{'at':tstamp,'status':'investigating','detail':'Repeated external checks did not verify the expected HTML.'}]})
 
 def resolve_auto(data,component,tstamp):
     for i in data['incidents']:

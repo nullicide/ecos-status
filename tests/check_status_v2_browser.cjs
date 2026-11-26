@@ -30,7 +30,7 @@ const live=['website','operating_picture','standards','signup','enterprise','acc
    assert.equal(await page.locator('.history-row').count(),6,'Six independent monitored histories');
    const componentLabels=await page.locator('.component-target').allTextContents();
    assert.deepEqual(componentLabels.map(s=>s.trim()),
-    ['Public website','Operating picture','Standards & governance','Create account','Enterprise access inquiry','Application sign-in']);
+    ['Public website','Operating picture','Standards & governance','Create account','Project evaluation inquiry','Application sign-in']);
    const links=await page.locator('.component-target').evaluateAll(nodes=>nodes.map(n=>n.href));
    assert.ok(links.includes('https://www.energycontrolos.com/create-account/'));
    assert.ok(links.includes('https://www.energycontrolos.com/enterprise-access/'));
@@ -41,7 +41,7 @@ const live=['website','operating_picture','standards','signup','enterprise','acc
    assert.doesNotMatch(await page.locator('#componentList').innerText(),/Previous Request Access URL/);
    assert.doesNotMatch(await page.locator('#historyList').innerText(),/Previous Request Access URL/);
    assert.match(await page.locator('#globalTitle').innerText(),/All monitored endpoints reachable/);
-   assert.equal(await page.locator('.history-row').filter({hasText:'Enterprise access inquiry'}).locator('.history-description').innerText(),
+   assert.equal(await page.locator('.history-row').filter({hasText:'Project evaluation inquiry'}).locator('.history-description').innerText(),
     'HTTP checks · 1/1 successful · Early monitoring data');
    for(const id of ['readiness','experiences','coverageSummary'])
     assert.equal(await page.locator('#'+id).count(),0,'Removed panel '+id);
@@ -54,12 +54,9 @@ const live=['website','operating_picture','standards','signup','enterprise','acc
    assert.ok(navBounds&&navBounds.x>=-1&&navBounds.x+navBounds.width<=width+1,
      width+'px platform link fits within viewport');
    if(width<=680){
-    assert.equal(await signin.isVisible(),false,width+'px hides sign-in from mobile header');
-    assert.equal(await page.locator('.site-header .nav-links a[href="#components"]').isVisible(),false,
-     width+'px hides the redundant services nav item');
-    const brand=await page.locator('.site-header .brand').boundingBox();
-    assert.ok(brand&&navBounds&&Math.abs((brand.y+brand.height/2)-(navBounds.y+navBounds.height/2))<10,
-     width+'px brand and platform sit on one header row');
+    assert.ok(await signin.isVisible(),width+'px sign-in stays accessible');
+    assert.ok(await page.locator('.site-header .nav-links a[href="#components"]').isVisible(),
+     width+'px services navigation stays accessible');
     const days=page.locator('.history-row').first().locator('.days .day');
     assert.equal(await days.count(),90,'Keep the full 90-day history in DOM');
     assert.equal(await page.locator('.history-row').first().locator('.days .day:visible').count(),30,width+'px renders 30 recent daily cells');
@@ -89,7 +86,7 @@ const live=['website','operating_picture','standards','signup','enterprise','acc
   const at=new Date().toISOString(),today=at.slice(0,10);
   await page.route('**/data/status.json*',r=>r.fulfill({
    contentType:'application/json',body:JSON.stringify({
-    checked_at:at,first_checked_at:'2026-10-24T03:34:31Z',
+    schema:1,checked_at:at,first_checked_at:'2026-10-24T03:34:31Z',
     components:{website:{state:'operational'},access:{state:'operational'},requests:{state:'operational'}},
     daily:{[today]:{requests:{ok:467,fail:0},website:{ok:467,fail:0},access:{ok:467,fail:0}}},
     incidents:[],maintenance:[]
@@ -98,7 +95,7 @@ const live=['website','operating_picture','standards','signup','enterprise','acc
   await page.goto('http://127.0.0.1:8765/',{waitUntil:'networkidle'});
   assert.notEqual(await page.locator('#globalStatus').getAttribute('data-state'),'operational',
    'Old successes must not be counted as new enterprise-page uptime');
-  assert.match(await page.locator('.history-row').filter({hasText:'Enterprise access inquiry'}).innerText(),
+  assert.match(await page.locator('.history-row').filter({hasText:'Project evaluation inquiry'}).innerText(),
    /No HTTP checks recorded/);
   assert.match(await page.locator('#retiredHistory').innerText(),/467\/467 historic/);
   await page.close();
@@ -128,6 +125,19 @@ const live=['website','operating_picture','standards','signup','enterprise','acc
    'Latest checked GitHub data beats the stale bundled snapshot');
   await sourcePage.close();
   console.log('PASS: live GitHub report overrides stale Cloudflare build');
+
+  // A recent primary report must not mask a newer mirror, or accept a future-dated snapshot.
+  const mirrorPage=await instance.newPage();
+  const olderRecent={...latestReport,checked_at:new Date(Date.now()-10*60000).toISOString(),
+    components:{...latestReport.components,website:{state:'outage'}}};
+  const futureReport={...olderRecent,checked_at:new Date(Date.now()+60*60000).toISOString()};
+  await mirrorPage.route('**/data/status.json*',route=>route.fulfill({contentType:'application/json',body:JSON.stringify(futureReport)}));
+  await mirrorPage.route('https://raw.githubusercontent.com/nullicide/ecos-status/main/site/data/status.json*',route=>route.fulfill({contentType:'application/json',body:JSON.stringify(olderRecent)}));
+  await mirrorPage.route('https://nullicide.github.io/ecos-status/data/status.json*',route=>route.fulfill({contentType:'application/json',body:JSON.stringify(latestReport)}));
+  await mirrorPage.goto('http://127.0.0.1:8765/',{waitUntil:'networkidle'});
+  assert.equal(await mirrorPage.locator('#globalStatus').getAttribute('data-state'),'operational');
+  await mirrorPage.close();
+  console.log('PASS: newest credible report wins regardless of source order');
 
   // If upstream monitoring sources are unavailable, don't imply last-known green is current.
   const fallbackPage=await instance.newPage();

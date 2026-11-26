@@ -54,6 +54,22 @@ class ECOSPublicStatusTests(unittest.TestCase):
                 page = "<html><body>" + "".join(markers) + "</body></html>"
                 self.assertTrue(self.probe(key, page))
 
+    def test_redesign_landmarks_and_rolling_deployment_compatibility(self):
+        cases = {
+            "website": ('id="platform" id="hero-title"', 'id="platform" id="scenario-systems"'),
+            "operating_picture": ('id="op-title" id="op-work-spec"', 'id="op-hero-title" id="op-stage-panel"'),
+            "enterprise": ('id="enterprise-form" <title>Request project evaluation | Energy Control OS</title>',
+                           'id="enterprise-form" <title>Request enterprise access | Energy Control OS</title>'),
+            "access": ('id="login-form" <title>Sign in to ECOS | Energy Control OS</title>',
+                       'id="login-form" <title>Enterprise Access | Energy Control OS</title>'),
+        }
+        for name, pages in cases.items():
+            for page in pages:
+                with self.subTest(component=name, page=page):
+                    self.assertTrue(self.probe(name, "<html>" + page + "</html>"))
+        self.assertFalse(self.probe("operating_picture", '<html id="op-title"></html>'))
+        self.assertFalse(self.probe("access", '<html id="login-form"><title>Unrelated page</title></html>'))
+
     def test_partial_or_generic_pages_never_count_as_success(self):
         for key, (_, markers) in monitor.TARGETS.items():
             with self.subTest(component=key):
