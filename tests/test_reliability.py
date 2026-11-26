@@ -24,6 +24,12 @@ class ReliabilityTests(unittest.TestCase):
         self.assertEqual(self.data["daily"]["2026-11-26"]["public_website"],{"ok":1,"fail":0})
         self.assertEqual(self.data["components"]["platform"]["state"],"unknown")
         self.assertEqual(self.data["components"]["public_website"]["state"],"operational")
+    def test_verified_history_separate_from_raw_checks(self):
+        self.cycle()
+        self.assertEqual(self.data["service_state_daily"]["2026-11-26"]["platform"],{"unknown":1})
+        self.assertEqual(self.data["service_state_daily"]["2026-11-26"]["public_website"],{"operational":1})
+        self.cycle(["academy_lesson"])
+        self.assertEqual(self.data["service_state_daily"]["2026-11-26"]["academy"],{"unknown":1,"degraded":1})
     def test_optional_probe_does_not_down_service(self):
         self.cycle(["inquiry_config","registration"])
         self.cycle(["inquiry_config","registration"])
