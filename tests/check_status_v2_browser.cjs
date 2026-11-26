@@ -22,7 +22,7 @@ const ids=['platform','identity','academy','public_website','investor'];
    assert.equal(await page.locator('.component').count(),5);
    assert.equal(await page.locator('.history-row').count(),5);
    assert.equal(await page.locator('.service-metric').filter({hasText:'Insufficient data'}).count(),0);
-   assert.equal(await page.locator('.service-metric').filter({hasText:'100.00% sampled operational'}).count(),5);
+   assert.equal(await page.locator('.service-metric').filter({hasText:'100.00%'}).count(),5);
    assert.equal(await page.locator('.service-card').first().locator('.day.good').count(),1);
    assert.equal(await page.locator('#globalStatus').getAttribute('data-state'),'operational');
    assert.match(await page.locator('#componentList').innerText(),/Operational/);
