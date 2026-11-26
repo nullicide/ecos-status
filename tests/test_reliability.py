@@ -22,19 +22,19 @@ class ReliabilityTests(unittest.TestCase):
         self.assertEqual(self.data["archived_monitoring"]["components"],old["components"])
         self.assertEqual(self.data["incidents"],old["incidents"])
         self.assertEqual(self.data["daily"]["2026-11-26"]["public_website"],{"ok":1,"fail":0})
-        self.assertEqual(self.data["components"]["platform"]["state"],"unknown")
+        self.assertEqual(self.data["components"]["platform"]["state"],"operational")
         self.assertEqual(self.data["components"]["public_website"]["state"],"operational")
     def test_verified_history_separate_from_raw_checks(self):
         self.cycle()
-        self.assertEqual(self.data["service_state_daily"]["2026-11-26"]["platform"],{"unknown":1})
-        self.assertEqual(self.data["service_state_daily"]["2026-11-26"]["public_website"],{"operational":1})
+        self.assertEqual(self.data["scoped_availability_daily"]["2026-11-26"]["platform"],{"operational":1})
+        self.assertEqual(self.data["scoped_availability_daily"]["2026-11-26"]["public_website"],{"operational":1})
         self.cycle(["academy_lesson"])
-        self.assertEqual(self.data["service_state_daily"]["2026-11-26"]["academy"],{"unknown":1,"degraded":1})
+        self.assertEqual(self.data["scoped_availability_daily"]["2026-11-26"]["academy"],{"operational":1,"degraded":1})
     def test_optional_probe_does_not_down_service(self):
         self.cycle(["inquiry_config","registration"])
         self.cycle(["inquiry_config","registration"])
         self.assertEqual(self.data["components"]["public_website"]["state"],"operational")
-        self.assertEqual(self.data["components"]["identity"]["state"],"unknown")
+        self.assertEqual(self.data["components"]["identity"]["state"],"operational")
     def test_partial_and_major_and_recovery(self):
         self.cycle(["academy_lesson"])
         self.assertEqual(self.data["components"]["academy"]["state"],"degraded")
@@ -44,7 +44,7 @@ class ReliabilityTests(unittest.TestCase):
         self.cycle(["academy_lesson","academy_home"])
         self.assertEqual(self.data["components"]["academy"]["state"],"outage")
         self.cycle(); self.cycle()
-        self.assertEqual(self.data["components"]["academy"]["state"],"unknown")
+        self.assertEqual(self.data["components"]["academy"]["state"],"operational")
         self.assertTrue(self.data["incidents"][-1]["ended_at"])
     def test_monitor_gap_not_down(self):
         self.cycle(); self.now+=dt.timedelta(hours=2); self.cycle()

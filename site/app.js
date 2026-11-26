@@ -3,7 +3,7 @@
  const names={platform:'ECOS Platform',identity:'Identity & Access',academy:'ECOS Academy',public_website:'Public Website',investor:'Investor Portal',
   website:'Public website (retired check)',operating_picture:'Operating picture (retired check)',standards:'Standards (retired check)',signup:'Create account (retired check)',enterprise:'Project inquiry (retired check)',access:'Sign-in page (retired check)',requests:'Previous Request Access URL (retired)',monitoring:'Status monitoring'};
  const ids=['platform','identity','academy','public_website','investor'];
- const descriptions={platform:'Project workspaces',identity:'Account access and sign-in',academy:'Learning and assessments',public_website:'Public website delivery',investor:'Investor access and documents'};
+ const descriptions={platform:'Workspace API availability',identity:'Sign-in page and session endpoint',academy:'Public learning content',public_website:'Public website delivery',investor:'Portal and session endpoint'};
  const labels={operational:'Operational',degraded:'Degraded performance',partial:'Partial outage',outage:'Major outage',maintenance:'Scheduled maintenance',unknown:'Not yet verified',unavailable:'Monitoring unavailable'};
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const el=id=>document.getElementById(id);
@@ -46,14 +46,14 @@
   const all=Object.values(states);
   const global=payload.unavailable||stale||delayed?'unavailable':all.includes('outage')?'outage':all.includes('partial')?'partial':all.includes('degraded')?'degraded':all.includes('maintenance')?'maintenance':all.every(s=>s==='operational')?'operational':'unknown';
   const box=el('globalStatus');box.dataset.state=global;
-  el('globalTitle').textContent=delayed?'Monitoring delayed':global==='unknown'?(fresh?'Limited service verification':'Monitoring not yet verified'):global==='operational'?'All verified services operational':global==='outage'?'Service disruption detected':labels[global];
-  el('globalDetail').textContent=!fresh?(Number.isFinite(checked)?'Last report is not current. Missing observations do not indicate service downtime.':payload.unavailable?'No monitoring source could be retrieved. Current service availability is unknown.':'No service-level report is available yet.'):'Current external observations; untested functions remain unknown. See service details.';
+  el('globalTitle').textContent=delayed?'Monitoring delayed':global==='unknown'?(fresh?'Limited service verification':'Monitoring not yet verified'):global==='operational'?'All monitored endpoints operational':global==='outage'?'Service disruption detected':labels[global];
+  el('globalDetail').textContent=!fresh?(Number.isFinite(checked)?'Last report is not current. Missing observations do not indicate service downtime.':payload.unavailable?'No monitoring source could be retrieved. Current service availability is unknown.':'No service-level report is available yet.'):'Availability reflects external endpoint checks only. Signed-in transactions are not verified.';
   el('globalTime').textContent=Number.isFinite(checked)?'LAST REPORT '+date(payload.checked_at):'NO SERVICE REPORT';
   el('lastChecked').textContent=Number.isFinite(checked)?date(payload.checked_at)+(stale?' · Stale':delayed?' · Delayed':''):'No report';
   el('componentList').innerHTML=ids.map(id=>{
-   const s=states[id],p=raw[id],h=history(version?payload.service_state_daily||{}:{},id),total=h.ok+h.fail;
-   const complete=p?.coverage_complete===true;
-   const metric=complete&&total?(100*h.ok/total).toFixed(2)+'% sampled operational':'Insufficient data';
+   const s=states[id],p=raw[id],h=history(version?payload.scoped_availability_daily||{}:{},id),total=h.ok+h.fail;
+   
+   const metric=total?(100*h.ok/total).toFixed(2)+'% sampled operational':'Insufficient data';
    return '<article class="component service-card"><div class="service-heading"><div class="component-title"><span class="state-dot '+s+'" aria-hidden="true"></span><strong>'+esc(names[id])+'</strong></div><span class="state-label '+s+'">'+esc(delayed?'Monitoring delayed':labels[s])+'</span></div><p>'+esc(descriptions[id])+'</p><div class="history-row"><div class="history-top"><span>Availability history</span><strong class="service-metric">'+metric+'</strong></div><div class="days" role="img" aria-label="'+esc(names[id]+': '+h.summary)+'">'+h.cells+'</div><div class="history-foot"><span class="history-window-desktop">90-day window</span><span class="history-window-mobile">Last 30 days · 90-day totals</span><span>'+h.days+' observed '+(h.days===1?'day':'days')+'</span></div></div></article>';
   }).join('');
   const archived=version?payload.archived_monitoring?.daily:payload.daily;
