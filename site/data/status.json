@@ -1,19 +1,19 @@
 {
   "schema": 1,
-  "checked_at": "2026-11-26T03:11:51Z",
+  "checked_at": "2026-11-26T12:43:54Z",
   "first_checked_at": "2026-10-24T03:34:31Z",
   "components": {
     "website": {
-      "state": "degraded",
-      "fail_streak": 1,
+      "state": "outage",
+      "fail_streak": 2,
       "success_streak": 0,
       "last_success_at": "2026-11-25T20:41:04Z"
     },
     "access": {
       "state": "operational",
       "fail_streak": 0,
-      "success_streak": 883,
-      "last_success_at": "2026-11-26T03:11:51Z"
+      "success_streak": 884,
+      "last_success_at": "2026-11-26T12:43:54Z"
     },
     "requests": {
       "state": "degraded",
@@ -22,26 +22,26 @@
       "last_success_at": "2026-11-04T14:29:10Z"
     },
     "operating_picture": {
-      "last_success_at": "2026-11-26T03:11:51Z",
-      "success_streak": 416,
+      "last_success_at": "2026-11-26T12:43:54Z",
+      "success_streak": 417,
       "fail_streak": 0,
       "state": "operational"
     },
     "standards": {
-      "last_success_at": "2026-11-26T03:11:51Z",
-      "success_streak": 416,
+      "last_success_at": "2026-11-26T12:43:54Z",
+      "success_streak": 417,
       "fail_streak": 0,
       "state": "operational"
     },
     "signup": {
-      "last_success_at": "2026-11-26T03:11:51Z",
-      "success_streak": 416,
+      "last_success_at": "2026-11-26T12:43:54Z",
+      "success_streak": 417,
       "fail_streak": 0,
       "state": "operational"
     },
     "enterprise": {
-      "last_success_at": "2026-11-26T03:11:51Z",
-      "success_streak": 416,
+      "last_success_at": "2026-11-26T12:43:54Z",
+      "success_streak": 417,
       "fail_streak": 0,
       "state": "operational"
     }
@@ -780,26 +780,26 @@
     "2026-11-26": {
       "website": {
         "ok": 0,
-        "fail": 1
+        "fail": 2
       },
       "operating_picture": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "standards": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "signup": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "enterprise": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "access": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       }
     }
@@ -832,7 +832,7 @@
       "origin": "monitoring-schedule",
       "component": "monitoring",
       "title": "Status monitoring — scheduled report delays",
-      "detail": "No new monitoring report was recorded between 2026-11-25T20:41:04Z and 2026-11-26T03:11:51Z (391 minutes). This is a monitoring-reporting gap, not evidence that a monitored service was down.",
+      "detail": "No new monitoring report was recorded between 2026-11-26T03:11:51Z and 2026-11-26T12:43:54Z (572 minutes). This is a monitoring-reporting gap, not evidence that a monitored service was down.",
       "status": "identified",
       "started_at": "2026-11-16T08:36:31Z",
       "ended_at": null,
@@ -976,6 +976,28 @@
           "at": "2026-11-26T03:11:51Z",
           "status": "identified",
           "detail": "No new monitoring report was recorded between 2026-11-25T20:41:04Z and 2026-11-26T03:11:51Z (391 minutes). This is a monitoring-reporting gap, not evidence that a monitored service was down."
+        },
+        {
+          "at": "2026-11-26T12:43:54Z",
+          "status": "identified",
+          "detail": "No new monitoring report was recorded between 2026-11-26T03:11:51Z and 2026-11-26T12:43:54Z (572 minutes). This is a monitoring-reporting gap, not evidence that a monitored service was down."
+        }
+      ]
+    },
+    {
+      "id": "f1060d94-f84",
+      "origin": "monitor",
+      "component": "website",
+      "title": "Public website — availability disruption",
+      "detail": "Repeated external requests did not return the expected page. Investigation is in progress.",
+      "status": "investigating",
+      "started_at": "2026-11-26T12:43:54Z",
+      "ended_at": null,
+      "updates": [
+        {
+          "at": "2026-11-26T12:43:54Z",
+          "status": "investigating",
+          "detail": "Repeated external availability checks failed."
         }
       ]
     }
