@@ -1,39 +1,39 @@
 {
   "schema": 1,
-  "checked_at": "2026-11-26T22:29:11Z",
+  "checked_at": "2026-11-26T22:32:14Z",
   "first_checked_at": "2026-11-26T22:29:11Z",
   "components": {
     "platform": {
       "state": "unknown",
-      "checked_at": "2026-11-26T22:29:11Z",
+      "checked_at": "2026-11-26T22:32:14Z",
       "required_passed": 1,
       "required_total": 1,
       "coverage_complete": false
     },
     "identity": {
       "state": "unknown",
-      "checked_at": "2026-11-26T22:29:11Z",
+      "checked_at": "2026-11-26T22:32:14Z",
       "required_passed": 2,
       "required_total": 2,
       "coverage_complete": false
     },
     "academy": {
       "state": "unknown",
-      "checked_at": "2026-11-26T22:29:11Z",
+      "checked_at": "2026-11-26T22:32:14Z",
       "required_passed": 2,
       "required_total": 2,
       "coverage_complete": false
     },
     "public_website": {
       "state": "operational",
-      "checked_at": "2026-11-26T22:29:11Z",
+      "checked_at": "2026-11-26T22:32:14Z",
       "required_passed": 1,
       "required_total": 1,
       "coverage_complete": true
     },
     "investor": {
       "state": "unknown",
-      "checked_at": "2026-11-26T22:29:11Z",
+      "checked_at": "2026-11-26T22:32:14Z",
       "required_passed": 2,
       "required_total": 2,
       "coverage_complete": false
@@ -42,23 +42,23 @@
   "daily": {
     "2026-11-26": {
       "platform": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "identity": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "academy": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "public_website": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "investor": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       }
     }
@@ -1106,129 +1106,129 @@
   "probes": {
     "workspace": {
       "passed": true,
-      "latency_ms": 417,
-      "checked_at": "2026-11-26T22:29:11Z",
+      "latency_ms": 315,
+      "checked_at": "2026-11-26T22:32:14Z",
       "fail_streak": 0,
-      "success_streak": 1
+      "success_streak": 2
     },
     "login": {
       "passed": true,
-      "latency_ms": 276,
-      "checked_at": "2026-11-26T22:29:11Z",
+      "latency_ms": 663,
+      "checked_at": "2026-11-26T22:32:14Z",
       "fail_streak": 0,
-      "success_streak": 1
+      "success_streak": 2
     },
     "session": {
       "passed": true,
-      "latency_ms": 477,
-      "checked_at": "2026-11-26T22:29:11Z",
+      "latency_ms": 531,
+      "checked_at": "2026-11-26T22:32:14Z",
       "fail_streak": 0,
-      "success_streak": 1
+      "success_streak": 2
     },
     "registration": {
       "passed": true,
-      "latency_ms": 442,
-      "checked_at": "2026-11-26T22:29:11Z",
+      "latency_ms": 499,
+      "checked_at": "2026-11-26T22:32:14Z",
       "fail_streak": 0,
-      "success_streak": 1
+      "success_streak": 2
     },
     "academy_home": {
       "passed": true,
-      "latency_ms": 473,
-      "checked_at": "2026-11-26T22:29:11Z",
+      "latency_ms": 319,
+      "checked_at": "2026-11-26T22:32:14Z",
       "fail_streak": 0,
-      "success_streak": 1
+      "success_streak": 2
     },
     "academy_lesson": {
       "passed": true,
-      "latency_ms": 258,
-      "checked_at": "2026-11-26T22:29:11Z",
+      "latency_ms": 239,
+      "checked_at": "2026-11-26T22:32:14Z",
       "fail_streak": 0,
-      "success_streak": 1
+      "success_streak": 2
     },
     "website_home": {
       "passed": true,
-      "latency_ms": 274,
-      "checked_at": "2026-11-26T22:29:11Z",
+      "latency_ms": 116,
+      "checked_at": "2026-11-26T22:32:14Z",
       "fail_streak": 0,
-      "success_streak": 1
+      "success_streak": 2
     },
     "inquiry_config": {
       "passed": true,
-      "latency_ms": 141,
-      "checked_at": "2026-11-26T22:29:11Z",
+      "latency_ms": 80,
+      "checked_at": "2026-11-26T22:32:14Z",
       "fail_streak": 0,
-      "success_streak": 1
+      "success_streak": 2
     },
     "investor_home": {
       "passed": true,
-      "latency_ms": 148,
-      "checked_at": "2026-11-26T22:29:11Z",
+      "latency_ms": 122,
+      "checked_at": "2026-11-26T22:32:14Z",
       "fail_streak": 0,
-      "success_streak": 1
+      "success_streak": 2
     },
     "investor_session": {
       "passed": true,
-      "latency_ms": 115,
-      "checked_at": "2026-11-26T22:29:11Z",
+      "latency_ms": 167,
+      "checked_at": "2026-11-26T22:32:14Z",
       "fail_streak": 0,
-      "success_streak": 1
+      "success_streak": 2
     },
     "investor_vault": {
       "passed": true,
-      "latency_ms": 94,
-      "checked_at": "2026-11-26T22:29:11Z",
+      "latency_ms": 207,
+      "checked_at": "2026-11-26T22:32:14Z",
       "fail_streak": 0,
-      "success_streak": 1
+      "success_streak": 2
     }
   },
   "probe_daily": {
     "2026-11-26": {
       "workspace": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "login": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "session": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "registration": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "academy_home": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "academy_lesson": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "website_home": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "inquiry_config": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "investor_home": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "investor_session": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       },
       "investor_vault": {
-        "ok": 1,
+        "ok": 2,
         "fail": 0
       }
     }
   },
-  "published_at": "2026-11-26T22:29:11Z"
+  "published_at": "2026-11-26T22:32:14Z"
 }
