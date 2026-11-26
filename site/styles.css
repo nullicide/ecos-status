@@ -381,3 +381,16 @@
  .component-target{overflow-wrap:anywhere}
  .timeline-main{min-width:0;overflow-wrap:anywhere}
 }
+
+/* IRI-001: service utility, no page-directory or marketing chrome. */
+.intro{padding-block:32px 20px}.intro h1{font-size:clamp(34px,5vw,52px)}
+.section{padding-block:28px}.intro-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+.component-title strong{font-size:16px;font-weight:650}.component-title{min-width:0}
+.methodology{margin-top:18px;padding:16px;border:1px solid var(--line);color:#c5d8e4;overflow-wrap:anywhere}
+.methodology summary{cursor:pointer;font-weight:650;min-height:32px}
+.methodology p{font-size:13px;line-height:1.6;margin:8px 0}.methodology h3{font-size:15px;margin:18px 0 6px}
+.state-label.partial,.state-label.maintenance,.state-label.unavailable{color:#ffe1a0}
+.state-dot.partial,.state-dot.maintenance,.state-dot.unavailable{background:#d7a852}
+.global-status[data-state=partial],.global-status[data-state=maintenance],.global-status[data-state=unavailable]{border-color:#a78344}
+.footer-lower{gap:16px;flex-wrap:wrap;line-height:1.6}.footer-lower span:last-child{max-width:680px}
+@media(max-width:680px){.site-header .nav-inner{flex-wrap:nowrap;gap:8px}.site-header .nav-links{flex:0 0 auto;width:auto;justify-content:flex-end}.site-header .nav-links a:not(.back-link){display:none}.intro-metrics{grid-template-columns:minmax(0,1fr)}.component{gap:12px}.component-title strong{overflow-wrap:anywhere}.state-label{max-width:100%;white-space:normal}}
