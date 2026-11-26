@@ -1,19 +1,19 @@
 {
   "schema": 1,
-  "checked_at": "2026-11-26T21:59:20Z",
+  "checked_at": "2026-11-26T22:09:57Z",
   "first_checked_at": "2026-10-24T03:34:31Z",
   "components": {
     "website": {
-      "state": "outage",
-      "fail_streak": 4,
-      "success_streak": 0,
-      "last_success_at": "2026-11-25T20:41:04Z"
+      "state": "degraded",
+      "fail_streak": 0,
+      "success_streak": 1,
+      "last_success_at": "2026-11-26T22:09:57Z"
     },
     "access": {
       "state": "degraded",
-      "fail_streak": 1,
-      "success_streak": 0,
-      "last_success_at": "2026-11-26T16:41:55Z"
+      "fail_streak": 0,
+      "success_streak": 1,
+      "last_success_at": "2026-11-26T22:09:57Z"
     },
     "requests": {
       "state": "degraded",
@@ -22,28 +22,28 @@
       "last_success_at": "2026-11-04T14:29:10Z"
     },
     "operating_picture": {
-      "last_success_at": "2026-11-26T16:41:55Z",
-      "success_streak": 0,
-      "fail_streak": 1,
+      "last_success_at": "2026-11-26T22:09:57Z",
+      "success_streak": 1,
+      "fail_streak": 0,
       "state": "degraded"
     },
     "standards": {
-      "last_success_at": "2026-11-26T21:59:20Z",
-      "success_streak": 419,
+      "last_success_at": "2026-11-26T22:09:57Z",
+      "success_streak": 420,
       "fail_streak": 0,
       "state": "operational"
     },
     "signup": {
-      "last_success_at": "2026-11-26T21:59:20Z",
-      "success_streak": 419,
+      "last_success_at": "2026-11-26T22:09:57Z",
+      "success_streak": 420,
       "fail_streak": 0,
       "state": "operational"
     },
     "enterprise": {
-      "last_success_at": "2026-11-26T12:43:54Z",
-      "success_streak": 0,
-      "fail_streak": 2,
-      "state": "outage"
+      "last_success_at": "2026-11-26T22:09:57Z",
+      "success_streak": 1,
+      "fail_streak": 0,
+      "state": "degraded"
     }
   },
   "daily": {
@@ -779,27 +779,27 @@
     },
     "2026-11-26": {
       "website": {
-        "ok": 0,
+        "ok": 1,
         "fail": 4
       },
       "operating_picture": {
-        "ok": 3,
+        "ok": 4,
         "fail": 1
       },
       "standards": {
-        "ok": 4,
+        "ok": 5,
         "fail": 0
       },
       "signup": {
-        "ok": 4,
+        "ok": 5,
         "fail": 0
       },
       "enterprise": {
-        "ok": 2,
+        "ok": 3,
         "fail": 2
       },
       "access": {
-        "ok": 3,
+        "ok": 4,
         "fail": 1
       }
     }
