@@ -20,7 +20,8 @@ on:
       - '.github/workflows/status-v2.yml'
 jobs:
   public-monitor-tests:
-    runs-on: ubuntu-latest
+    # Pin OS supported by the locked Playwright version.
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     steps:
