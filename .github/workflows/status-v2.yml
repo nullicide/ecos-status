@@ -12,6 +12,11 @@ on:
       - '.github/workflows/status-v2.yml'
   pull_request:
     paths:
+      - 'scripts/verify_production.py'
+      - 'scripts/synthetic_workspace.py'
+      - 'tests/test_publication.py'
+      - 'tests/test_synthetic_workspace.py'
+      - '.github/workflows/synthetic-workspace.yml'
       - 'monitor.py'
       - 'reliability.py'
       - 'tests/test_reliability.py'
