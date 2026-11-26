@@ -9,15 +9,15 @@
  const el=id=>document.getElementById(id);
  const date=s=>{const d=new Date(s||'');return Number.isFinite(d.getTime())?d.toLocaleString(undefined,{year:'numeric',month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'}):'Not available'};
  function history(rows,id){
-  let ok=0,fail=0,days=0;const cells=[];
+  let ok=0,fail=0,days=0;const cells=[],observations=[];
   for(let n=89;n>=0;n--){
    const d=new Date();d.setUTCDate(d.getUTCDate()-n);const k=d.toISOString().slice(0,10);
    const row=rows[k]?.[id]||{},a=Number(row.ok||0),b=Number(row.fail||0);
-   ok+=a;fail+=b;if(a+b)days++;
+   ok+=a;fail+=b;if(a+b){days++;observations.push(k+': '+a+' passed, '+b+' failed');}
    const label=k+': '+(a+b?a+' passed, '+b+' failed':'no observations');
-   cells.push('<span class="day '+(!a&&!b?'none':!b?'good':!a?'bad':'partial')+'" title="'+esc(label)+'" aria-label="'+esc(label)+'"></span>');
+   cells.push('<span class="day '+(!a&&!b?'none':!b?'good':!a?'bad':'partial')+'" title="'+esc(label)+'"></span>');
   }
-  return {ok,fail,days,cells:cells.join('')};
+  return {ok,fail,days,cells:cells.join(''),summary:observations.length?observations.join('; ')+'; other dates unobserved':'No observations'};
  }
  function incident(i,archived=false){
   const state=i.ended_at?'Resolved':archived?'Historical / retired check':(i.status||'Investigating');
@@ -45,7 +45,7 @@
   const all=Object.values(states);
   const global=stale||delayed?'unavailable':all.includes('outage')?'outage':all.includes('partial')?'partial':all.includes('degraded')?'degraded':all.includes('maintenance')?'maintenance':all.every(s=>s==='operational')?'operational':'unknown';
   const box=el('globalStatus');box.dataset.state=global;
-  el('globalTitle').textContent=delayed?'Monitoring delayed':global==='unknown'?(fresh?'Limited service verification':'Monitoring not yet verified'):global==='operational'?'All verified services operational':labels[global];
+  el('globalTitle').textContent=delayed?'Monitoring delayed':global==='unknown'?(fresh?'Limited service verification':'Monitoring not yet verified'):global==='operational'?'All verified services operational':global==='outage'?'Service disruption detected':labels[global];
   el('globalDetail').textContent=!fresh?(Number.isFinite(checked)?'Last report is not current. Missing observations do not indicate service downtime.':'No service-level report is available yet.'):'Current external observations; untested functions remain unknown. See service details.';
   el('globalTime').textContent=Number.isFinite(checked)?'LAST REPORT '+date(payload.checked_at):'NO SERVICE REPORT';
   el('lastChecked').textContent=Number.isFinite(checked)?date(payload.checked_at)+(stale?' · Stale':delayed?' · Delayed':''):'No report';
@@ -55,7 +55,7 @@
   }).join('');
   el('historyList').innerHTML=ids.map(id=>{
    const h=history(version?payload.daily||{}:{},id),total=h.ok+h.fail;
-   return '<div class="history-row"><div class="history-top"><strong>'+esc(names[id])+'</strong><span class="history-pct">'+(total?(100*h.ok/total).toFixed(2)+'%':'—')+'</span></div><p class="history-description">'+(total?h.ok+'/'+total+' observed check sets passed':'No service check sets recorded')+'</p><div class="days" role="img" aria-label="90-day sampled check history for '+esc(names[id])+'">'+h.cells+'</div><div class="history-foot"><span class="history-window-desktop">90-day window</span><span class="history-window-mobile">Last 30 days · 90-day totals</span><span>'+h.days+' observed days</span></div></div>';
+   return '<div class="history-row"><div class="history-top"><strong>'+esc(names[id])+'</strong><span class="history-pct">'+(total?(100*h.ok/total).toFixed(2)+'%':'—')+'</span></div><p class="history-description">'+(total?h.ok+'/'+total+' observed check sets passed':'No service check sets recorded')+'</p><div class="days" role="img" aria-label="90-day sampled check history for '+esc(names[id]+'. '+h.summary)+'">'+h.cells+'</div><div class="history-foot"><span class="history-window-desktop">90-day window</span><span class="history-window-mobile">Last 30 days · 90-day totals</span><span>'+h.days+' observed days</span></div></div>';
   }).join('');
   const archived=version?payload.archived_monitoring?.daily:payload.daily;
   const sums={};for(const row of Object.values(archived||{}))for(const [id,count] of Object.entries(row)){const s=sums[id]||={ok:0,fail:0};s.ok+=Number(count.ok||0);s.fail+=Number(count.fail||0);}
