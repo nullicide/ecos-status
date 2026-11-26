@@ -1,39 +1,39 @@
 {
   "schema": 1,
-  "checked_at": "2026-11-26T23:11:08Z",
+  "checked_at": "2026-11-26T23:14:08Z",
   "first_checked_at": "2026-11-26T22:29:11Z",
   "components": {
     "platform": {
       "state": "operational",
-      "checked_at": "2026-11-26T23:11:08Z",
+      "checked_at": "2026-11-26T23:14:08Z",
       "required_passed": 1,
       "required_total": 1,
       "coverage_complete": false
     },
     "identity": {
       "state": "operational",
-      "checked_at": "2026-11-26T23:11:08Z",
+      "checked_at": "2026-11-26T23:14:08Z",
       "required_passed": 2,
       "required_total": 2,
       "coverage_complete": false
     },
     "academy": {
       "state": "operational",
-      "checked_at": "2026-11-26T23:11:08Z",
+      "checked_at": "2026-11-26T23:14:08Z",
       "required_passed": 2,
       "required_total": 2,
       "coverage_complete": false
     },
     "public_website": {
       "state": "operational",
-      "checked_at": "2026-11-26T23:11:08Z",
+      "checked_at": "2026-11-26T23:14:08Z",
       "required_passed": 1,
       "required_total": 1,
       "coverage_complete": true
     },
     "investor": {
       "state": "operational",
-      "checked_at": "2026-11-26T23:11:08Z",
+      "checked_at": "2026-11-26T23:14:08Z",
       "required_passed": 2,
       "required_total": 2,
       "coverage_complete": false
@@ -42,23 +42,23 @@
   "daily": {
     "2026-11-26": {
       "platform": {
-        "ok": 5,
+        "ok": 6,
         "fail": 0
       },
       "identity": {
-        "ok": 5,
+        "ok": 6,
         "fail": 0
       },
       "academy": {
-        "ok": 5,
+        "ok": 6,
         "fail": 0
       },
       "public_website": {
-        "ok": 5,
+        "ok": 6,
         "fail": 0
       },
       "investor": {
-        "ok": 5,
+        "ok": 6,
         "fail": 0
       }
     }
@@ -1106,131 +1106,131 @@
   "probes": {
     "workspace": {
       "passed": true,
-      "latency_ms": 385,
-      "checked_at": "2026-11-26T23:11:08Z",
+      "latency_ms": 384,
+      "checked_at": "2026-11-26T23:14:08Z",
       "fail_streak": 0,
-      "success_streak": 5
+      "success_streak": 6
     },
     "login": {
       "passed": true,
-      "latency_ms": 460,
-      "checked_at": "2026-11-26T23:11:08Z",
+      "latency_ms": 431,
+      "checked_at": "2026-11-26T23:14:08Z",
       "fail_streak": 0,
-      "success_streak": 5
+      "success_streak": 6
     },
     "session": {
       "passed": true,
-      "latency_ms": 633,
-      "checked_at": "2026-11-26T23:11:08Z",
+      "latency_ms": 547,
+      "checked_at": "2026-11-26T23:14:08Z",
       "fail_streak": 0,
-      "success_streak": 5
+      "success_streak": 6
     },
     "registration": {
       "passed": true,
-      "latency_ms": 579,
-      "checked_at": "2026-11-26T23:11:08Z",
+      "latency_ms": 535,
+      "checked_at": "2026-11-26T23:14:08Z",
       "fail_streak": 0,
-      "success_streak": 5
+      "success_streak": 6
     },
     "academy_home": {
       "passed": true,
-      "latency_ms": 301,
-      "checked_at": "2026-11-26T23:11:08Z",
+      "latency_ms": 328,
+      "checked_at": "2026-11-26T23:14:08Z",
       "fail_streak": 0,
-      "success_streak": 5
+      "success_streak": 6
     },
     "academy_lesson": {
       "passed": true,
-      "latency_ms": 261,
-      "checked_at": "2026-11-26T23:11:08Z",
+      "latency_ms": 326,
+      "checked_at": "2026-11-26T23:14:08Z",
       "fail_streak": 0,
-      "success_streak": 5
+      "success_streak": 6
     },
     "website_home": {
       "passed": true,
-      "latency_ms": 140,
-      "checked_at": "2026-11-26T23:11:08Z",
+      "latency_ms": 185,
+      "checked_at": "2026-11-26T23:14:08Z",
       "fail_streak": 0,
-      "success_streak": 5
+      "success_streak": 6
     },
     "inquiry_config": {
       "passed": true,
-      "latency_ms": 93,
-      "checked_at": "2026-11-26T23:11:08Z",
+      "latency_ms": 121,
+      "checked_at": "2026-11-26T23:14:08Z",
       "fail_streak": 0,
-      "success_streak": 5
+      "success_streak": 6
     },
     "investor_home": {
       "passed": true,
-      "latency_ms": 268,
-      "checked_at": "2026-11-26T23:11:08Z",
+      "latency_ms": 173,
+      "checked_at": "2026-11-26T23:14:08Z",
       "fail_streak": 0,
-      "success_streak": 5
+      "success_streak": 6
     },
     "investor_session": {
       "passed": true,
-      "latency_ms": 103,
-      "checked_at": "2026-11-26T23:11:08Z",
+      "latency_ms": 109,
+      "checked_at": "2026-11-26T23:14:08Z",
       "fail_streak": 0,
-      "success_streak": 5
+      "success_streak": 6
     },
     "investor_vault": {
       "passed": true,
-      "latency_ms": 93,
-      "checked_at": "2026-11-26T23:11:08Z",
+      "latency_ms": 82,
+      "checked_at": "2026-11-26T23:14:08Z",
       "fail_streak": 0,
-      "success_streak": 5
+      "success_streak": 6
     }
   },
   "probe_daily": {
     "2026-11-26": {
       "workspace": {
-        "ok": 5,
+        "ok": 6,
         "fail": 0
       },
       "login": {
-        "ok": 5,
+        "ok": 6,
         "fail": 0
       },
       "session": {
-        "ok": 5,
+        "ok": 6,
         "fail": 0
       },
       "registration": {
-        "ok": 5,
+        "ok": 6,
         "fail": 0
       },
       "academy_home": {
-        "ok": 5,
+        "ok": 6,
         "fail": 0
       },
       "academy_lesson": {
-        "ok": 5,
+        "ok": 6,
         "fail": 0
       },
       "website_home": {
-        "ok": 5,
+        "ok": 6,
         "fail": 0
       },
       "inquiry_config": {
-        "ok": 5,
+        "ok": 6,
         "fail": 0
       },
       "investor_home": {
-        "ok": 5,
+        "ok": 6,
         "fail": 0
       },
       "investor_session": {
-        "ok": 5,
+        "ok": 6,
         "fail": 0
       },
       "investor_vault": {
-        "ok": 5,
+        "ok": 6,
         "fail": 0
       }
     }
   },
-  "published_at": "2026-11-26T23:11:08Z",
+  "published_at": "2026-11-26T23:14:08Z",
   "service_state_daily": {
     "2026-11-26": {
       "platform": {
@@ -1253,19 +1253,19 @@
   "scoped_availability_daily": {
     "2026-11-26": {
       "platform": {
-        "operational": 1
+        "operational": 2
       },
       "identity": {
-        "operational": 1
+        "operational": 2
       },
       "academy": {
-        "operational": 1
+        "operational": 2
       },
       "public_website": {
-        "operational": 1
+        "operational": 2
       },
       "investor": {
-        "operational": 1
+        "operational": 2
       }
     }
   }
