@@ -1,0 +1,25 @@
+name: ECOS isolated synthetic workspace (manual)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  fixture-read:
+    if: ${{ github.ref == 'refs/heads/main' && vars.ECOS_SYNTHETIC_ENABLED == 'true' }}
+    environment: ecos-synthetic
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Read isolated workspace only
+        env:
+          ECOS_SYNTHETIC_ENABLED: ${{ vars.ECOS_SYNTHETIC_ENABLED }}
+          ECOS_SYNTHETIC_APP_COOKIE: ${{ secrets.ECOS_SYNTHETIC_APP_COOKIE }}
+          ECOS_SYNTHETIC_ORG_ID: ${{ secrets.ECOS_SYNTHETIC_ORG_ID }}
+          ECOS_SYNTHETIC_PROJECT_ID: ${{ secrets.ECOS_SYNTHETIC_PROJECT_ID }}
+          ECOS_SYNTHETIC_EMAIL: ${{ secrets.ECOS_SYNTHETIC_EMAIL }}
+        run: python scripts/synthetic_workspace.py
