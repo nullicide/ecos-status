@@ -40,5 +40,10 @@ const ids=['platform','identity','academy','public_website','investor'];
   await p.goto('http://127.0.0.1:8765/',{waitUntil:'networkidle'});
   assert.equal(await p.locator('#globalStatus').getAttribute('data-state'),'unavailable');
   await p.close();
+  const missing=await browser.newPage();
+  await missing.route('**/data/status.json*',r=>r.abort());
+  await missing.goto('http://127.0.0.1:8765/',{waitUntil:'networkidle'});
+  assert.equal(await missing.locator('#globalStatus').getAttribute('data-state'),'unavailable');
+  await missing.close();
  }finally{await browser.close()}
 })().catch(e=>{console.error(e);process.exitCode=1});

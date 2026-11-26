@@ -32,6 +32,7 @@ def verify():
         assert -300<=age<=1500, "Monitoring report is not current"
         print("Verified report:",url,"at",data["checked_at"],"states:",{k:v["state"] for k,v in data["components"].items()})
     assert ET.fromstring(get(MIRROR+"feed.xml")).tag=="rss", "RSS invalid"
+    assert ET.fromstring(get(HOST+"feed.xml")).tag=="rss", "Original RSS endpoint unavailable"
     print("Verified independent RSS publication")
 
 if __name__=="__main__":

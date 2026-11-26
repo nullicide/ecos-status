@@ -37,16 +37,16 @@
   for(const id of ids){
    let state=raw[id]?.state||'unknown';
    if(!Object.hasOwn(labels,state))state='unknown';
-   if(!fresh)state=stale||delayed?'unavailable':'unknown';
+   if(!fresh)state=payload.unavailable||stale||delayed?'unavailable':'unknown';
    else if(active.some(i=>i.component===id&&i.origin==='manual')&&!['outage','partial'].includes(state))state='partial';
    else if(maintenance.some(m=>m.component===id&&Date.parse(m.starts_at)<=now)&&!['outage','partial'].includes(state))state='maintenance';
    states[id]=state;
   }
   const all=Object.values(states);
-  const global=stale||delayed?'unavailable':all.includes('outage')?'outage':all.includes('partial')?'partial':all.includes('degraded')?'degraded':all.includes('maintenance')?'maintenance':all.every(s=>s==='operational')?'operational':'unknown';
+  const global=payload.unavailable||stale||delayed?'unavailable':all.includes('outage')?'outage':all.includes('partial')?'partial':all.includes('degraded')?'degraded':all.includes('maintenance')?'maintenance':all.every(s=>s==='operational')?'operational':'unknown';
   const box=el('globalStatus');box.dataset.state=global;
   el('globalTitle').textContent=delayed?'Monitoring delayed':global==='unknown'?(fresh?'Limited service verification':'Monitoring not yet verified'):global==='operational'?'All verified services operational':global==='outage'?'Service disruption detected':labels[global];
-  el('globalDetail').textContent=!fresh?(Number.isFinite(checked)?'Last report is not current. Missing observations do not indicate service downtime.':'No service-level report is available yet.'):'Current external observations; untested functions remain unknown. See service details.';
+  el('globalDetail').textContent=!fresh?(Number.isFinite(checked)?'Last report is not current. Missing observations do not indicate service downtime.':payload.unavailable?'No monitoring source could be retrieved. Current service availability is unknown.':'No service-level report is available yet.'):'Current external observations; untested functions remain unknown. See service details.';
   el('globalTime').textContent=Number.isFinite(checked)?'LAST REPORT '+date(payload.checked_at):'NO SERVICE REPORT';
   el('lastChecked').textContent=Number.isFinite(checked)?date(payload.checked_at)+(stale?' · Stale':delayed?' · Delayed':''):'No report';
   el('componentList').innerHTML=ids.map(id=>{
@@ -82,7 +82,7 @@
   if(loading)return;loading=true;
   try{const reports=(await Promise.all(sources.map(fetchReport))).filter(Boolean);if(last)reports.push(last);
    reports.sort((a,b)=>(b.monitoring_version===2)-(a.monitoring_version===2)||Date.parse(b.published_at||b.checked_at)-Date.parse(a.published_at||a.checked_at));
-   last=reports[0]||null;render(last||{});
+   last=reports[0]||null;render(last||{unavailable:true});
   }finally{loading=false}
  }
  // RSS subscription disclosure: a feed reader subscribes, not this static website.
