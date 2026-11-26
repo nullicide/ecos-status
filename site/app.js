@@ -3,21 +3,22 @@
  const names={platform:'ECOS Platform',identity:'Identity & Access',academy:'ECOS Academy',public_website:'Public Website',investor:'Investor Portal',
   website:'Public website (retired check)',operating_picture:'Operating picture (retired check)',standards:'Standards (retired check)',signup:'Create account (retired check)',enterprise:'Project inquiry (retired check)',access:'Sign-in page (retired check)',requests:'Previous Request Access URL (retired)',monitoring:'Status monitoring'};
  const ids=['platform','identity','academy','public_website','investor'];
- const descriptions={platform:'Workspace access boundary; signed-in workflows not tested.',identity:'Sign-in surface and anonymous session response; sign-in and email transactions not tested.',academy:'Public learning delivery; learner records and assessments not tested.',public_website:'Public homepage delivery; forms and delivery are separately observed.',investor:'Portal and anonymous authorization boundary; signed-in access and document retrieval not tested.'};
+ const descriptions={platform:'Project workspaces',identity:'Account access and sign-in',academy:'Learning and assessments',public_website:'Public website delivery',investor:'Investor access and documents'};
  const labels={operational:'Operational',degraded:'Degraded performance',partial:'Partial outage',outage:'Major outage',maintenance:'Scheduled maintenance',unknown:'Not yet verified',unavailable:'Monitoring unavailable'};
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const el=id=>document.getElementById(id);
  const date=s=>{const d=new Date(s||'');return Number.isFinite(d.getTime())?d.toLocaleString(undefined,{year:'numeric',month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'}):'Not available'};
  function history(rows,id){
-  let ok=0,fail=0,days=0;const cells=[],observations=[];
+  let ok=0,fail=0,days=0,unknown=0;const cells=[],observations=[];
   for(let n=89;n>=0;n--){
    const d=new Date();d.setUTCDate(d.getUTCDate()-n);const k=d.toISOString().slice(0,10);
-   const row=rows[k]?.[id]||{},a=Number(row.ok||0),b=Number(row.fail||0);
-   ok+=a;fail+=b;if(a+b){days++;observations.push(k+': '+a+' passed, '+b+' failed');}
-   const label=k+': '+(a+b?a+' passed, '+b+' failed':'no observations');
-   cells.push('<span class="day '+(!a&&!b?'none':!b?'good':!a?'bad':'partial')+'" title="'+esc(label)+'"></span>');
+   const row=rows[k]?.[id]||{},a=Number(row.operational||0),b=Number(row.outage||0)+Number(row.partial||0),c=Number(row.degraded||0),u=Number(row.unknown||0);
+   ok+=a;fail+=b+c;unknown+=u;if(a+b+c)days++;
+   const label=k+': '+(a+b+c+u?a+' operational, '+c+' degraded, '+b+' outage, '+u+' unverified':'no verified observations');
+   if(a+b+c+u)observations.push(label);
+   cells.push('<span class="day '+(b?'bad':c?'partial':a&&!u?'good':'none')+'" title="'+esc(label)+'"></span>');
   }
-  return {ok,fail,days,cells:cells.join(''),summary:observations.length?observations.join('; ')+'; other dates unobserved':'No observations'};
+  return {ok,fail,days,unknown,cells:cells.join(''),summary:observations.join('; ')||'No verified observations'};
  }
  function incident(i,archived=false){
   const state=i.ended_at?'Resolved':archived?'Historical / retired check':(i.status||'Investigating');
@@ -50,12 +51,10 @@
   el('globalTime').textContent=Number.isFinite(checked)?'LAST REPORT '+date(payload.checked_at):'NO SERVICE REPORT';
   el('lastChecked').textContent=Number.isFinite(checked)?date(payload.checked_at)+(stale?' · Stale':delayed?' · Delayed':''):'No report';
   el('componentList').innerHTML=ids.map(id=>{
-   const s=states[id],p=raw[id],evidence=p&&Number.isInteger(p.required_total)?' · '+p.required_passed+'/'+p.required_total+' required checks passed':'';
-   return '<article class="component"><div><div class="component-title"><span class="state-dot '+s+'" aria-hidden="true"></span><strong>'+esc(names[id])+'</strong></div><p>'+esc(descriptions[id]+(fresh?evidence:''))+'</p></div><span class="state-label '+s+'">'+esc(delayed?'Monitoring delayed':labels[s])+'</span></article>';
-  }).join('');
-  el('historyList').innerHTML=ids.map(id=>{
-   const h=history(version?payload.daily||{}:{},id),total=h.ok+h.fail;
-   return '<div class="history-row"><div class="history-top"><strong>'+esc(names[id])+'</strong><span class="history-pct">'+(total?(100*h.ok/total).toFixed(2)+'%':'—')+'</span></div><p class="history-description">'+(total?h.ok+'/'+total+' observed check sets passed':'No service check sets recorded')+'</p><div class="days" role="img" aria-label="90-day sampled check history for '+esc(names[id]+'. '+h.summary)+'">'+h.cells+'</div><div class="history-foot"><span class="history-window-desktop">90-day window</span><span class="history-window-mobile">Last 30 days · 90-day totals</span><span>'+h.days+' observed days</span></div></div>';
+   const s=states[id],p=raw[id],h=history(version?payload.service_state_daily||{}:{},id),total=h.ok+h.fail;
+   const complete=p?.coverage_complete===true;
+   const metric=complete&&total?(100*h.ok/total).toFixed(2)+'% sampled operational':'Insufficient data';
+   return '<article class="component service-card"><div class="service-heading"><div class="component-title"><span class="state-dot '+s+'" aria-hidden="true"></span><strong>'+esc(names[id])+'</strong></div><span class="state-label '+s+'">'+esc(delayed?'Monitoring delayed':labels[s])+'</span></div><p>'+esc(descriptions[id])+'</p><div class="history-row"><div class="history-top"><span>Availability history</span><strong class="service-metric">'+metric+'</strong></div><div class="days" role="img" aria-label="'+esc(names[id]+': '+h.summary)+'">'+h.cells+'</div><div class="history-foot"><span class="history-window-desktop">90-day window</span><span class="history-window-mobile">Last 30 days · 90-day totals</span><span>'+h.days+' observed '+(h.days===1?'day':'days')+'</span></div></div></article>';
   }).join('');
   const archived=version?payload.archived_monitoring?.daily:payload.daily;
   const sums={};for(const row of Object.values(archived||{}))for(const [id,count] of Object.entries(row)){const s=sums[id]||={ok:0,fail:0};s.ok+=Number(count.ok||0);s.fail+=Number(count.fail||0);}
