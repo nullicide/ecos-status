@@ -3,19 +3,33 @@ import datetime as dt
 import json
 import time
 import urllib.request
+import urllib.parse
+import urllib.error
 import xml.etree.ElementTree as ET
 
 HOST="https://status.energycontrolos.com/"
 MIRROR="https://nullicide.github.io/ecos-status/"
 RAW="https://raw.githubusercontent.com/nullicide/ecos-status/main/site/data/status.json"
+RAW_RSS="https://raw.githubusercontent.com/nullicide/ecos-status/main/site/feed.xml"
 IDS={"platform","identity","academy","public_website","investor"}
 
 def get(url):
     sep="&" if "?" in url else "?"
     req=urllib.request.Request(url+sep+"release="+str(time.time_ns()),headers={"Cache-Control":"no-cache","User-Agent":"ECOS-IRI001-release-check"})
-    with urllib.request.urlopen(req,timeout=15) as res:
-        if res.status!=200: raise RuntimeError("Unexpected HTTP status")
-        return res.read(2_000_000).decode("utf-8")
+    def host(value):
+        return urllib.parse.urlsplit(value).hostname
+    try:
+        with urllib.request.urlopen(req,timeout=15) as res:
+            final=res.geturl()
+            # A mirror redirecting to the primary host cannot prove independence.
+            allowed={host(url)}
+            if url==HOST+"feed.xml": allowed.add(host(RAW_RSS))
+            if host(final) not in allowed:
+                raise RuntimeError("Unexpected final host: "+str(host(final)))
+            if res.status!=200: raise RuntimeError("Unexpected HTTP status")
+            return res.read(2_000_000).decode("utf-8")
+    except urllib.error.HTTPError as error:
+        raise RuntimeError("HTTP "+str(error.code)+" at final host "+str(host(error.geturl()))) from None
 
 def verify_shell(origin):
     html=get(origin)
@@ -40,6 +54,7 @@ def verify():
         ("mirror shell",verify_shell,MIRROR),
         ("canonical report",verify_report,RAW),
         ("mirror report",verify_report,MIRROR+"data/service-status-v2.json"),
+        ("raw RSS",verify_rss,RAW_RSS),
         ("mirror RSS",verify_rss,MIRROR+"feed.xml"),
         ("public RSS",verify_rss,HOST+"feed.xml"),
     ]
