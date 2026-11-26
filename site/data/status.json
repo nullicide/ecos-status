@@ -1,806 +1,65 @@
 {
   "schema": 1,
-  "checked_at": "2026-11-26T22:09:57Z",
-  "first_checked_at": "2026-10-24T03:34:31Z",
+  "checked_at": "2026-11-26T22:29:11Z",
+  "first_checked_at": "2026-11-26T22:29:11Z",
   "components": {
-    "website": {
-      "state": "degraded",
-      "fail_streak": 0,
-      "success_streak": 1,
-      "last_success_at": "2026-11-26T22:09:57Z"
+    "platform": {
+      "state": "unknown",
+      "checked_at": "2026-11-26T22:29:11Z",
+      "required_passed": 1,
+      "required_total": 1,
+      "coverage_complete": false
     },
-    "access": {
-      "state": "degraded",
-      "fail_streak": 0,
-      "success_streak": 1,
-      "last_success_at": "2026-11-26T22:09:57Z"
+    "identity": {
+      "state": "unknown",
+      "checked_at": "2026-11-26T22:29:11Z",
+      "required_passed": 2,
+      "required_total": 2,
+      "coverage_complete": false
     },
-    "requests": {
-      "state": "degraded",
-      "fail_streak": 1,
-      "success_streak": 0,
-      "last_success_at": "2026-11-04T14:29:10Z"
+    "academy": {
+      "state": "unknown",
+      "checked_at": "2026-11-26T22:29:11Z",
+      "required_passed": 2,
+      "required_total": 2,
+      "coverage_complete": false
     },
-    "operating_picture": {
-      "last_success_at": "2026-11-26T22:09:57Z",
-      "success_streak": 1,
-      "fail_streak": 0,
-      "state": "degraded"
+    "public_website": {
+      "state": "operational",
+      "checked_at": "2026-11-26T22:29:11Z",
+      "required_passed": 1,
+      "required_total": 1,
+      "coverage_complete": true
     },
-    "standards": {
-      "last_success_at": "2026-11-26T22:09:57Z",
-      "success_streak": 420,
-      "fail_streak": 0,
-      "state": "operational"
-    },
-    "signup": {
-      "last_success_at": "2026-11-26T22:09:57Z",
-      "success_streak": 420,
-      "fail_streak": 0,
-      "state": "operational"
-    },
-    "enterprise": {
-      "last_success_at": "2026-11-26T22:09:57Z",
-      "success_streak": 1,
-      "fail_streak": 0,
-      "state": "degraded"
+    "investor": {
+      "state": "unknown",
+      "checked_at": "2026-11-26T22:29:11Z",
+      "required_passed": 2,
+      "required_total": 2,
+      "coverage_complete": false
     }
   },
   "daily": {
-    "2026-10-24": {
-      "website": {
-        "ok": 56,
-        "fail": 0
-      },
-      "access": {
-        "ok": 56,
-        "fail": 0
-      },
-      "requests": {
-        "ok": 56,
-        "fail": 0
-      }
-    },
-    "2026-10-25": {
-      "website": {
-        "ok": 59,
-        "fail": 0
-      },
-      "access": {
-        "ok": 59,
-        "fail": 0
-      },
-      "requests": {
-        "ok": 59,
-        "fail": 0
-      }
-    },
-    "2026-10-26": {
-      "website": {
-        "ok": 38,
-        "fail": 0
-      },
-      "access": {
-        "ok": 38,
-        "fail": 0
-      },
-      "requests": {
-        "ok": 38,
-        "fail": 0
-      }
-    },
-    "2026-10-27": {
-      "website": {
-        "ok": 45,
-        "fail": 0
-      },
-      "access": {
-        "ok": 45,
-        "fail": 0
-      },
-      "requests": {
-        "ok": 45,
-        "fail": 0
-      }
-    },
-    "2026-10-28": {
-      "website": {
-        "ok": 38,
-        "fail": 0
-      },
-      "access": {
-        "ok": 38,
-        "fail": 0
-      },
-      "requests": {
-        "ok": 38,
-        "fail": 0
-      }
-    },
-    "2026-10-29": {
-      "website": {
-        "ok": 34,
-        "fail": 0
-      },
-      "access": {
-        "ok": 34,
-        "fail": 0
-      },
-      "requests": {
-        "ok": 34,
-        "fail": 0
-      }
-    },
-    "2026-10-30": {
-      "website": {
-        "ok": 35,
-        "fail": 0
-      },
-      "access": {
-        "ok": 35,
-        "fail": 0
-      },
-      "requests": {
-        "ok": 35,
-        "fail": 0
-      }
-    },
-    "2026-10-31": {
-      "website": {
-        "ok": 42,
-        "fail": 0
-      },
-      "access": {
-        "ok": 42,
-        "fail": 0
-      },
-      "requests": {
-        "ok": 42,
-        "fail": 0
-      }
-    },
-    "2026-11-01": {
-      "website": {
-        "ok": 40,
-        "fail": 0
-      },
-      "access": {
-        "ok": 40,
-        "fail": 0
-      },
-      "requests": {
-        "ok": 40,
-        "fail": 0
-      }
-    },
-    "2026-11-02": {
-      "website": {
-        "ok": 29,
-        "fail": 0
-      },
-      "access": {
-        "ok": 29,
-        "fail": 0
-      },
-      "requests": {
-        "ok": 29,
-        "fail": 0
-      }
-    },
-    "2026-11-03": {
-      "website": {
-        "ok": 34,
-        "fail": 0
-      },
-      "access": {
-        "ok": 34,
-        "fail": 0
-      },
-      "requests": {
-        "ok": 32,
-        "fail": 2
-      }
-    },
-    "2026-11-04": {
-      "website": {
-        "ok": 30,
-        "fail": 0
-      },
-      "access": {
-        "ok": 30,
-        "fail": 0
-      },
-      "requests": {
-        "ok": 16,
-        "fail": 1
-      },
-      "operating_picture": {
-        "ok": 13,
-        "fail": 0
-      },
-      "standards": {
-        "ok": 13,
-        "fail": 0
-      },
-      "signup": {
-        "ok": 13,
-        "fail": 0
-      },
-      "enterprise": {
-        "ok": 13,
-        "fail": 0
-      }
-    },
-    "2026-11-05": {
-      "website": {
-        "ok": 30,
-        "fail": 0
-      },
-      "operating_picture": {
-        "ok": 30,
-        "fail": 0
-      },
-      "standards": {
-        "ok": 30,
-        "fail": 0
-      },
-      "signup": {
-        "ok": 30,
-        "fail": 0
-      },
-      "enterprise": {
-        "ok": 30,
-        "fail": 0
-      },
-      "access": {
-        "ok": 30,
-        "fail": 0
-      }
-    },
-    "2026-11-06": {
-      "website": {
-        "ok": 30,
-        "fail": 0
-      },
-      "operating_picture": {
-        "ok": 30,
-        "fail": 0
-      },
-      "standards": {
-        "ok": 30,
-        "fail": 0
-      },
-      "signup": {
-        "ok": 30,
-        "fail": 0
-      },
-      "enterprise": {
-        "ok": 30,
-        "fail": 0
-      },
-      "access": {
-        "ok": 30,
-        "fail": 0
-      }
-    },
-    "2026-11-07": {
-      "website": {
-        "ok": 38,
-        "fail": 0
-      },
-      "operating_picture": {
-        "ok": 38,
-        "fail": 0
-      },
-      "standards": {
-        "ok": 38,
-        "fail": 0
-      },
-      "signup": {
-        "ok": 38,
-        "fail": 0
-      },
-      "enterprise": {
-        "ok": 38,
-        "fail": 0
-      },
-      "access": {
-        "ok": 38,
-        "fail": 0
-      }
-    },
-    "2026-11-08": {
-      "website": {
-        "ok": 37,
-        "fail": 0
-      },
-      "operating_picture": {
-        "ok": 37,
-        "fail": 0
-      },
-      "standards": {
-        "ok": 37,
-        "fail": 0
-      },
-      "signup": {
-        "ok": 37,
-        "fail": 0
-      },
-      "enterprise": {
-        "ok": 37,
-        "fail": 0
-      },
-      "access": {
-        "ok": 37,
-        "fail": 0
-      }
-    },
-    "2026-11-09": {
-      "website": {
-        "ok": 27,
-        "fail": 0
-      },
-      "operating_picture": {
-        "ok": 27,
-        "fail": 0
-      },
-      "standards": {
-        "ok": 27,
-        "fail": 0
-      },
-      "signup": {
-        "ok": 27,
-        "fail": 0
-      },
-      "enterprise": {
-        "ok": 27,
-        "fail": 0
-      },
-      "access": {
-        "ok": 27,
-        "fail": 0
-      }
-    },
-    "2026-11-10": {
-      "website": {
-        "ok": 31,
-        "fail": 0
-      },
-      "operating_picture": {
-        "ok": 31,
-        "fail": 0
-      },
-      "standards": {
-        "ok": 31,
-        "fail": 0
-      },
-      "signup": {
-        "ok": 31,
-        "fail": 0
-      },
-      "enterprise": {
-        "ok": 31,
-        "fail": 0
-      },
-      "access": {
-        "ok": 31,
-        "fail": 0
-      }
-    },
-    "2026-11-11": {
-      "website": {
-        "ok": 25,
-        "fail": 0
-      },
-      "operating_picture": {
-        "ok": 25,
-        "fail": 0
-      },
-      "standards": {
-        "ok": 25,
-        "fail": 0
-      },
-      "signup": {
-        "ok": 25,
-        "fail": 0
-      },
-      "enterprise": {
-        "ok": 25,
-        "fail": 0
-      },
-      "access": {
-        "ok": 25,
-        "fail": 0
-      }
-    },
-    "2026-11-12": {
-      "website": {
-        "ok": 28,
-        "fail": 0
-      },
-      "operating_picture": {
-        "ok": 28,
-        "fail": 0
-      },
-      "standards": {
-        "ok": 28,
-        "fail": 0
-      },
-      "signup": {
-        "ok": 28,
-        "fail": 0
-      },
-      "enterprise": {
-        "ok": 28,
-        "fail": 0
-      },
-      "access": {
-        "ok": 28,
-        "fail": 0
-      }
-    },
-    "2026-11-13": {
-      "website": {
-        "ok": 29,
-        "fail": 0
-      },
-      "operating_picture": {
-        "ok": 29,
-        "fail": 0
-      },
-      "standards": {
-        "ok": 29,
-        "fail": 0
-      },
-      "signup": {
-        "ok": 29,
-        "fail": 0
-      },
-      "enterprise": {
-        "ok": 29,
-        "fail": 0
-      },
-      "access": {
-        "ok": 29,
-        "fail": 0
-      }
-    },
-    "2026-11-14": {
-      "website": {
-        "ok": 36,
-        "fail": 0
-      },
-      "operating_picture": {
-        "ok": 36,
-        "fail": 0
-      },
-      "standards": {
-        "ok": 36,
-        "fail": 0
-      },
-      "signup": {
-        "ok": 36,
-        "fail": 0
-      },
-      "enterprise": {
-        "ok": 36,
-        "fail": 0
-      },
-      "access": {
-        "ok": 36,
-        "fail": 0
-      }
-    },
-    "2026-11-15": {
-      "website": {
-        "ok": 34,
-        "fail": 0
-      },
-      "operating_picture": {
-        "ok": 34,
-        "fail": 0
-      },
-      "standards": {
-        "ok": 34,
-        "fail": 0
-      },
-      "signup": {
-        "ok": 34,
-        "fail": 0
-      },
-      "enterprise": {
-        "ok": 34,
-        "fail": 0
-      },
-      "access": {
-        "ok": 34,
-        "fail": 0
-      }
-    },
-    "2026-11-16": {
-      "website": {
-        "ok": 20,
-        "fail": 0
-      },
-      "operating_picture": {
-        "ok": 20,
-        "fail": 0
-      },
-      "standards": {
-        "ok": 20,
-        "fail": 0
-      },
-      "signup": {
-        "ok": 20,
-        "fail": 0
-      },
-      "enterprise": {
-        "ok": 20,
-        "fail": 0
-      },
-      "access": {
-        "ok": 20,
-        "fail": 0
-      }
-    },
-    "2026-11-17": {
-      "website": {
-        "ok": 11,
-        "fail": 0
-      },
-      "operating_picture": {
-        "ok": 11,
-        "fail": 0
-      },
-      "standards": {
-        "ok": 11,
-        "fail": 0
-      },
-      "signup": {
-        "ok": 11,
-        "fail": 0
-      },
-      "enterprise": {
-        "ok": 11,
-        "fail": 0
-      },
-      "access": {
-        "ok": 11,
-        "fail": 0
-      }
-    },
-    "2026-11-18": {
-      "website": {
-        "ok": 4,
-        "fail": 0
-      },
-      "operating_picture": {
-        "ok": 4,
-        "fail": 0
-      },
-      "standards": {
-        "ok": 4,
-        "fail": 0
-      },
-      "signup": {
-        "ok": 4,
-        "fail": 0
-      },
-      "enterprise": {
-        "ok": 4,
-        "fail": 0
-      },
-      "access": {
-        "ok": 4,
-        "fail": 0
-      }
-    },
-    "2026-11-19": {
-      "website": {
-        "ok": 3,
-        "fail": 0
-      },
-      "operating_picture": {
-        "ok": 3,
-        "fail": 0
-      },
-      "standards": {
-        "ok": 3,
-        "fail": 0
-      },
-      "signup": {
-        "ok": 3,
-        "fail": 0
-      },
-      "enterprise": {
-        "ok": 3,
-        "fail": 0
-      },
-      "access": {
-        "ok": 3,
-        "fail": 0
-      }
-    },
-    "2026-11-20": {
-      "website": {
-        "ok": 3,
-        "fail": 0
-      },
-      "operating_picture": {
-        "ok": 3,
-        "fail": 0
-      },
-      "standards": {
-        "ok": 3,
-        "fail": 0
-      },
-      "signup": {
-        "ok": 3,
-        "fail": 0
-      },
-      "enterprise": {
-        "ok": 3,
-        "fail": 0
-      },
-      "access": {
-        "ok": 3,
-        "fail": 0
-      }
-    },
-    "2026-11-21": {
-      "website": {
-        "ok": 4,
-        "fail": 0
-      },
-      "operating_picture": {
-        "ok": 4,
-        "fail": 0
-      },
-      "standards": {
-        "ok": 4,
-        "fail": 0
-      },
-      "signup": {
-        "ok": 4,
-        "fail": 0
-      },
-      "enterprise": {
-        "ok": 4,
-        "fail": 0
-      },
-      "access": {
-        "ok": 4,
-        "fail": 0
-      }
-    },
-    "2026-11-22": {
-      "website": {
-        "ok": 4,
-        "fail": 0
-      },
-      "operating_picture": {
-        "ok": 4,
-        "fail": 0
-      },
-      "standards": {
-        "ok": 4,
-        "fail": 0
-      },
-      "signup": {
-        "ok": 4,
-        "fail": 0
-      },
-      "enterprise": {
-        "ok": 4,
-        "fail": 0
-      },
-      "access": {
-        "ok": 4,
-        "fail": 0
-      }
-    },
-    "2026-11-23": {
-      "website": {
-        "ok": 3,
-        "fail": 0
-      },
-      "operating_picture": {
-        "ok": 3,
-        "fail": 0
-      },
-      "standards": {
-        "ok": 3,
-        "fail": 0
-      },
-      "signup": {
-        "ok": 3,
-        "fail": 0
-      },
-      "enterprise": {
-        "ok": 3,
-        "fail": 0
-      },
-      "access": {
-        "ok": 3,
-        "fail": 0
-      }
-    },
-    "2026-11-24": {
-      "website": {
-        "ok": 2,
-        "fail": 0
-      },
-      "operating_picture": {
-        "ok": 2,
-        "fail": 0
-      },
-      "standards": {
-        "ok": 2,
-        "fail": 0
-      },
-      "signup": {
-        "ok": 2,
-        "fail": 0
-      },
-      "enterprise": {
-        "ok": 2,
-        "fail": 0
-      },
-      "access": {
-        "ok": 2,
-        "fail": 0
-      }
-    },
-    "2026-11-25": {
-      "website": {
-        "ok": 3,
-        "fail": 0
-      },
-      "operating_picture": {
-        "ok": 3,
-        "fail": 0
-      },
-      "standards": {
-        "ok": 3,
-        "fail": 0
-      },
-      "signup": {
-        "ok": 3,
-        "fail": 0
-      },
-      "enterprise": {
-        "ok": 3,
-        "fail": 0
-      },
-      "access": {
-        "ok": 3,
-        "fail": 0
-      }
-    },
     "2026-11-26": {
-      "website": {
+      "platform": {
         "ok": 1,
-        "fail": 4
-      },
-      "operating_picture": {
-        "ok": 4,
-        "fail": 1
-      },
-      "standards": {
-        "ok": 5,
         "fail": 0
       },
-      "signup": {
-        "ok": 5,
+      "identity": {
+        "ok": 1,
         "fail": 0
       },
-      "enterprise": {
-        "ok": 3,
-        "fail": 2
+      "academy": {
+        "ok": 1,
+        "fail": 0
       },
-      "access": {
-        "ok": 4,
-        "fail": 1
+      "public_website": {
+        "ok": 1,
+        "fail": 0
+      },
+      "investor": {
+        "ok": 1,
+        "fail": 0
       }
     }
   },
@@ -833,9 +92,9 @@
       "component": "monitoring",
       "title": "Status monitoring — scheduled report delays",
       "detail": "No new monitoring report was recorded between 2026-11-26T16:41:55Z and 2026-11-26T21:59:20Z (317 minutes). This is a monitoring-reporting gap, not evidence that a monitored service was down.",
-      "status": "identified",
+      "status": "resolved",
       "started_at": "2026-11-16T08:36:31Z",
-      "ended_at": null,
+      "ended_at": "2026-11-26T22:29:11Z",
       "updates": [
         {
           "at": "2026-11-16T08:36:31Z",
@@ -991,6 +250,11 @@
           "at": "2026-11-26T21:59:20Z",
           "status": "identified",
           "detail": "No new monitoring report was recorded between 2026-11-26T16:41:55Z and 2026-11-26T21:59:20Z (317 minutes). This is a monitoring-reporting gap, not evidence that a monitored service was down."
+        },
+        {
+          "at": "2026-11-26T22:29:11Z",
+          "status": "resolved",
+          "detail": "Monitoring reports resumed; unobserved intervals remain unknown."
         }
       ]
     },
@@ -1029,5 +293,942 @@
       ]
     }
   ],
-  "maintenance": []
+  "maintenance": [],
+  "archived_monitoring": {
+    "retired_at": "2026-11-26T22:29:10Z",
+    "checked_at": "2026-11-26T22:09:57Z",
+    "first_checked_at": "2026-10-24T03:34:31Z",
+    "components": {
+      "website": {
+        "state": "degraded",
+        "fail_streak": 0,
+        "success_streak": 1,
+        "last_success_at": "2026-11-26T22:09:57Z"
+      },
+      "access": {
+        "state": "degraded",
+        "fail_streak": 0,
+        "success_streak": 1,
+        "last_success_at": "2026-11-26T22:09:57Z"
+      },
+      "requests": {
+        "state": "degraded",
+        "fail_streak": 1,
+        "success_streak": 0,
+        "last_success_at": "2026-11-04T14:29:10Z"
+      },
+      "operating_picture": {
+        "last_success_at": "2026-11-26T22:09:57Z",
+        "success_streak": 1,
+        "fail_streak": 0,
+        "state": "degraded"
+      },
+      "standards": {
+        "last_success_at": "2026-11-26T22:09:57Z",
+        "success_streak": 420,
+        "fail_streak": 0,
+        "state": "operational"
+      },
+      "signup": {
+        "last_success_at": "2026-11-26T22:09:57Z",
+        "success_streak": 420,
+        "fail_streak": 0,
+        "state": "operational"
+      },
+      "enterprise": {
+        "last_success_at": "2026-11-26T22:09:57Z",
+        "success_streak": 1,
+        "fail_streak": 0,
+        "state": "degraded"
+      }
+    },
+    "daily": {
+      "2026-10-24": {
+        "website": {
+          "ok": 56,
+          "fail": 0
+        },
+        "access": {
+          "ok": 56,
+          "fail": 0
+        },
+        "requests": {
+          "ok": 56,
+          "fail": 0
+        }
+      },
+      "2026-10-25": {
+        "website": {
+          "ok": 59,
+          "fail": 0
+        },
+        "access": {
+          "ok": 59,
+          "fail": 0
+        },
+        "requests": {
+          "ok": 59,
+          "fail": 0
+        }
+      },
+      "2026-10-26": {
+        "website": {
+          "ok": 38,
+          "fail": 0
+        },
+        "access": {
+          "ok": 38,
+          "fail": 0
+        },
+        "requests": {
+          "ok": 38,
+          "fail": 0
+        }
+      },
+      "2026-10-27": {
+        "website": {
+          "ok": 45,
+          "fail": 0
+        },
+        "access": {
+          "ok": 45,
+          "fail": 0
+        },
+        "requests": {
+          "ok": 45,
+          "fail": 0
+        }
+      },
+      "2026-10-28": {
+        "website": {
+          "ok": 38,
+          "fail": 0
+        },
+        "access": {
+          "ok": 38,
+          "fail": 0
+        },
+        "requests": {
+          "ok": 38,
+          "fail": 0
+        }
+      },
+      "2026-10-29": {
+        "website": {
+          "ok": 34,
+          "fail": 0
+        },
+        "access": {
+          "ok": 34,
+          "fail": 0
+        },
+        "requests": {
+          "ok": 34,
+          "fail": 0
+        }
+      },
+      "2026-10-30": {
+        "website": {
+          "ok": 35,
+          "fail": 0
+        },
+        "access": {
+          "ok": 35,
+          "fail": 0
+        },
+        "requests": {
+          "ok": 35,
+          "fail": 0
+        }
+      },
+      "2026-10-31": {
+        "website": {
+          "ok": 42,
+          "fail": 0
+        },
+        "access": {
+          "ok": 42,
+          "fail": 0
+        },
+        "requests": {
+          "ok": 42,
+          "fail": 0
+        }
+      },
+      "2026-11-01": {
+        "website": {
+          "ok": 40,
+          "fail": 0
+        },
+        "access": {
+          "ok": 40,
+          "fail": 0
+        },
+        "requests": {
+          "ok": 40,
+          "fail": 0
+        }
+      },
+      "2026-11-02": {
+        "website": {
+          "ok": 29,
+          "fail": 0
+        },
+        "access": {
+          "ok": 29,
+          "fail": 0
+        },
+        "requests": {
+          "ok": 29,
+          "fail": 0
+        }
+      },
+      "2026-11-03": {
+        "website": {
+          "ok": 34,
+          "fail": 0
+        },
+        "access": {
+          "ok": 34,
+          "fail": 0
+        },
+        "requests": {
+          "ok": 32,
+          "fail": 2
+        }
+      },
+      "2026-11-04": {
+        "website": {
+          "ok": 30,
+          "fail": 0
+        },
+        "access": {
+          "ok": 30,
+          "fail": 0
+        },
+        "requests": {
+          "ok": 16,
+          "fail": 1
+        },
+        "operating_picture": {
+          "ok": 13,
+          "fail": 0
+        },
+        "standards": {
+          "ok": 13,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 13,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 13,
+          "fail": 0
+        }
+      },
+      "2026-11-05": {
+        "website": {
+          "ok": 30,
+          "fail": 0
+        },
+        "operating_picture": {
+          "ok": 30,
+          "fail": 0
+        },
+        "standards": {
+          "ok": 30,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 30,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 30,
+          "fail": 0
+        },
+        "access": {
+          "ok": 30,
+          "fail": 0
+        }
+      },
+      "2026-11-06": {
+        "website": {
+          "ok": 30,
+          "fail": 0
+        },
+        "operating_picture": {
+          "ok": 30,
+          "fail": 0
+        },
+        "standards": {
+          "ok": 30,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 30,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 30,
+          "fail": 0
+        },
+        "access": {
+          "ok": 30,
+          "fail": 0
+        }
+      },
+      "2026-11-07": {
+        "website": {
+          "ok": 38,
+          "fail": 0
+        },
+        "operating_picture": {
+          "ok": 38,
+          "fail": 0
+        },
+        "standards": {
+          "ok": 38,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 38,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 38,
+          "fail": 0
+        },
+        "access": {
+          "ok": 38,
+          "fail": 0
+        }
+      },
+      "2026-11-08": {
+        "website": {
+          "ok": 37,
+          "fail": 0
+        },
+        "operating_picture": {
+          "ok": 37,
+          "fail": 0
+        },
+        "standards": {
+          "ok": 37,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 37,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 37,
+          "fail": 0
+        },
+        "access": {
+          "ok": 37,
+          "fail": 0
+        }
+      },
+      "2026-11-09": {
+        "website": {
+          "ok": 27,
+          "fail": 0
+        },
+        "operating_picture": {
+          "ok": 27,
+          "fail": 0
+        },
+        "standards": {
+          "ok": 27,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 27,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 27,
+          "fail": 0
+        },
+        "access": {
+          "ok": 27,
+          "fail": 0
+        }
+      },
+      "2026-11-10": {
+        "website": {
+          "ok": 31,
+          "fail": 0
+        },
+        "operating_picture": {
+          "ok": 31,
+          "fail": 0
+        },
+        "standards": {
+          "ok": 31,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 31,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 31,
+          "fail": 0
+        },
+        "access": {
+          "ok": 31,
+          "fail": 0
+        }
+      },
+      "2026-11-11": {
+        "website": {
+          "ok": 25,
+          "fail": 0
+        },
+        "operating_picture": {
+          "ok": 25,
+          "fail": 0
+        },
+        "standards": {
+          "ok": 25,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 25,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 25,
+          "fail": 0
+        },
+        "access": {
+          "ok": 25,
+          "fail": 0
+        }
+      },
+      "2026-11-12": {
+        "website": {
+          "ok": 28,
+          "fail": 0
+        },
+        "operating_picture": {
+          "ok": 28,
+          "fail": 0
+        },
+        "standards": {
+          "ok": 28,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 28,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 28,
+          "fail": 0
+        },
+        "access": {
+          "ok": 28,
+          "fail": 0
+        }
+      },
+      "2026-11-13": {
+        "website": {
+          "ok": 29,
+          "fail": 0
+        },
+        "operating_picture": {
+          "ok": 29,
+          "fail": 0
+        },
+        "standards": {
+          "ok": 29,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 29,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 29,
+          "fail": 0
+        },
+        "access": {
+          "ok": 29,
+          "fail": 0
+        }
+      },
+      "2026-11-14": {
+        "website": {
+          "ok": 36,
+          "fail": 0
+        },
+        "operating_picture": {
+          "ok": 36,
+          "fail": 0
+        },
+        "standards": {
+          "ok": 36,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 36,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 36,
+          "fail": 0
+        },
+        "access": {
+          "ok": 36,
+          "fail": 0
+        }
+      },
+      "2026-11-15": {
+        "website": {
+          "ok": 34,
+          "fail": 0
+        },
+        "operating_picture": {
+          "ok": 34,
+          "fail": 0
+        },
+        "standards": {
+          "ok": 34,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 34,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 34,
+          "fail": 0
+        },
+        "access": {
+          "ok": 34,
+          "fail": 0
+        }
+      },
+      "2026-11-16": {
+        "website": {
+          "ok": 20,
+          "fail": 0
+        },
+        "operating_picture": {
+          "ok": 20,
+          "fail": 0
+        },
+        "standards": {
+          "ok": 20,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 20,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 20,
+          "fail": 0
+        },
+        "access": {
+          "ok": 20,
+          "fail": 0
+        }
+      },
+      "2026-11-17": {
+        "website": {
+          "ok": 11,
+          "fail": 0
+        },
+        "operating_picture": {
+          "ok": 11,
+          "fail": 0
+        },
+        "standards": {
+          "ok": 11,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 11,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 11,
+          "fail": 0
+        },
+        "access": {
+          "ok": 11,
+          "fail": 0
+        }
+      },
+      "2026-11-18": {
+        "website": {
+          "ok": 4,
+          "fail": 0
+        },
+        "operating_picture": {
+          "ok": 4,
+          "fail": 0
+        },
+        "standards": {
+          "ok": 4,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 4,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 4,
+          "fail": 0
+        },
+        "access": {
+          "ok": 4,
+          "fail": 0
+        }
+      },
+      "2026-11-19": {
+        "website": {
+          "ok": 3,
+          "fail": 0
+        },
+        "operating_picture": {
+          "ok": 3,
+          "fail": 0
+        },
+        "standards": {
+          "ok": 3,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 3,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 3,
+          "fail": 0
+        },
+        "access": {
+          "ok": 3,
+          "fail": 0
+        }
+      },
+      "2026-11-20": {
+        "website": {
+          "ok": 3,
+          "fail": 0
+        },
+        "operating_picture": {
+          "ok": 3,
+          "fail": 0
+        },
+        "standards": {
+          "ok": 3,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 3,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 3,
+          "fail": 0
+        },
+        "access": {
+          "ok": 3,
+          "fail": 0
+        }
+      },
+      "2026-11-21": {
+        "website": {
+          "ok": 4,
+          "fail": 0
+        },
+        "operating_picture": {
+          "ok": 4,
+          "fail": 0
+        },
+        "standards": {
+          "ok": 4,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 4,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 4,
+          "fail": 0
+        },
+        "access": {
+          "ok": 4,
+          "fail": 0
+        }
+      },
+      "2026-11-22": {
+        "website": {
+          "ok": 4,
+          "fail": 0
+        },
+        "operating_picture": {
+          "ok": 4,
+          "fail": 0
+        },
+        "standards": {
+          "ok": 4,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 4,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 4,
+          "fail": 0
+        },
+        "access": {
+          "ok": 4,
+          "fail": 0
+        }
+      },
+      "2026-11-23": {
+        "website": {
+          "ok": 3,
+          "fail": 0
+        },
+        "operating_picture": {
+          "ok": 3,
+          "fail": 0
+        },
+        "standards": {
+          "ok": 3,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 3,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 3,
+          "fail": 0
+        },
+        "access": {
+          "ok": 3,
+          "fail": 0
+        }
+      },
+      "2026-11-24": {
+        "website": {
+          "ok": 2,
+          "fail": 0
+        },
+        "operating_picture": {
+          "ok": 2,
+          "fail": 0
+        },
+        "standards": {
+          "ok": 2,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 2,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 2,
+          "fail": 0
+        },
+        "access": {
+          "ok": 2,
+          "fail": 0
+        }
+      },
+      "2026-11-25": {
+        "website": {
+          "ok": 3,
+          "fail": 0
+        },
+        "operating_picture": {
+          "ok": 3,
+          "fail": 0
+        },
+        "standards": {
+          "ok": 3,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 3,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 3,
+          "fail": 0
+        },
+        "access": {
+          "ok": 3,
+          "fail": 0
+        }
+      },
+      "2026-11-26": {
+        "website": {
+          "ok": 1,
+          "fail": 4
+        },
+        "operating_picture": {
+          "ok": 4,
+          "fail": 1
+        },
+        "standards": {
+          "ok": 5,
+          "fail": 0
+        },
+        "signup": {
+          "ok": 5,
+          "fail": 0
+        },
+        "enterprise": {
+          "ok": 3,
+          "fail": 2
+        },
+        "access": {
+          "ok": 4,
+          "fail": 1
+        }
+      }
+    },
+    "reason": "Public webpage checks retired; service evidence starts independently."
+  },
+  "monitoring_version": 2,
+  "probes": {
+    "workspace": {
+      "passed": true,
+      "latency_ms": 417,
+      "checked_at": "2026-11-26T22:29:11Z",
+      "fail_streak": 0,
+      "success_streak": 1
+    },
+    "login": {
+      "passed": true,
+      "latency_ms": 276,
+      "checked_at": "2026-11-26T22:29:11Z",
+      "fail_streak": 0,
+      "success_streak": 1
+    },
+    "session": {
+      "passed": true,
+      "latency_ms": 477,
+      "checked_at": "2026-11-26T22:29:11Z",
+      "fail_streak": 0,
+      "success_streak": 1
+    },
+    "registration": {
+      "passed": true,
+      "latency_ms": 442,
+      "checked_at": "2026-11-26T22:29:11Z",
+      "fail_streak": 0,
+      "success_streak": 1
+    },
+    "academy_home": {
+      "passed": true,
+      "latency_ms": 473,
+      "checked_at": "2026-11-26T22:29:11Z",
+      "fail_streak": 0,
+      "success_streak": 1
+    },
+    "academy_lesson": {
+      "passed": true,
+      "latency_ms": 258,
+      "checked_at": "2026-11-26T22:29:11Z",
+      "fail_streak": 0,
+      "success_streak": 1
+    },
+    "website_home": {
+      "passed": true,
+      "latency_ms": 274,
+      "checked_at": "2026-11-26T22:29:11Z",
+      "fail_streak": 0,
+      "success_streak": 1
+    },
+    "inquiry_config": {
+      "passed": true,
+      "latency_ms": 141,
+      "checked_at": "2026-11-26T22:29:11Z",
+      "fail_streak": 0,
+      "success_streak": 1
+    },
+    "investor_home": {
+      "passed": true,
+      "latency_ms": 148,
+      "checked_at": "2026-11-26T22:29:11Z",
+      "fail_streak": 0,
+      "success_streak": 1
+    },
+    "investor_session": {
+      "passed": true,
+      "latency_ms": 115,
+      "checked_at": "2026-11-26T22:29:11Z",
+      "fail_streak": 0,
+      "success_streak": 1
+    },
+    "investor_vault": {
+      "passed": true,
+      "latency_ms": 94,
+      "checked_at": "2026-11-26T22:29:11Z",
+      "fail_streak": 0,
+      "success_streak": 1
+    }
+  },
+  "probe_daily": {
+    "2026-11-26": {
+      "workspace": {
+        "ok": 1,
+        "fail": 0
+      },
+      "login": {
+        "ok": 1,
+        "fail": 0
+      },
+      "session": {
+        "ok": 1,
+        "fail": 0
+      },
+      "registration": {
+        "ok": 1,
+        "fail": 0
+      },
+      "academy_home": {
+        "ok": 1,
+        "fail": 0
+      },
+      "academy_lesson": {
+        "ok": 1,
+        "fail": 0
+      },
+      "website_home": {
+        "ok": 1,
+        "fail": 0
+      },
+      "inquiry_config": {
+        "ok": 1,
+        "fail": 0
+      },
+      "investor_home": {
+        "ok": 1,
+        "fail": 0
+      },
+      "investor_session": {
+        "ok": 1,
+        "fail": 0
+      },
+      "investor_vault": {
+        "ok": 1,
+        "fail": 0
+      }
+    }
+  },
+  "published_at": "2026-11-26T22:29:11Z"
 }

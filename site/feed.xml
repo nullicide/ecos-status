@@ -6,11 +6,11 @@
     <description>Public incidents and maintenance notices for Energy Control OS.</description>
     <language>en-us</language>
     <item>
-      <title>Status monitoring — scheduled report delays — Identified</title>
-      <description>No new monitoring report was recorded between 2026-11-26T16:41:55Z and 2026-11-26T21:59:20Z (317 minutes). This is a monitoring-reporting gap, not evidence that a monitored service was down.</description>
+      <title>Status monitoring — scheduled report delays — Resolved</title>
+      <description>Monitoring reports resumed; unobserved intervals remain unknown.</description>
       <link>https://status.energycontrolos.com/#incidents</link>
-      <guid isPermaLink="false">ecos-monitoring-delays-20261116-31</guid>
-      <pubDate>Thu, 26 Nov 2026 21:59:20 +0000</pubDate>
+      <guid isPermaLink="false">ecos-monitoring-delays-20261116-32</guid>
+      <pubDate>Thu, 26 Nov 2026 22:29:11 +0000</pubDate>
     </item>
     <item>
       <title>Enterprise access inquiry — availability disruption — Investigating</title>
