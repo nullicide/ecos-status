@@ -17,23 +17,42 @@ def get(url):
         if res.status!=200: raise RuntimeError("Unexpected HTTP status")
         return res.read(2_000_000).decode("utf-8")
 
+def verify_shell(origin):
+    html=get(origin)
+    assert "iri001-20261126" in html and 'id="activeIncidents"' in html, "Old or unexpected public shell"
+    assert "System status" in html, "Missing public status title"
+
+def verify_report(url):
+    data=json.loads(get(url))
+    assert data.get("monitoring_version")==2 and set(data["components"])==IDS, "Legacy or incomplete report"
+    assert data.get("archived_monitoring",{}).get("daily"), "Legacy history missing"
+    checked=dt.datetime.fromisoformat(data["checked_at"].replace("Z","+00:00"))
+    age=(dt.datetime.now(dt.timezone.utc)-checked).total_seconds()
+    assert -300<=age<=1500, "Monitoring report is not current"
+
+def verify_rss(url):
+    assert ET.fromstring(get(url)).tag=="rss", "RSS invalid"
+
 def verify():
-    for origin in (HOST,MIRROR):
-        html=get(origin)
-        assert "iri001-20261126" in html and 'id="activeIncidents"' in html, "Old or unexpected public shell"
-        assert "System status" in html, "Missing public status title"
-        print("Verified public shell:",origin)
-    for url in (RAW,MIRROR+"data/service-status-v2.json"):
-        data=json.loads(get(url))
-        assert data.get("monitoring_version")==2 and set(data["components"])==IDS, "Legacy or incomplete report: "+url
-        assert data.get("archived_monitoring",{}).get("daily"), "Legacy history missing"
-        checked=dt.datetime.fromisoformat(data["checked_at"].replace("Z","+00:00"))
-        age=(dt.datetime.now(dt.timezone.utc)-checked).total_seconds()
-        assert -300<=age<=1500, "Monitoring report is not current"
-        print("Verified report:",url,"at",data["checked_at"],"states:",{k:v["state"] for k,v in data["components"].items()})
-    assert ET.fromstring(get(MIRROR+"feed.xml")).tag=="rss", "RSS invalid"
-    assert ET.fromstring(get(HOST+"feed.xml")).tag=="rss", "Original RSS endpoint unavailable"
-    print("Verified independent RSS publication")
+    # Never let one broken mirror suppress evidence for unrelated endpoints.
+    targets=[
+        ("canonical shell",verify_shell,HOST),
+        ("mirror shell",verify_shell,MIRROR),
+        ("canonical report",verify_report,RAW),
+        ("mirror report",verify_report,MIRROR+"data/service-status-v2.json"),
+        ("mirror RSS",verify_rss,MIRROR+"feed.xml"),
+        ("public RSS",verify_rss,HOST+"feed.xml"),
+    ]
+    failed=[]
+    for name,check,url in targets:
+        try:
+            check(url)
+            print("PASS:",name,flush=True)
+        except (OSError,ValueError,AssertionError,RuntimeError,ET.ParseError,KeyError) as error:
+            failed.append(name)
+            print("FAIL:",name,type(error).__name__,str(error),flush=True)
+    if failed:
+        raise RuntimeError("Failed release checks: "+", ".join(failed))
 
 if __name__=="__main__":
     for attempt in range(12):
