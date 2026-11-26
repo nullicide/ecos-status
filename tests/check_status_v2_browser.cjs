@@ -8,8 +8,9 @@ const ids=['platform','identity','academy','public_website','investor'];
  try{
   const at=new Date().toISOString(),today=at.slice(0,10);
   const report={schema:1,monitoring_version:2,checked_at:at,published_at:at,first_checked_at:at,
-   components:Object.fromEntries(ids.map(id=>[id,{state:id==='public_website'?'operational':'unknown',required_passed:1,required_total:1}])),
+   components:Object.fromEntries(ids.map(id=>[id,{state:id==='public_website'?'operational':'unknown',required_passed:1,required_total:1,coverage_complete:id==='public_website'}])),
    daily:{[today]:Object.fromEntries(ids.map(id=>[id,{ok:1,fail:0}]))},
+   service_state_daily:{[today]:Object.fromEntries(ids.map(id=>[id,id==='public_website'?{operational:1}:{unknown:1}]))},
    archived_monitoring:{daily:{'2026-10-24':{website:{ok:467,fail:0}}}},
    incidents:[],maintenance:[],probes:{}};
   for(const width of [320,390,768,1440]){
@@ -20,9 +21,12 @@ const ids=['platform','identity','academy','public_website','investor'];
    await page.goto('http://127.0.0.1:8765/',{waitUntil:'networkidle'});
    assert.equal(await page.locator('.component').count(),5);
    assert.equal(await page.locator('.history-row').count(),5);
+   assert.equal(await page.locator('.service-metric').filter({hasText:'Insufficient data'}).count(),4);
+   assert.equal(await page.locator('.service-metric').filter({hasText:'100.00% sampled operational'}).count(),1);
+   assert.equal(await page.locator('.service-card').first().locator('.day.good').count(),0);
    assert.equal(await page.locator('#globalStatus').getAttribute('data-state'),'unknown');
    assert.match(await page.locator('#componentList').innerText(),/Not yet verified/);
-   assert.doesNotMatch(await page.locator('#historyList').innerText(),/467/);
+   assert.doesNotMatch(await page.locator('#componentList').innerText(),/467/);
    assert.match(await page.locator('#retiredHistory').textContent(),/467\/467/);
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),width+' overflow');
    assert.equal(await page.locator('.history-row').first().locator('.day:visible').count(),width<=680?30:90);
