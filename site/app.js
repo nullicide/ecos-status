@@ -53,7 +53,7 @@
   el('componentList').innerHTML=ids.map(id=>{
    const s=states[id],p=raw[id],h=history(version?payload.scoped_availability_daily||{}:{},id),total=h.ok+h.fail;
    
-   const metric=total?(100*h.ok/total).toFixed(2)+'% sampled operational':'Insufficient data';
+   const metric=total?(100*h.ok/total).toFixed(2)+'%':'Insufficient data';
    return '<article class="component service-card"><div class="service-heading"><div class="component-title"><span class="state-dot '+s+'" aria-hidden="true"></span><strong>'+esc(names[id])+'</strong></div><span class="state-label '+s+'">'+esc(delayed?'Monitoring delayed':labels[s])+'</span></div><p>'+esc(descriptions[id])+'</p><div class="history-row"><div class="history-top"><span>Availability history</span><strong class="service-metric">'+metric+'</strong></div><div class="days" role="img" aria-label="'+esc(names[id]+': '+h.summary)+'">'+h.cells+'</div><div class="history-foot"><span class="history-window-desktop">90-day window</span><span class="history-window-mobile">Last 30 days · 90-day totals</span><span>'+h.days+' observed '+(h.days===1?'day':'days')+'</span></div></div></article>';
   }).join('');
   const archived=version?payload.archived_monitoring?.daily:payload.daily;
