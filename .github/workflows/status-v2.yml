@@ -3,6 +3,8 @@ on:
   push:
     branches: [main]
     paths:
+      - 'reliability.py'
+      - 'tests/test_reliability.py'
       - 'site/index.html'
       - 'site/app.js'
       - 'site/styles.css'
@@ -11,6 +13,8 @@ on:
   pull_request:
     paths:
       - 'monitor.py'
+      - 'reliability.py'
+      - 'tests/test_reliability.py'
       - 'site/index.html'
       - 'site/app.js'
       - 'tests/check_status_v2_browser.cjs'
@@ -31,15 +35,15 @@ jobs:
           python-version: '3.12'
       - name: Validate monitor logic and syntax
         run: |
-          python -m unittest discover -s tests -p 'test_monitor*.py' -v
-          python -m py_compile monitor.py monitor_schiller.py
+          python -m unittest discover -s tests -p 'test_*.py' -v
+          python -m py_compile monitor.py monitor_schiller.py reliability.py
           node --check site/app.js
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - name: Install Chromium test runner
         run: |
-          npm install --no-save --no-package-lock playwright@1.56.1
+          npm install --no-save --no-package-lock playwright@1.56.1 @axe-core/playwright@4.10.2
           npx playwright install --with-deps chromium
       - name: Verify Status v2 desktop/tablet/mobile UX
         run: |

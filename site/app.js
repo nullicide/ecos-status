@@ -1,103 +1,89 @@
 'use strict';
 (() => {
- const DISPLAY={
-  website:'Public website',operating_picture:'Operating picture',standards:'Standards & governance',
-  signup:'Create account',enterprise:'Project evaluation inquiry',
-  access:'Application sign-in',requests:'Previous Request Access URL (retired)',monitoring:'Status monitoring'
- };
- const DESC={
-  website:'Public homepage reachability',
-  operating_picture:'Public operating picture and coordination overview',
-  standards:'Public standards and governance reference',
-  signup:'Individual registration page; registration and email verification are not tested',
-  enterprise:'Project evaluation inquiry page; submission and delivery are not tested',
-  access:'Application sign-in page; authentication and workspace access are not tested'
- };
- const HREF={
-  website:'https://www.energycontrolos.com/',
-  operating_picture:'https://www.energycontrolos.com/operating-picture/',
-  standards:'https://www.energycontrolos.com/standards/',
-  signup:'https://www.energycontrolos.com/create-account/',
-  enterprise:'https://www.energycontrolos.com/enterprise-access/',
-  access:'https://app.energycontrolos.com/login/'
- };
- const LABEL={operational:'Operational',degraded:'Intermittent response',outage:'Repeated check failures',unknown:'Not currently verified',maintenance:'Maintenance'};
+ const names={platform:'ECOS Platform',identity:'Identity & Access',academy:'ECOS Academy',public_website:'Public Website',investor:'Investor Portal',
+  website:'Public website (retired check)',operating_picture:'Operating picture (retired check)',standards:'Standards (retired check)',signup:'Create account (retired check)',enterprise:'Project inquiry (retired check)',access:'Sign-in page (retired check)',requests:'Previous Request Access URL (retired)',monitoring:'Status monitoring'};
+ const ids=['platform','identity','academy','public_website','investor'];
+ const descriptions={platform:'Workspace access boundary; signed-in workflows not tested.',identity:'Sign-in surface and anonymous session response; sign-in and email transactions not tested.',academy:'Public learning delivery; learner records and assessments not tested.',public_website:'Public homepage delivery; forms and delivery are separately observed.',investor:'Portal and anonymous authorization boundary; signed-in access and document retrieval not tested.'};
+ const labels={operational:'Operational',degraded:'Degraded performance',partial:'Partial outage',outage:'Major outage',maintenance:'Scheduled maintenance',unknown:'Not yet verified',unavailable:'Monitoring unavailable'};
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const el=id=>document.getElementById(id);
- const date=s=>{if(!s)return 'Not available';const d=new Date(s);return Number.isFinite(d.getTime())?d.toLocaleString(undefined,{year:'numeric',month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'}):'Not available'};
- const dayKey=(d)=>d.toISOString().slice(0,10);
- const monitoredOrder=['website','operating_picture','standards','signup','enterprise','access'];
- function global(state,report,title){const box=el('globalStatus');box.dataset.state=state;const headline={operational:'All monitored endpoints reachable',degraded:'Some endpoints need attention',outage:'Endpoint check failures',unknown:'Monitoring unavailable'};el('globalTitle').textContent=title||headline[state];el('globalDetail').textContent=report||'No verified monitoring result is available.';}
- function historyCells(rows,id){let success=0,fail=0;const now=new Date();const cells=[];let observedDays=0;for(let n=89;n>=0;n--){let d=new Date(now);d.setUTCDate(d.getUTCDate()-n);const k=dayKey(d),v=rows[k]?.[id]||{},ok=v.ok||0,bad=v.fail||0,total=ok+bad;success+=ok;fail+=bad;if(total)observedDays++;const cls=total===0?'none':bad===0?'good':ok===0?'bad':'partial';cells.push(`<span class="day ${cls}" aria-label="${esc(k)}: ${total?ok+' passed, '+bad+' failed':'no observations'}" title="${esc(k)}: ${total?ok+' passed, '+bad+' failed':'no observations'}"></span>`)}return {cells:cells.join(''),success,fail,observedDays};}
- function render(payload){
-  const now=Date.now(),checked=payload.checked_at?Date.parse(payload.checked_at):NaN;
-  // Scheduled checks may arrive later than their nominal 5-minute cadence.
-  // Keep a late last-known result visible in amber without presenting it as live green.
-  const age=now-checked;
-  const stale=!Number.isFinite(checked)||age>90*60*1000||age< -5*60*1000;
-  const delayed=!stale&&age>25*60*1000;
-  const lastReport=Number.isFinite(checked)?date(payload.checked_at):'No report recorded';
-  const gapTime=Number.isFinite(checked)&&age>=0?(age>=3600000?(age/3600000).toFixed(1)+' hours':Math.max(1,Math.round(age/60000))+' minutes'):'unknown duration';
-  const raw=payload.components||{};const statuses=monitoredOrder.map(id=>stale?'unknown':raw[id]?.state||'unknown');
-  const anyOut=statuses.includes('outage'),anyDeg=statuses.includes('degraded'),allOk=statuses.every(s=>s==='operational');
-  const measured=anyOut?'outage':anyDeg?'degraded':allOk?'operational':'unknown';
-  const state=stale?'unknown':delayed?(measured==='outage'?'outage':'degraded'):measured;
-  global(state,stale?(Number.isFinite(checked)?'No new external monitoring report has been recorded for '+gapTime+'. Last report: '+lastReport+'. This is a monitoring-data gap; it does not establish that the listed services are down.':'No external monitoring report has been recorded. Current service health is unverified.'):delayed?'The most recent external check was '+date(payload.checked_at)+'. Scheduled monitoring is delayed; the last known results are shown below, not confirmed current.':state==='operational'?'All listed public pages returned the expected HTML in the latest external checks. This does not verify registrations, inquiries, authentication, operational workflows or electrical safety.':state==='outage'?'At least one endpoint failed repeated external checks. The underlying cause is not confirmed. See incidents below.':state==='degraded'?'A monitored endpoint has returned inconsistent responses or is recovering.':'Some endpoints have not yet completed a verified check.',delayed&&state!=='outage'?'Monitoring delayed':stale&&Number.isFinite(checked)?'Monitoring data unavailable':undefined);
-  el('lastChecked').textContent=Number.isFinite(checked)?lastReport+(stale?' · Stale':delayed?' · Delayed':''):'No report';el('globalTime').textContent=Number.isFinite(checked)?'LAST REPORT '+lastReport.toUpperCase():'NO REPORT AVAILABLE';
-  el('componentList').innerHTML=monitoredOrder.map(id=>{const verified=raw[id]?.state||'unknown';const s=stale?'unknown':delayed&&verified!=='outage'?'degraded':verified;const title=delayed&&s!=='outage'?'Last check delayed':LABEL[s]||LABEL.unknown;return `<article class="component"><div><div class="component-title"><span class="state-dot ${esc(s)}" aria-hidden="true"></span><a class="component-target" href="${esc(HREF[id])}" target="_blank" rel="noopener noreferrer" aria-label="Open ${esc(DISPLAY[id])} in a new tab">${esc(DISPLAY[id])}</a></div><p>${esc(DESC[id])}</p></div><span class="state-label ${esc(s)}">${esc(title)}</span></article>`}).join('');
-  const hist=payload.daily||{};
-  el('historyList').innerHTML=monitoredOrder.map(id=>{const h=historyCells(hist,id),total=h.success+h.fail;const first=payload.first_checked_at?Date.parse(payload.first_checked_at):NaN;const ageHours=Number.isFinite(first)?(now-first)/36e5:0;const early=ageHours<24||total<200;const pct=total>0?(100*h.success/total).toFixed(2)+'%':'—';const statusText=total?'HTTP checks · '+h.success+'/'+total+' successful'+(early?' · Early monitoring data':''):'No HTTP checks recorded for this page yet';return `<div class="history-row"><div class="history-top"><strong>${esc(DISPLAY[id])}</strong><span class="history-pct">${esc(pct)}</span></div><p class="history-description">${esc(statusText)}</p><div class="days" role="img" aria-label="90-day HTTP check history for ${esc(DISPLAY[id])}; latest 30 days shown on small screens">${h.cells}</div><div class="history-foot"><span class="history-window-desktop">90-day window</span><span class="history-window-mobile">Last 30 days · 90-day totals</span><span>${h.observedDays} monitored ${h.observedDays===1?'day':'days'} · Today</span></div></div>`}).join('');
-  // Preserve the old request-access URL's 467 earlier checks as legacy history;
-  // its counts are intentionally never assigned to the new enterprise form.
-  const legacy=historyCells(hist,'requests'),oldChecks=legacy.success+legacy.fail;
-  const archive=el('retiredHistory');
-  if(archive){
-   archive.hidden=oldChecks===0;
-   archive.innerHTML=oldChecks?
-    '<div class="retired-top"><strong>Previous Request Access URL</strong><span>RETIRED MONITOR</span></div>'+
-    '<p>Historical checks for the old /request-access/ URL are retained. This URL is no longer actively monitored, and its check history is not counted toward the current Project evaluation page.</p>'+
-    '<small>'+legacy.success+'/'+oldChecks+' historic HTTP checks passed · '+legacy.observedDays+' observed days in the rolling window</small>':'';
+ const date=s=>{const d=new Date(s||'');return Number.isFinite(d.getTime())?d.toLocaleString(undefined,{year:'numeric',month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'}):'Not available'};
+ function history(rows,id){
+  let ok=0,fail=0,days=0;const cells=[],observations=[];
+  for(let n=89;n>=0;n--){
+   const d=new Date();d.setUTCDate(d.getUTCDate()-n);const k=d.toISOString().slice(0,10);
+   const row=rows[k]?.[id]||{},a=Number(row.ok||0),b=Number(row.fail||0);
+   ok+=a;fail+=b;if(a+b){days++;observations.push(k+': '+a+' passed, '+b+' failed');}
+   const label=k+': '+(a+b?a+' passed, '+b+' failed':'no observations');
+   cells.push('<span class="day '+(!a&&!b?'none':!b?'good':!a?'bad':'partial')+'" title="'+esc(label)+'"></span>');
   }
-  const entries=(payload.incidents||[]).slice().sort((a,b)=>String(b.started_at).localeCompare(String(a.started_at))).slice(0,20);
-  el('incidentList').innerHTML=entries.length?entries.map(i=>`<article class="timeline-item"><div class="timeline-date">${esc(date(i.started_at))}</div><div class="timeline-main"><strong>${esc(i.title)}</strong><p>${esc(i.detail||'')}</p><p>Component: ${esc(DISPLAY[i.component]||i.component||'Service')} · ${i.ended_at?'Resolved '+esc(date(i.ended_at)):'Update in progress'}</p>${(i.updates||[]).slice().reverse().slice(0,8).map(u=>`<p class="incident-update"><strong>${esc(date(u.at))} — ${esc(u.status)}</strong> ${esc(u.detail||'')}</p>`).join('')}<span class="timeline-status ${i.ended_at?'':'open'}">${i.ended_at?'Resolved':esc(i.status||'Investigating')}</span></div></article>`).join(''):'<div class="loading-item">No incidents have been published in the monitoring history.</div>';
-  const maintenance=(payload.maintenance||[]).slice().sort((a,b)=>String(a.starts_at).localeCompare(String(b.starts_at))).filter(m=>!m.completed_at && Date.parse(m.ends_at||m.starts_at)>(now-24*3600*1000)).slice(0,8);
-  el('maintenanceList').innerHTML=maintenance.length?maintenance.map(m=>`<article class="timeline-item"><div class="timeline-date">${esc(date(m.starts_at))}</div><div class="timeline-main"><strong>${esc(m.title)}</strong><p>${esc(m.detail||'')}</p><p>Expected end: ${esc(date(m.ends_at))} · Component: ${esc(DISPLAY[m.component]||'Multiple services')}</p><span class="timeline-status">Scheduled</span></div></article>`).join(''):'<div class="loading-item">No maintenance windows have been published.</div>';
+  return {ok,fail,days,cells:cells.join(''),summary:observations.length?observations.join('; ')+'; other dates unobserved':'No observations'};
  }
- // Cloudflare Pages only builds for website changes. Scheduled checks commit with
- // [skip ci], so load the live monitoring record independently of site deployments.
- // GitHub Pages is a second published source; the bundled snapshot is last resort.
- const STATUS_SOURCES=[
-  'https://raw.githubusercontent.com/nullicide/ecos-status/main/site/data/status.json',
-  'https://nullicide.github.io/ecos-status/data/status.json',
-  './data/status.json'
- ];
- const validReport=j=>j&&j.schema===1&&typeof j.checked_at==='string'&&
-  Number.isFinite(Date.parse(j.checked_at))&&j.components&&typeof j.components==='object'&&
-  j.daily&&typeof j.daily==='object';
- let lastReport=null,loading=false;
+ function incident(i,archived=false){
+  const state=i.ended_at?'Resolved':archived?'Historical / retired check':(i.status||'Investigating');
+  return '<article class="timeline-item"><div class="timeline-date">'+esc(date(i.started_at))+'</div><div class="timeline-main"><strong>'+esc(i.title)+'</strong><p>'+esc(i.detail||'')+'</p><p>'+esc(names[i.component]||i.component||'Service')+'</p>'+
+   (i.updates||[]).slice().reverse().map(u=>'<p class="incident-update"><strong>'+esc(date(u.at))+' — '+esc(u.status)+'</strong> '+esc(u.detail||'')+'</p>').join('')+
+   '<span class="timeline-status '+(i.ended_at||archived?'':'open')+'">'+esc(state)+'</span></div></article>';
+ }
+ function render(payload){
+  const version=payload.monitoring_version===2,now=Date.now(),checked=version?Date.parse(payload.checked_at||''):NaN;
+  const age=now-checked,stale=Number.isFinite(checked)&&(age>90*60000||age< -5*60000),delayed=!stale&&Number.isFinite(checked)&&age>25*60000;
+  const fresh=Number.isFinite(checked)&&!stale&&!delayed;
+  const raw=version?payload.components||{}:{};
+  const incidents=(payload.incidents||[]).slice().sort((a,b)=>String(b.started_at).localeCompare(String(a.started_at)));
+  const active=incidents.filter(i=>!i.ended_at&&(ids.includes(i.component)||i.component==='monitoring'));
+  const maintenance=(payload.maintenance||[]).filter(m=>ids.includes(m.component)&&!m.completed_at&&Date.parse(m.ends_at)>now);
+  const states={};
+  for(const id of ids){
+   let state=raw[id]?.state||'unknown';
+   if(!Object.hasOwn(labels,state))state='unknown';
+   if(!fresh)state=payload.unavailable||stale||delayed?'unavailable':'unknown';
+   else if(active.some(i=>i.component===id&&i.origin==='manual')&&!['outage','partial'].includes(state))state='partial';
+   else if(maintenance.some(m=>m.component===id&&Date.parse(m.starts_at)<=now)&&!['outage','partial'].includes(state))state='maintenance';
+   states[id]=state;
+  }
+  const all=Object.values(states);
+  const global=payload.unavailable||stale||delayed?'unavailable':all.includes('outage')?'outage':all.includes('partial')?'partial':all.includes('degraded')?'degraded':all.includes('maintenance')?'maintenance':all.every(s=>s==='operational')?'operational':'unknown';
+  const box=el('globalStatus');box.dataset.state=global;
+  el('globalTitle').textContent=delayed?'Monitoring delayed':global==='unknown'?(fresh?'Limited service verification':'Monitoring not yet verified'):global==='operational'?'All verified services operational':global==='outage'?'Service disruption detected':labels[global];
+  el('globalDetail').textContent=!fresh?(Number.isFinite(checked)?'Last report is not current. Missing observations do not indicate service downtime.':payload.unavailable?'No monitoring source could be retrieved. Current service availability is unknown.':'No service-level report is available yet.'):'Current external observations; untested functions remain unknown. See service details.';
+  el('globalTime').textContent=Number.isFinite(checked)?'LAST REPORT '+date(payload.checked_at):'NO SERVICE REPORT';
+  el('lastChecked').textContent=Number.isFinite(checked)?date(payload.checked_at)+(stale?' · Stale':delayed?' · Delayed':''):'No report';
+  el('componentList').innerHTML=ids.map(id=>{
+   const s=states[id],p=raw[id],evidence=p&&Number.isInteger(p.required_total)?' · '+p.required_passed+'/'+p.required_total+' required checks passed':'';
+   return '<article class="component"><div><div class="component-title"><span class="state-dot '+s+'" aria-hidden="true"></span><strong>'+esc(names[id])+'</strong></div><p>'+esc(descriptions[id]+(fresh?evidence:''))+'</p></div><span class="state-label '+s+'">'+esc(delayed?'Monitoring delayed':labels[s])+'</span></article>';
+  }).join('');
+  el('historyList').innerHTML=ids.map(id=>{
+   const h=history(version?payload.daily||{}:{},id),total=h.ok+h.fail;
+   return '<div class="history-row"><div class="history-top"><strong>'+esc(names[id])+'</strong><span class="history-pct">'+(total?(100*h.ok/total).toFixed(2)+'%':'—')+'</span></div><p class="history-description">'+(total?h.ok+'/'+total+' observed check sets passed':'No service check sets recorded')+'</p><div class="days" role="img" aria-label="90-day sampled check history for '+esc(names[id]+'. '+h.summary)+'">'+h.cells+'</div><div class="history-foot"><span class="history-window-desktop">90-day window</span><span class="history-window-mobile">Last 30 days · 90-day totals</span><span>'+h.days+' observed days</span></div></div>';
+  }).join('');
+  const archived=version?payload.archived_monitoring?.daily:payload.daily;
+  const sums={};for(const row of Object.values(archived||{}))for(const [id,count] of Object.entries(row)){const s=sums[id]||={ok:0,fail:0};s.ok+=Number(count.ok||0);s.fail+=Number(count.fail||0);}
+  el('retiredHistory').innerHTML='<h3>Archived webpage observations</h3>'+(Object.keys(sums).length?Object.entries(sums).map(([id,c])=>'<p>'+esc(names[id]||id)+': '+c.ok+'/'+(c.ok+c.fail)+' checks passed</p>').join(''):'<p>No archive loaded.</p>');
+  el('probeDetails').innerHTML='<h3>Latest technical checks</h3>'+(version?Object.entries(payload.probes||{}).map(([id,p])=>'<p>'+esc(id.replaceAll('_',' '))+': '+(p.passed?'Passed':'Failed')+(fresh?'':' (last report, not current)')+'</p>').join(''):'<p>No current probe report.</p>');
+  el('activeIncidents').innerHTML=active.length?active.map(i=>incident(i)).join(''):'<div class="loading-item">'+(fresh?'No active incidents published.':'No current incident report verified.')+'</div>';
+  const past=incidents.filter(i=>!active.includes(i));
+  el('incidentList').innerHTML=past.length?past.map(i=>incident(i,!ids.includes(i.component)&&i.component!=='monitoring')).join(''):'<div class="loading-item">No historical incidents in loaded report.</div>';
+  el('maintenanceList').innerHTML=maintenance.length?maintenance.map(m=>'<article class="timeline-item"><div class="timeline-date">'+esc(date(m.starts_at))+'</div><div class="timeline-main"><strong>'+esc(m.title)+'</strong><p>'+esc(m.detail||'')+'</p><p>'+esc(names[m.component])+' · Ends '+esc(date(m.ends_at))+'</p></div></article>').join(''):'<div class="loading-item">No upcoming maintenance published.</div>';
+  const oldMaintenance=(payload.maintenance||[]).filter(m=>!maintenance.includes(m));
+  if(oldMaintenance.length)el('incidentList').insertAdjacentHTML('beforeend','<details class="methodology"><summary>Historical maintenance</summary>'+oldMaintenance.map(m=>'<p>'+esc(m.title)+' · '+esc(date(m.starts_at))+' to '+esc(date(m.ends_at))+'</p>').join('')+'</details>');
+ }
+ const sources=['https://raw.githubusercontent.com/nullicide/ecos-status/main/site/data/status.json','https://nullicide.github.io/ecos-status/data/status.json','./data/status.json'];
+ let last=null,loading=false;
  async function fetchReport(source){
-  const controller=new AbortController();
-  const timer=setTimeout(()=>controller.abort(),8000);
-  try{
-   const response=await fetch(source+'?at='+Date.now(),{cache:'no-store',signal:controller.signal});
-   if(!response.ok)return null;
-   const report=await response.json();
-   if(!validReport(report)||Date.parse(report.checked_at)>Date.now()+5*60*1000)return null;
-   return report;
-  }catch(_error){return null;}
-  finally{clearTimeout(timer);}
+  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);
+  try{const res=await fetch(source+'?at='+Date.now(),{cache:'no-store',signal:controller.signal});if(!res.ok)return null;
+   const j=await res.json(),t=Date.parse(j.published_at||j.checked_at||'');
+   if(j.schema!==1||!j.components||!j.daily||!Number.isFinite(t)||t>Date.now()+5*60000)return null;
+   return j;
+  }catch{return null}finally{clearTimeout(timer)}
  }
  async function load(){
-  if(loading)return;
-  loading=true;
-  try{
-   // Race-independent selection: a fresh-but-older mirror must not hide a newer report.
-   const reports=(await Promise.all(STATUS_SOURCES.map(fetchReport))).filter(Boolean);
-   if(lastReport)reports.push(lastReport);
-   reports.sort((a,b)=>Date.parse(b.checked_at)-Date.parse(a.checked_at));
-   lastReport=reports[0]||null;
-   render(lastReport||{components:{},incidents:[],maintenance:[],daily:{}});
-  }finally{loading=false;}
+  if(loading)return;loading=true;
+  try{const reports=(await Promise.all(sources.map(fetchReport))).filter(Boolean);if(last)reports.push(last);
+   reports.sort((a,b)=>(b.monitoring_version===2)-(a.monitoring_version===2)||Date.parse(b.published_at||b.checked_at)-Date.parse(a.published_at||a.checked_at));
+   last=reports[0]||null;render(last||{unavailable:true});
+  }finally{loading=false}
  }
  // RSS subscription disclosure: a feed reader subscribes, not this static website.
  function initSubscription(){

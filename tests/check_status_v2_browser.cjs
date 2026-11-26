@@ -1,155 +1,49 @@
 'use strict';
 const assert=require('node:assert/strict');
 const {chromium}=require('playwright');
-
-const live=['website','operating_picture','standards','signup','enterprise','access'];
+const {AxeBuilder}=require('@axe-core/playwright');
+const ids=['platform','identity','academy','public_website','investor'];
 (async()=>{
- const instance=await chromium.launch({headless:true});
+ const browser=await chromium.launch({headless:true});
  try{
-  for(const width of [320,360,375,390,744,768,820,1024,1280,1440,1920]){
-   const page=await instance.newPage({viewport:{width,height:900},reducedMotion:'reduce'});
-   const errors=[];let providerRequests=0;
-   page.on('pageerror',e=>errors.push(e.message));
-   page.on('request',req=>{if(req.url().includes('/data/dependencies.json'))providerRequests++;});
-   const at=new Date().toISOString(),today=at.slice(0,10);
-   const components=Object.fromEntries(live.map(id=>[id,{state:'operational',last_success_at:at}]));
-   components.requests={state:'degraded',last_success_at:at}; // historical, not live
-   const daily=Object.fromEntries(live.map(id=>[id,{ok:1,fail:0}]));
-   daily.requests={ok:4,fail:2};
-   await page.route('**/data/status.json*',r=>r.fulfill({
-    contentType:'application/json',body:JSON.stringify({
-     schema:1,checked_at:at,first_checked_at:'2026-10-24T03:34:31Z',
-     components,daily:{[today]:daily},incidents:[],maintenance:[]
-    })
-   }));
-   const response=await page.goto('http://127.0.0.1:8765/',{waitUntil:'networkidle'});
-   assert.equal(response.status(),200);
-   for(const id of ['components','history','incidents','maintenance','subscribe'])
-    assert.equal(await page.locator('#'+id).count(),1,'Public section '+id);
-   assert.equal(await page.locator('.component').count(),6,'Six current ECOS monitored pages');
-   assert.equal(await page.locator('.history-row').count(),6,'Six independent monitored histories');
-   const componentLabels=await page.locator('.component-target').allTextContents();
-   assert.deepEqual(componentLabels.map(s=>s.trim()),
-    ['Public website','Operating picture','Standards & governance','Create account','Project evaluation inquiry','Application sign-in']);
-   const links=await page.locator('.component-target').evaluateAll(nodes=>nodes.map(n=>n.href));
-   assert.ok(links.includes('https://www.energycontrolos.com/create-account/'));
-   assert.ok(links.includes('https://www.energycontrolos.com/enterprise-access/'));
-   assert.ok(links.includes('https://app.energycontrolos.com/login/'));
-   assert.equal(await page.locator('#retiredHistory').isVisible(),true);
-   assert.match(await page.locator('#retiredHistory').innerText(),/Previous Request Access URL/);
-   assert.match(await page.locator('#retiredHistory').innerText(),/4\/6 historic HTTP checks passed/);
-   assert.doesNotMatch(await page.locator('#componentList').innerText(),/Previous Request Access URL/);
-   assert.doesNotMatch(await page.locator('#historyList').innerText(),/Previous Request Access URL/);
-   assert.match(await page.locator('#globalTitle').innerText(),/All monitored endpoints reachable/);
-   assert.equal(await page.locator('.history-row').filter({hasText:'Project evaluation inquiry'}).locator('.history-description').innerText(),
-    'HTTP checks · 1/1 successful · Early monitoring data');
-   for(const id of ['readiness','experiences','coverageSummary'])
-    assert.equal(await page.locator('#'+id).count(),0,'Removed panel '+id);
-   const signin=page.locator('.site-header .nav-links .status-signin');
-   assert.equal(await signin.count(),1,'Canonical sign-in link in status header');
-   assert.equal(await signin.getAttribute('href'),'https://app.energycontrolos.com/login/');
-   const platform=page.locator('.site-header .nav-links .back-link');
-   assert.ok(await platform.isVisible(),width+'px platform return is visible');
-   const navBounds=await platform.boundingBox();
-   assert.ok(navBounds&&navBounds.x>=-1&&navBounds.x+navBounds.width<=width+1,
-     width+'px platform link fits within viewport');
-   if(width<=680){
-    assert.ok(await signin.isVisible(),width+'px sign-in stays accessible');
-    assert.ok(await page.locator('.site-header .nav-links a[href="#components"]').isVisible(),
-     width+'px services navigation stays accessible');
-    const days=page.locator('.history-row').first().locator('.days .day');
-    assert.equal(await days.count(),90,'Keep the full 90-day history in DOM');
-    assert.equal(await page.locator('.history-row').first().locator('.days .day:visible').count(),30,width+'px renders 30 recent daily cells');
-    assert.ok(await days.last().evaluate(e=>getComputedStyle(e).backgroundColor!=='rgb(51, 72, 88)'),
-     width+'px latest successful day remains colored');
-    assert.ok(await page.locator('.history-window-mobile').first().isVisible());
-   }else{
-    assert.ok(await signin.isVisible(),width+'px sign-in control remains visible on desktop');
-    assert.equal(await page.locator('.history-row').first().locator('.days .day:visible').count(),90);
-   }
-   const dimensions=await page.evaluate(()=>({document:document.documentElement.scrollWidth,viewport:innerWidth}));
-   if(dimensions.document>dimensions.viewport+1){
-    const offenders=await page.evaluate(()=>[...document.querySelectorAll('body *')].map(e=>({
-      tag:e.tagName.toLowerCase(),className:typeof e.className==='string'?e.className:'',
-      id:e.id,rect:e.getBoundingClientRect().toJSON()
-    })).filter(x=>x.rect.right>innerWidth+1).slice(0,12));
-    console.error('Overflow offenders:',JSON.stringify(offenders));
-   }
-   assert.ok(dimensions.document<=dimensions.viewport+1,width+'px horizontal overflow '+JSON.stringify(dimensions));
-   assert.deepEqual(errors,[],width+'px JavaScript runtime errors');
-   assert.equal(providerRequests,0,'No hidden provider data dependency');
-   console.log('ECOS status pages and historical isolation passed at '+width+'px');
-   await page.close();
-  }
-  // Prior monitoring state cannot make an unobserved new service look green.
-  const page=await instance.newPage();
   const at=new Date().toISOString(),today=at.slice(0,10);
-  await page.route('**/data/status.json*',r=>r.fulfill({
-   contentType:'application/json',body:JSON.stringify({
-    schema:1,checked_at:at,first_checked_at:'2026-10-24T03:34:31Z',
-    components:{website:{state:'operational'},access:{state:'operational'},requests:{state:'operational'}},
-    daily:{[today]:{requests:{ok:467,fail:0},website:{ok:467,fail:0},access:{ok:467,fail:0}}},
-    incidents:[],maintenance:[]
-   })
-  }));
-  await page.goto('http://127.0.0.1:8765/',{waitUntil:'networkidle'});
-  assert.notEqual(await page.locator('#globalStatus').getAttribute('data-state'),'operational',
-   'Old successes must not be counted as new enterprise-page uptime');
-  assert.match(await page.locator('.history-row').filter({hasText:'Project evaluation inquiry'}).innerText(),
-   /No HTTP checks recorded/);
-  assert.match(await page.locator('#retiredHistory').innerText(),/467\/467 historic/);
-  await page.close();
-  console.log('PASS: legacy checks do not transfer to new enterprise access');
-
-  // The current GitHub monitoring record must override an old Cloudflare build.
-  const sourcePage=await instance.newPage();
-  let remoteReads=0;
-  const updatedAt=new Date().toISOString(),updatedDay=updatedAt.slice(0,10);
-  const latestReport={
-   schema:1,checked_at:updatedAt,first_checked_at:'2026-10-24T03:34:31Z',
-   components:Object.fromEntries(live.map(id=>[id,{state:'operational',last_success_at:updatedAt}])),
-   daily:{[updatedDay]:Object.fromEntries(live.map(id=>[id,{ok:1,fail:0}]))},
-   incidents:[],maintenance:[]
-  };
-  const oldReport={...latestReport,checked_at:'2026-10-24T03:34:31Z'};
-  await sourcePage.route('**/data/status.json*',route=>route.fulfill({
-   contentType:'application/json',body:JSON.stringify(oldReport)
-  }));
-  await sourcePage.route('https://raw.githubusercontent.com/nullicide/ecos-status/main/site/data/status.json*',route=>{
-   remoteReads++;
-   return route.fulfill({contentType:'application/json',body:JSON.stringify(latestReport)});
-  });
-  await sourcePage.goto('http://127.0.0.1:8765/',{waitUntil:'networkidle'});
-  assert.ok(remoteReads>0,'Browser actually requests live monitoring JSON from GitHub');
-  assert.equal(await sourcePage.locator('#globalStatus').getAttribute('data-state'),'operational',
-   'Latest checked GitHub data beats the stale bundled snapshot');
-  await sourcePage.close();
-  console.log('PASS: live GitHub report overrides stale Cloudflare build');
-
-  // A recent primary report must not mask a newer mirror, or accept a future-dated snapshot.
-  const mirrorPage=await instance.newPage();
-  const olderRecent={...latestReport,checked_at:new Date(Date.now()-10*60000).toISOString(),
-    components:{...latestReport.components,website:{state:'outage'}}};
-  const futureReport={...olderRecent,checked_at:new Date(Date.now()+60*60000).toISOString()};
-  await mirrorPage.route('**/data/status.json*',route=>route.fulfill({contentType:'application/json',body:JSON.stringify(futureReport)}));
-  await mirrorPage.route('https://raw.githubusercontent.com/nullicide/ecos-status/main/site/data/status.json*',route=>route.fulfill({contentType:'application/json',body:JSON.stringify(olderRecent)}));
-  await mirrorPage.route('https://nullicide.github.io/ecos-status/data/status.json*',route=>route.fulfill({contentType:'application/json',body:JSON.stringify(latestReport)}));
-  await mirrorPage.goto('http://127.0.0.1:8765/',{waitUntil:'networkidle'});
-  assert.equal(await mirrorPage.locator('#globalStatus').getAttribute('data-state'),'operational');
-  await mirrorPage.close();
-  console.log('PASS: newest credible report wins regardless of source order');
-
-  // If upstream monitoring sources are unavailable, don't imply last-known green is current.
-  const fallbackPage=await instance.newPage();
-  await fallbackPage.route('**/data/status.json*',route=>route.fulfill({
-   contentType:'application/json',body:JSON.stringify(oldReport)
-  }));
-  await fallbackPage.route('https://raw.githubusercontent.com/nullicide/ecos-status/main/site/data/status.json*',route=>route.abort());
-  await fallbackPage.route('https://nullicide.github.io/ecos-status/data/status.json*',route=>route.abort());
-  await fallbackPage.goto('http://127.0.0.1:8765/',{waitUntil:'networkidle'});
-  assert.equal(await fallbackPage.locator('#globalStatus').getAttribute('data-state'),'unknown',
-   'Old Cloudflare snapshot must remain unverified when live sources fail');
-  await fallbackPage.close();
-  console.log('PASS: upstream failure does not silently restore green status');
- }finally{await instance.close();}
+  const report={schema:1,monitoring_version:2,checked_at:at,published_at:at,first_checked_at:at,
+   components:Object.fromEntries(ids.map(id=>[id,{state:id==='public_website'?'operational':'unknown',required_passed:1,required_total:1}])),
+   daily:{[today]:Object.fromEntries(ids.map(id=>[id,{ok:1,fail:0}]))},
+   archived_monitoring:{daily:{'2026-10-24':{website:{ok:467,fail:0}}}},
+   incidents:[],maintenance:[],probes:{}};
+  for(const width of [320,390,768,1440]){
+   const context=await browser.newContext({viewport:{width,height:900},reducedMotion:'reduce'});
+   const page=await context.newPage();
+   const errors=[];page.on('pageerror',e=>errors.push(e.message));
+   await page.route('**/data/status.json*',r=>r.fulfill({contentType:'application/json',body:JSON.stringify(report)}));
+   await page.goto('http://127.0.0.1:8765/',{waitUntil:'networkidle'});
+   assert.equal(await page.locator('.component').count(),5);
+   assert.equal(await page.locator('.history-row').count(),5);
+   assert.equal(await page.locator('#globalStatus').getAttribute('data-state'),'unknown');
+   assert.match(await page.locator('#componentList').innerText(),/Not yet verified/);
+   assert.doesNotMatch(await page.locator('#historyList').innerText(),/467/);
+   assert.match(await page.locator('#retiredHistory').textContent(),/467\/467/);
+   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),width+' overflow');
+   assert.equal(await page.locator('.history-row').first().locator('.day:visible').count(),width<=680?30:90);
+   await page.locator('#openSubscribe').click();
+   assert.equal(await page.locator('#subscribeDialog').isVisible(),true);
+   await page.keyboard.press('Escape');
+   assert.equal(await page.locator('#subscribeDialog').isVisible(),false);
+   const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze();
+   assert.deepEqual(axe.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)})),[]);
+   assert.deepEqual(errors,[]);await context.close();console.log('IRI-001 verified '+width);
+  }
+  const p=await browser.newPage();
+  const stale={...report,checked_at:new Date(Date.now()-120*60000).toISOString(),published_at:new Date(Date.now()-120*60000).toISOString()};
+  await p.route('**/data/status.json*',r=>r.fulfill({contentType:'application/json',body:JSON.stringify(stale)}));
+  await p.goto('http://127.0.0.1:8765/',{waitUntil:'networkidle'});
+  assert.equal(await p.locator('#globalStatus').getAttribute('data-state'),'unavailable');
+  await p.close();
+  const missing=await browser.newPage();
+  await missing.route('**/data/status.json*',r=>r.abort());
+  await missing.goto('http://127.0.0.1:8765/',{waitUntil:'networkidle'});
+  assert.equal(await missing.locator('#globalStatus').getAttribute('data-state'),'unavailable');
+  await missing.close();
+ }finally{await browser.close()}
 })().catch(e=>{console.error(e);process.exitCode=1});

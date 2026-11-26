@@ -210,7 +210,7 @@ def monitor(data:dict,results:dict[str,bool],instant:dt.datetime)->dict:
 def manual(data:dict,action:str,component:str,title:str,detail:str,start:str,end:str,instant:dt.datetime)->dict:
     stamp=iso(instant)
     title=title.strip()[:160];detail=detail.strip()[:1800]
-    if component not in TARGETS:raise ValueError('Unrecognized component')
+    if component not in TARGETS and component not in ('platform','identity','academy','public_website','investor'):raise ValueError('Unrecognized component')
     if action in ('incident_open','incident_update','maintenance_schedule') and not title and action!='incident_update':raise ValueError('Title required')
     if action=='incident_open':
         data['incidents'].append({'id':str(uuid.uuid4())[:12],'origin':'manual','component':component,'title':title,'detail':detail,'status':'investigating','started_at':stamp,'ended_at':None,
