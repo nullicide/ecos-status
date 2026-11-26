@@ -1,39 +1,39 @@
 {
   "schema": 1,
-  "checked_at": "2026-11-26T22:32:14Z",
+  "checked_at": "2026-11-26T22:45:54Z",
   "first_checked_at": "2026-11-26T22:29:11Z",
   "components": {
     "platform": {
       "state": "unknown",
-      "checked_at": "2026-11-26T22:32:14Z",
+      "checked_at": "2026-11-26T22:45:54Z",
       "required_passed": 1,
       "required_total": 1,
       "coverage_complete": false
     },
     "identity": {
       "state": "unknown",
-      "checked_at": "2026-11-26T22:32:14Z",
+      "checked_at": "2026-11-26T22:45:54Z",
       "required_passed": 2,
       "required_total": 2,
       "coverage_complete": false
     },
     "academy": {
       "state": "unknown",
-      "checked_at": "2026-11-26T22:32:14Z",
+      "checked_at": "2026-11-26T22:45:54Z",
       "required_passed": 2,
       "required_total": 2,
       "coverage_complete": false
     },
     "public_website": {
       "state": "operational",
-      "checked_at": "2026-11-26T22:32:14Z",
+      "checked_at": "2026-11-26T22:45:54Z",
       "required_passed": 1,
       "required_total": 1,
       "coverage_complete": true
     },
     "investor": {
       "state": "unknown",
-      "checked_at": "2026-11-26T22:32:14Z",
+      "checked_at": "2026-11-26T22:45:54Z",
       "required_passed": 2,
       "required_total": 2,
       "coverage_complete": false
@@ -42,23 +42,23 @@
   "daily": {
     "2026-11-26": {
       "platform": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "identity": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "academy": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "public_website": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "investor": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       }
     }
@@ -1106,129 +1106,129 @@
   "probes": {
     "workspace": {
       "passed": true,
-      "latency_ms": 315,
-      "checked_at": "2026-11-26T22:32:14Z",
+      "latency_ms": 328,
+      "checked_at": "2026-11-26T22:45:54Z",
       "fail_streak": 0,
-      "success_streak": 2
+      "success_streak": 3
     },
     "login": {
       "passed": true,
-      "latency_ms": 663,
-      "checked_at": "2026-11-26T22:32:14Z",
+      "latency_ms": 325,
+      "checked_at": "2026-11-26T22:45:54Z",
       "fail_streak": 0,
-      "success_streak": 2
+      "success_streak": 3
     },
     "session": {
       "passed": true,
-      "latency_ms": 531,
-      "checked_at": "2026-11-26T22:32:14Z",
+      "latency_ms": 326,
+      "checked_at": "2026-11-26T22:45:54Z",
       "fail_streak": 0,
-      "success_streak": 2
+      "success_streak": 3
     },
     "registration": {
       "passed": true,
-      "latency_ms": 499,
-      "checked_at": "2026-11-26T22:32:14Z",
+      "latency_ms": 322,
+      "checked_at": "2026-11-26T22:45:54Z",
       "fail_streak": 0,
-      "success_streak": 2
+      "success_streak": 3
     },
     "academy_home": {
       "passed": true,
-      "latency_ms": 319,
-      "checked_at": "2026-11-26T22:32:14Z",
+      "latency_ms": 241,
+      "checked_at": "2026-11-26T22:45:54Z",
       "fail_streak": 0,
-      "success_streak": 2
+      "success_streak": 3
     },
     "academy_lesson": {
       "passed": true,
-      "latency_ms": 239,
-      "checked_at": "2026-11-26T22:32:14Z",
+      "latency_ms": 307,
+      "checked_at": "2026-11-26T22:45:54Z",
       "fail_streak": 0,
-      "success_streak": 2
+      "success_streak": 3
     },
     "website_home": {
       "passed": true,
-      "latency_ms": 116,
-      "checked_at": "2026-11-26T22:32:14Z",
+      "latency_ms": 367,
+      "checked_at": "2026-11-26T22:45:54Z",
       "fail_streak": 0,
-      "success_streak": 2
+      "success_streak": 3
     },
     "inquiry_config": {
       "passed": true,
       "latency_ms": 80,
-      "checked_at": "2026-11-26T22:32:14Z",
+      "checked_at": "2026-11-26T22:45:54Z",
       "fail_streak": 0,
-      "success_streak": 2
+      "success_streak": 3
     },
     "investor_home": {
       "passed": true,
-      "latency_ms": 122,
-      "checked_at": "2026-11-26T22:32:14Z",
+      "latency_ms": 145,
+      "checked_at": "2026-11-26T22:45:54Z",
       "fail_streak": 0,
-      "success_streak": 2
+      "success_streak": 3
     },
     "investor_session": {
       "passed": true,
-      "latency_ms": 167,
-      "checked_at": "2026-11-26T22:32:14Z",
+      "latency_ms": 140,
+      "checked_at": "2026-11-26T22:45:54Z",
       "fail_streak": 0,
-      "success_streak": 2
+      "success_streak": 3
     },
     "investor_vault": {
       "passed": true,
-      "latency_ms": 207,
-      "checked_at": "2026-11-26T22:32:14Z",
+      "latency_ms": 151,
+      "checked_at": "2026-11-26T22:45:54Z",
       "fail_streak": 0,
-      "success_streak": 2
+      "success_streak": 3
     }
   },
   "probe_daily": {
     "2026-11-26": {
       "workspace": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "login": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "session": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "registration": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "academy_home": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "academy_lesson": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "website_home": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "inquiry_config": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "investor_home": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "investor_session": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "investor_vault": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       }
     }
   },
-  "published_at": "2026-11-26T22:32:14Z"
+  "published_at": "2026-11-26T22:45:54Z"
 }
