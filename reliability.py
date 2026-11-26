@@ -156,6 +156,9 @@ def record(data, results, instant):
             "coverage_complete":spec["complete"]}
         sample=daily.setdefault(name,{"ok":0,"fail":0})
         sample["ok" if passed else "fail"]+=1
+        # Separate verified service states from raw check-set counts; never backfill.
+        verified=data.setdefault("service_state_daily",{}).setdefault(day,{}).setdefault(name,{})
+        verified[state]=verified.get(state,0)+1
         active=next((i for i in data["incidents"] if i.get("origin")=="service-monitor" and i.get("component")==name and not i.get("ended_at")),None)
         if state in ("outage","partial") and active is None:
             detail="Repeated external service checks failed. The underlying cause and full customer impact are not established."
