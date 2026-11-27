@@ -161,12 +161,12 @@ def record(data, results, instant):
         verified[state]=verified.get(state,0)+1
         active=next((i for i in data["incidents"] if i.get("origin")=="service-monitor" and i.get("component")==name and not i.get("ended_at")),None)
         if state in ("outage","partial") and active is None:
-            detail="Repeated external service checks failed. The underlying cause and full customer impact are not established."
+            detail="Repeated external service checks failed. The cause and extent of user impact remain unknown."
             data["incidents"].append({"id":str(uuid.uuid4())[:12],"origin":"service-monitor","component":name,
               "title":spec["title"]+" — investigating check failures","detail":detail,"status":"investigating",
               "started_at":stamp,"ended_at":None,"updates":[{"at":stamp,"status":"investigating","detail":detail}]})
         elif active and passed and all(p["success_streak"]>=2 for p in required):
-            detail="External checks recovered. Unmonitored functions remain unverified."
+            detail="External checks passed again. Functions outside those checks require separate verification."
             active.update(ended_at=stamp,status="resolved")
             active.setdefault("updates",[]).append({"at":stamp,"status":"resolved","detail":detail})
     # Never truncate historical observations, incidents or maintenance records.

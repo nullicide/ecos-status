@@ -129,7 +129,7 @@ def new_incident(data,component,tstamp):
     if any(not it.get('ended_at') and it.get('component')==component and it.get('origin')=='monitor' for it in data['incidents']):return
     data['incidents'].append({'id':str(uuid.uuid4())[:12],'origin':'monitor','component':component,
        'title':TITLES[component]+' — endpoint check failures',
-       'detail':'Repeated external checks did not verify the expected page. This may reflect reachability, an intermediary response, or changed page markup; the cause is not yet confirmed.',
+       'detail':'Repeated external checks did not find the expected page response. The cause is still being investigated.',
        'status':'investigating','started_at':tstamp,'ended_at':None,
        'updates':[{'at':tstamp,'status':'investigating','detail':'Repeated external checks did not verify the expected HTML.'}]})
 
@@ -137,7 +137,7 @@ def resolve_auto(data,component,tstamp):
     for i in data['incidents']:
         if i.get('origin')=='monitor' and i.get('component')==component and not i.get('ended_at'):
             i['ended_at']=tstamp;i['status']='resolved'
-            i['detail']='External endpoint checks have returned to normal. This does not validate application functions.'
+            i['detail']='External endpoint checks passed again. Application functions require separate verification.'
             i.setdefault('updates',[]).append({'at':tstamp,'status':'resolved','detail':i['detail']})
 
 def record_monitoring_gap(data:dict,previous_stamp:str|None,instant:dt.datetime)->bool:

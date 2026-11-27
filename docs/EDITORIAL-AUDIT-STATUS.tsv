@@ -1,0 +1,33 @@
+# ECOS Status file-level editorial coverage
+# Baseline 5bf477d174b86052ce511698d0ee0e779097e994 (28 tracked files). Resume at the first pending row.
+# The baseline blob identifies the inventoried file. Each audit commit records the revision and disposition.
+# Source review and production acceptance are tracked independently.
+path	baseline_blob	disposition	basis
+.DS_Store	db5331ee7200caa7cbd28e0172aaf1efea107796	excluded	Filesystem, source control or routing metadata.
+.gitattributes	dfe0770424b2a19faf507a501ebfc23be8f54e7b	excluded	Filesystem, source control or routing metadata.
+.github/workflows/publish-status.yml	dca6b8d4911b00c502f994c3152168faadf02318	excluded	Internal scheduled monitoring, tests or publication configuration.
+.github/workflows/status-monitor-tests.yml	6598bf8b92e633b0670d0bb9acb383da426aff7c	excluded	Internal scheduled monitoring, tests or publication configuration.
+.github/workflows/status-v2.yml	40c391d689faa892fe3b7e967f44a151f99789ad	excluded	Internal scheduled monitoring, tests or publication configuration.
+.github/workflows/synthetic-workspace.yml	9607678730786d85b6b576eabcc41c2c9ec5f9bf	excluded	Internal scheduled monitoring, tests or publication configuration.
+docs/IRI-001-founder-activation.md	c8fdca5b48661b5d8abdaf0f10a14cf4678b509f	corrected	Clarified the operator-facing document title while preserving the existing authorized roles and release gates.
+docs/IRI-001.md	c6e21fcc7ef745a7708485a166897a782e4ed168	retained	Reviewed existing monitoring scope, change evidence and outstanding production acceptance. Preserved the historical implementation record.
+monitor.py	d6ca01e7f0df13c71b75dd0116b713fc44e6323d	corrected	Made automated endpoint incident and recovery descriptions direct. Preserved probe rules, historical data and RSS identifiers.
+monitor_schiller.py	6d32cbcaac604bcda2dacc7b07170d11c7810689	retained	Reviewed page-reachability incident and recovery messages for the separate historical monitor.
+reliability.py	32fad880c826294d8a0d191ae40f256628468ef3	corrected	Clarified automated service incident and recovery notices without changing coverage or measurements.
+scripts/synthetic_workspace.py	696927b9eb439576cc145381f1ea282f0260ab7c	excluded	Test or operator verification tooling. No public editorial copy.
+scripts/verify_production.py	e2a8ffb5fc4a75adc98629a8fcc8916010fd375e	excluded	Test or operator verification tooling. No public editorial copy.
+site/404.html	1646d26a1ce83e834ca8626b149f6b925a825397	corrected	Removed redundant error text and retained a direct link to System Status.
+site/_redirects	d303c6b28fe6a89299e125f0cda62e5526a2ac51	excluded	Filesystem, source control or routing metadata.
+site/app.js	9f8e23ede62981b46e9cda0ce2d25ac8fb1b81c7	corrected	Aligned live, delayed and missing report wording with the evidence available and preserved all thresholds and service state logic.
+site/data/115schiller.json	786f30180a06b2994f87df5c304e212063eac406	excluded	Generated monitoring or incident publication record. Historical results preserved. Editorial templates are reviewed at their source.
+site/data/status.json	a44ae06679699445709f4e50fd3d471c438b45d7	excluded	Generated monitoring or incident publication record. Historical results preserved. Editorial templates are reviewed at their source.
+site/favicon.svg	2a693db719d1586a5667e9d10805840806a8f0cf	retained	Reviewed the site mark and embedded label.
+site/feed.xml	d28f2783fae4961b524573037bd458aab14fdd94	excluded	Generated monitoring or incident publication record. Historical results preserved. Editorial templates are reviewed at their source.
+site/index.html	ff3711caaa27407aec98802f2d46222bbc13b0d6	corrected	Clarified service report freshness, observation counts, and RSS subscriptions. Preserved the monitoring and field safety scope.
+site/styles.css	6efcf1c737df92ac53584c3caad26235e46a8191	excluded	Inspected styling and generated decorative symbols. Contains no standalone editorial text.
+tests/check_status_v2_browser.cjs	90e73a8fc93fc0654cd066467df976ea45d8baa4	excluded	Test or operator verification tooling. No public editorial copy.
+tests/test_monitor_ecos.py	3c75e631b5f08c7e95f4e789721d6dbccbf4d170	excluded	Test or operator verification tooling. No public editorial copy.
+tests/test_monitor_schiller.py	29bf437daae313bf587a2fda742c04092bebf5c3	excluded	Test or operator verification tooling. No public editorial copy.
+tests/test_publication.py	c5e283cb7e313ade654831ead6f0266a9ba8bd00	excluded	Test or operator verification tooling. No public editorial copy.
+tests/test_reliability.py	cde0ae01ce7e73ee14b4e270dcc5a2ad1ce09087	excluded	Test or operator verification tooling. No public editorial copy.
+tests/test_synthetic_workspace.py	72be9a80ec2b33fa0177304e0c51374a9167f200	excluded	Test or operator verification tooling. No public editorial copy.

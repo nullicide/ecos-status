@@ -46,8 +46,8 @@
   const all=Object.values(states);
   const global=payload.unavailable||stale||delayed?'unavailable':all.includes('outage')?'outage':all.includes('partial')?'partial':all.includes('degraded')?'degraded':all.includes('maintenance')?'maintenance':all.every(s=>s==='operational')?'operational':'unknown';
   const box=el('globalStatus');box.dataset.state=global;
-  el('globalTitle').textContent=delayed?'Monitoring delayed':global==='unknown'?(fresh?'Limited service verification':'Monitoring not yet verified'):global==='operational'?'All monitored endpoints operational':global==='outage'?'Service disruption detected':labels[global];
-  el('globalDetail').textContent=!fresh?(Number.isFinite(checked)?'Last report is not current. Missing observations do not indicate service downtime.':payload.unavailable?'No monitoring source could be retrieved. Current service availability is unknown.':'No service-level report is available yet.'):'Availability reflects external endpoint checks only. Signed-in transactions are not verified.';
+  el('globalTitle').textContent=delayed?'Monitoring delayed':global==='unknown'?(fresh?'Limited service verification':'Monitoring not yet verified'):global==='operational'?'All monitored endpoint checks passed':global==='outage'?'Service disruption detected':labels[global];
+  el('globalDetail').textContent=!fresh?(Number.isFinite(checked)?'The latest report is out of date. Current service availability is unknown.':payload.unavailable?'The monitoring report is unavailable. Current service availability is unknown.':'No service-level report is available yet.'):'Availability reflects external endpoint checks. Signed-in activity requires separate verification.';
   el('globalTime').textContent=Number.isFinite(checked)?'LAST REPORT '+date(payload.checked_at):'NO SERVICE REPORT';
   el('lastChecked').textContent=Number.isFinite(checked)?date(payload.checked_at)+(stale?' · Stale':delayed?' · Delayed':''):'No report';
   el('componentList').innerHTML=ids.map(id=>{
@@ -59,10 +59,10 @@
   const archived=version?payload.archived_monitoring?.daily:payload.daily;
   const sums={};for(const row of Object.values(archived||{}))for(const [id,count] of Object.entries(row)){const s=sums[id]||={ok:0,fail:0};s.ok+=Number(count.ok||0);s.fail+=Number(count.fail||0);}
   el('retiredHistory').innerHTML='<h3>Archived webpage observations</h3>'+(Object.keys(sums).length?Object.entries(sums).map(([id,c])=>'<p>'+esc(names[id]||id)+': '+c.ok+'/'+(c.ok+c.fail)+' checks passed</p>').join(''):'<p>No archive loaded.</p>');
-  el('probeDetails').innerHTML='<h3>Latest technical checks</h3>'+(version?Object.entries(payload.probes||{}).map(([id,p])=>'<p>'+esc(id.replaceAll('_',' '))+': '+(p.passed?'Passed':'Failed')+(fresh?'':' (last report, not current)')+'</p>').join(''):'<p>No current probe report.</p>');
+  el('probeDetails').innerHTML='<h3>Latest technical checks</h3>'+(version?Object.entries(payload.probes||{}).map(([id,p])=>'<p>'+esc(id.replaceAll('_',' '))+': '+(p.passed?'Passed':'Failed')+(fresh?'':' (last report, not current)')+'</p>').join(''):'<p>No current check report.</p>');
   el('activeIncidents').innerHTML=active.length?active.map(i=>incident(i)).join(''):'<div class="loading-item">'+(fresh?'No active incidents published.':'No current incident report verified.')+'</div>';
   const past=incidents.filter(i=>!active.includes(i));
-  el('incidentList').innerHTML=past.length?past.map(i=>incident(i,!ids.includes(i.component)&&i.component!=='monitoring')).join(''):'<div class="loading-item">No historical incidents in loaded report.</div>';
+  el('incidentList').innerHTML=past.length?past.map(i=>incident(i,!ids.includes(i.component)&&i.component!=='monitoring')).join(''):'<div class="loading-item">This report lists no past incidents.</div>';
   el('maintenanceList').innerHTML=maintenance.length?maintenance.map(m=>'<article class="timeline-item"><div class="timeline-date">'+esc(date(m.starts_at))+'</div><div class="timeline-main"><strong>'+esc(m.title)+'</strong><p>'+esc(m.detail||'')+'</p><p>'+esc(names[m.component])+' · Ends '+esc(date(m.ends_at))+'</p></div></article>').join(''):'<div class="loading-item">No upcoming maintenance published.</div>';
   const oldMaintenance=(payload.maintenance||[]).filter(m=>!maintenance.includes(m));
   if(oldMaintenance.length)el('incidentList').insertAdjacentHTML('beforeend','<details class="methodology"><summary>Historical maintenance</summary>'+oldMaintenance.map(m=>'<p>'+esc(m.title)+' · '+esc(date(m.starts_at))+' to '+esc(date(m.ends_at))+'</p>').join('')+'</details>');

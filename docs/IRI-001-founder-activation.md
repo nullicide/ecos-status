@@ -1,4 +1,4 @@
-# IRI-001 founder activation — remaining gates
+# IRI-001 production activation — remaining checks
 
 Status: not activated. No credentials included. Do not use actual project data or normal employee accounts. No paid features required.
 
