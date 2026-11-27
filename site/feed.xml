@@ -6,6 +6,13 @@
     <description>Public incidents and maintenance notices for Energy Control OS.</description>
     <language>en-us</language>
     <item>
+      <title>Status monitoring reports delayed — Resolved</title>
+      <description>Monitoring reports resumed; unobserved intervals remain unknown.</description>
+      <link>https://status.energycontrolos.com/#incidents</link>
+      <guid isPermaLink="false">ecos-0219022a-de8-2</guid>
+      <pubDate>Fri, 27 Nov 2026 02:13:10 +0000</pubDate>
+    </item>
+    <item>
       <title>Status monitoring — scheduled report delays — Resolved</title>
       <description>Monitoring reports resumed; unobserved intervals remain unknown.</description>
       <link>https://status.energycontrolos.com/#incidents</link>
