@@ -1,39 +1,39 @@
 {
   "schema": 1,
-  "checked_at": "2026-11-27T04:12:03Z",
+  "checked_at": "2026-11-27T13:56:29Z",
   "first_checked_at": "2026-11-26T22:29:11Z",
   "components": {
     "platform": {
       "state": "operational",
-      "checked_at": "2026-11-27T04:12:03Z",
+      "checked_at": "2026-11-27T13:56:29Z",
       "required_passed": 1,
       "required_total": 1,
       "coverage_complete": false
     },
     "identity": {
       "state": "operational",
-      "checked_at": "2026-11-27T04:12:03Z",
+      "checked_at": "2026-11-27T13:56:29Z",
       "required_passed": 2,
       "required_total": 2,
       "coverage_complete": false
     },
     "academy": {
       "state": "operational",
-      "checked_at": "2026-11-27T04:12:03Z",
+      "checked_at": "2026-11-27T13:56:29Z",
       "required_passed": 2,
       "required_total": 2,
       "coverage_complete": false
     },
     "public_website": {
       "state": "operational",
-      "checked_at": "2026-11-27T04:12:03Z",
+      "checked_at": "2026-11-27T13:56:29Z",
       "required_passed": 1,
       "required_total": 1,
       "coverage_complete": true
     },
     "investor": {
       "state": "operational",
-      "checked_at": "2026-11-27T04:12:03Z",
+      "checked_at": "2026-11-27T13:56:29Z",
       "required_passed": 2,
       "required_total": 2,
       "coverage_complete": false
@@ -64,23 +64,23 @@
     },
     "2026-11-27": {
       "platform": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "identity": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "academy": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "public_website": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "investor": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       }
     }
@@ -353,6 +353,28 @@
         },
         {
           "at": "2026-11-27T04:12:03Z",
+          "status": "resolved",
+          "detail": "Monitoring reports resumed; unobserved intervals remain unknown."
+        }
+      ]
+    },
+    {
+      "id": "aad9d171-533",
+      "origin": "monitoring-schedule",
+      "component": "monitoring",
+      "title": "Status monitoring reports delayed",
+      "detail": "No new monitoring report was recorded between 2026-11-27T04:12:03Z and 2026-11-27T13:56:29Z (584 minutes). This is a monitoring-reporting gap, not evidence that a monitored service was down.",
+      "status": "resolved",
+      "started_at": "2026-11-27T13:56:29Z",
+      "ended_at": "2026-11-27T13:56:29Z",
+      "updates": [
+        {
+          "at": "2026-11-27T13:56:29Z",
+          "status": "identified",
+          "detail": "No new monitoring report was recorded between 2026-11-27T04:12:03Z and 2026-11-27T13:56:29Z (584 minutes). This is a monitoring-reporting gap, not evidence that a monitored service was down."
+        },
+        {
+          "at": "2026-11-27T13:56:29Z",
           "status": "resolved",
           "detail": "Monitoring reports resumed; unobserved intervals remain unknown."
         }
@@ -1172,80 +1194,80 @@
   "probes": {
     "workspace": {
       "passed": true,
-      "latency_ms": 324,
-      "checked_at": "2026-11-27T04:12:03Z",
+      "latency_ms": 418,
+      "checked_at": "2026-11-27T13:56:29Z",
       "fail_streak": 0,
-      "success_streak": 8
+      "success_streak": 9
     },
     "login": {
       "passed": true,
-      "latency_ms": 388,
-      "checked_at": "2026-11-27T04:12:03Z",
+      "latency_ms": 566,
+      "checked_at": "2026-11-27T13:56:29Z",
       "fail_streak": 0,
-      "success_streak": 8
+      "success_streak": 9
     },
     "session": {
       "passed": true,
-      "latency_ms": 588,
-      "checked_at": "2026-11-27T04:12:03Z",
+      "latency_ms": 928,
+      "checked_at": "2026-11-27T13:56:29Z",
       "fail_streak": 0,
-      "success_streak": 8
+      "success_streak": 9
     },
     "registration": {
       "passed": true,
-      "latency_ms": 546,
-      "checked_at": "2026-11-27T04:12:03Z",
+      "latency_ms": 874,
+      "checked_at": "2026-11-27T13:56:29Z",
       "fail_streak": 0,
-      "success_streak": 8
+      "success_streak": 9
     },
     "academy_home": {
       "passed": true,
-      "latency_ms": 273,
-      "checked_at": "2026-11-27T04:12:03Z",
+      "latency_ms": 377,
+      "checked_at": "2026-11-27T13:56:29Z",
       "fail_streak": 0,
-      "success_streak": 8
+      "success_streak": 9
     },
     "academy_lesson": {
       "passed": true,
-      "latency_ms": 243,
-      "checked_at": "2026-11-27T04:12:03Z",
+      "latency_ms": 401,
+      "checked_at": "2026-11-27T13:56:29Z",
       "fail_streak": 0,
-      "success_streak": 8
+      "success_streak": 9
     },
     "website_home": {
       "passed": true,
-      "latency_ms": 81,
-      "checked_at": "2026-11-27T04:12:03Z",
+      "latency_ms": 195,
+      "checked_at": "2026-11-27T13:56:29Z",
       "fail_streak": 0,
-      "success_streak": 8
+      "success_streak": 9
     },
     "inquiry_config": {
       "passed": true,
-      "latency_ms": 73,
-      "checked_at": "2026-11-27T04:12:03Z",
+      "latency_ms": 108,
+      "checked_at": "2026-11-27T13:56:29Z",
       "fail_streak": 0,
-      "success_streak": 8
+      "success_streak": 9
     },
     "investor_home": {
       "passed": true,
-      "latency_ms": 89,
-      "checked_at": "2026-11-27T04:12:03Z",
+      "latency_ms": 178,
+      "checked_at": "2026-11-27T13:56:29Z",
       "fail_streak": 0,
-      "success_streak": 8
+      "success_streak": 9
     },
     "investor_session": {
       "passed": true,
-      "latency_ms": 112,
-      "checked_at": "2026-11-27T04:12:03Z",
+      "latency_ms": 116,
+      "checked_at": "2026-11-27T13:56:29Z",
       "fail_streak": 0,
-      "success_streak": 8
+      "success_streak": 9
     },
     "investor_vault": {
       "passed": true,
-      "latency_ms": 121,
-      "checked_at": "2026-11-27T04:12:03Z",
+      "latency_ms": 66,
+      "checked_at": "2026-11-27T13:56:29Z",
       "fail_streak": 0,
-      "success_streak": 8
+      "success_streak": 9
     }
   },
   "probe_daily": {
@@ -1297,52 +1319,52 @@
     },
     "2026-11-27": {
       "workspace": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "login": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "session": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "registration": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "academy_home": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "academy_lesson": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "website_home": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "inquiry_config": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "investor_home": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "investor_session": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       },
       "investor_vault": {
-        "ok": 2,
+        "ok": 3,
         "fail": 0
       }
     }
   },
-  "published_at": "2026-11-27T04:12:03Z",
+  "published_at": "2026-11-27T13:56:29Z",
   "service_state_daily": {
     "2026-11-26": {
       "platform": {
@@ -1382,19 +1404,19 @@
     },
     "2026-11-27": {
       "platform": {
-        "operational": 2
+        "operational": 3
       },
       "identity": {
-        "operational": 2
+        "operational": 3
       },
       "academy": {
-        "operational": 2
+        "operational": 3
       },
       "public_website": {
-        "operational": 2
+        "operational": 3
       },
       "investor": {
-        "operational": 2
+        "operational": 3
       }
     }
   }
